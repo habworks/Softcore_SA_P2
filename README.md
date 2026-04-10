@@ -1,40 +1,25 @@
-# Arty A7 Hardware Repository
+# SoftCore SA Phase 2
 
-This repository contains Vivado projects for all demos for the Arty A7.
+A complete Signal and Audio Spectrum Analyzer Project design based on the Xilinx Artix A7 FPGA.  
+FPGA, Hardware and Firmware 100% designed by: 
+Hab Collector
+Principal Engineer
+IMR Engineering, LLC
 
-For more information about the Arty A7, visit its [Resource Center](https://reference.digilentinc.com/reference/programmable-logic/arty-a7/start) on the Digilent Wiki.
+See a demo of the project here [Video Demo](https://imrengineeringcom-my.sharepoint.com/:v:/g/personal/hab_collector_imrengineering_com/IQCNRXcKcpunQ4q-7LwDUr22AYgADxUZiHp8gwkplrM7jkg?e=7BmwQX) on the IMR Cloud.
 
-Each demo contained in this repository is documented on the Digilent Wiki, links in the table below.
+##Project Folders:
 
-| Wiki Link | Description |
+| Folder | Description |
 |-----------|-------------|
-| [Arty A7 GPIO Demo](https://reference.digilentinc.com/reference/programmable-logic/arty-a7/demos/gpio) | This project demonstrates the basic use of Arty A7's Switches, LEDs, RGB LED's, Pushbuttons, and USB UART bridge |
-| [Arty A7 XADC Analog to Digital Converter Demo](https://reference.digilentinc.com/reference/programmable-logic/arty-a7/demos/xadc) | Simple hardware-only project that uses the XADC analog-to-digital functionality of the board |
-| [Arty A7 Pmod VGA Demo](https://reference.digilentinc.com/reference/programmable-logic/arty-a7/demos/pmod-vga) | Play video through a simple VGA interface|
-
-## Repository Description
-
-This repository contains the Vivado projects and hardware designs for all of the demos that we provide for the Arty A7. As some demos also require software sources contained in Vitis workspaces, this repository should not be used directly. The [Arty A7](https://github.com/Digilent/Arty-A7) repository contains all sources for these demos across all tools, and pulls in all of this repository's sources by using it as a submodule.
-
-For instructions on how to use this repository with git, and for additional documentation on the submodule and branch structures used, please visit [Digilent FPGA Demo Git Repositories](https://reference.digilentinc.com/reference/programmable-logic/documents/git) on the Digilent Wiki. Note that use of git is not required to use this demo. Digilent recommends the use of project releases, for which instructions can be found in each demo wiki page, linked in the table of demos, above.
-
-Demos were moved into this repository during 2020.1 updates. History of these demos prior to these updates can be found in their old repositories, linked below:
-* https://github.com/Digilent/Arty-A7-35-GPIO/
-* https://github.com/Digilent/Arty-A7-100-GPIO/
-* https://github.com/Digilent/Arty-A7-35-XADC/
-* https://github.com/Digilent/Arty-A7-100-XADC/
-* https://github.com/Digilent/Arty-A7-35-Pmod-VGA/
-* https://github.com/Digilent/Arty-A7-100-Pmod-VGA/
+| Audio | PCM-16 files used for audio spectrum playback|
+| Bootloader_Softcore_SA | Firmware Project Bootloader|
+| Documents | UMTS, Images, and reference material|
+| FPGA_RTL_IP | Custom RTL IP created in Verilog for this project|
+| Hardware | Hardware Design in Circuit Studio: Schematics, PCB, BOM|
+| PL_Softcore_SA | Processor Logic Vivado Project Files|
+| PS_Softcore_SA | Application Firmware|
+| Simulation | Spice Modle Simulation (LT Spice)|
 
 
-A complete Signal and Audio Spectrum Analyzer Project design.  Includes:
-FPGA 
-  PL
-  Custom IP RTL (Verilog)
-Hardware:
-  Schematics
-  PCB
-  GERBERs
-Firmware
-Simulations
-Technical Documentation
+
