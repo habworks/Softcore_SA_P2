@@ -1,14 +1,14 @@
 # SoftCore SA Phase 2
 
-A complete Signal and Audio Spectrum Analyzer Project design based on the Xilinx Artix A7 FPGA.  
-FPGA, Hardware and Firmware 100% designed by: 
-Hab Collector
-Principal Engineer
-IMR Engineering, LLC
+A complete Signal and Audio Spectrum Analyzer Project design based on the Xilinx Artix A7 FPGA.<br>
+FPGA, Hardware and Firmware 100% designed by:<br>
+Hab Collector<br>
+Principal Engineer<br>
+IMR Engineering, LLC<br>
 
-See a demo of the project here [Video Demo](https://imrengineeringcom-my.sharepoint.com/:v:/g/personal/hab_collector_imrengineering_com/IQCNRXcKcpunQ4q-7LwDUr22AYgADxUZiHp8gwkplrM7jkg?e=7BmwQX) on the IMR Cloud.
+See a [Video Demo](https://imrengineeringcom-my.sharepoint.com/:v:/g/personal/hab_collector_imrengineering_com/IQCNRXcKcpunQ4q-7LwDUr22AYgADxUZiHp8gwkplrM7jkg?e=7BmwQX) from the IMR Cloud.
 
-##Project Folders:
+## Project Folders:
 
 | Folder | Description |
 |-----------|-------------|
