@@ -1,0 +1,32 @@
+# Copyright (C) 2025 Advanced Micro Devices, Inc.  All rights reserved.
+# Copyright (c) 2021 Xilinx, Inc.  All rights reserved.
+# SPDX-License-Identifier: MIT
+%YAML 1.2
+---
+title: Driver for IMR_ADC_7476A_X2 Dual ADC
+maintainers:
+  - User
+type: driver
+device_type: custom_ip
+
+properties:
+  compatible:
+    - enum:
+        - imr,IMR_ADC_7476A_X2-1.0
+  reg:
+    description: AXI4-Lite register space for ADC Control and Data
+  interrupts:
+    description: Interrupt signal asserted when ADC conversion is ready
+    
+# These link your AXI address and the IRQ to xparameters.h
+config:
+  - C_S00_AXI_BASEADDR
+  - C_S00_AXI_HIGHADDR
+
+required:
+  - compatible
+  - reg
+  - interrupts
+
+examples:
+...

@@ -1,0 +1,14 @@
+Project Outputs Generation Report
+---------------------------------
+Start Output Generation At 6:07:12 PM On 3/22/2026
+
+Output: BOM_PartType
+Type  : BOM
+From  : Variant [[No Variations]] of Project [Softcore_SA_HW.PrjPcb]
+   Generated File[BOM_PartType-Softcore_SA_HW.xlsx]
+
+
+Files Generated   : 1
+Documents Printed : 0
+
+Finished Output Generation At 6:07:50 PM On 3/22/2026
