@@ -21,7 +21,7 @@
 			"targetSetup": {
 				"resetSystem": true,
 				"programDevice": true,
-				"bitstreamFile": "C:\\IMR_Projects\\IMR\\Softcore_SA\\PL_Softcore_SA\\PL_Softcore_SA.runs\\impl_1\\BD_Softcore_SA_wrapper.bit",
+				"bitstreamFile": "C:\\IMR_Projects\\IMR\\Softcore_SA_P2\\PL_Softcore_SA\\PL_Softcore_SA.runs\\impl_1\\BD_Softcore_SA_wrapper.bit",
 				"downloadElf": [
 					{
 						"core": "microblaze_0",

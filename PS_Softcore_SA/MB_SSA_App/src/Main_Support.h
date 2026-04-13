@@ -40,8 +40,8 @@ extern"C" {
 
 // DEFINES
 // PS FW REVSION
-#define FW_MAJOR_REV            1
-#define FW_MINOR_REV            1
+#define FW_MAJOR_REV            2
+#define FW_MINOR_REV            0
 #define FW_TEST_REV             0
 #define HW_REV                  1
 // USED IN IO ACCESS

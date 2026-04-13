@@ -14,7 +14,7 @@
 -- Found assembler: C:/Xilinx_Embedded_2024.2/Vitis/2024.2/gnu/microblaze/nt/bin/mb-gcc.exe
 -- Configuring done
 -- Generating done
--- Build files have been written to: C:/IMR_Projects/IMR/Softcore_SA/PS_Softcore_SA/MB_SSA_Platform/microblaze_0/standalone_microblaze_0/bsp/libsrc/build_configs/gen_bsp
+-- Build files have been written to: C:/IMR_Projects/IMR/Softcore_SA_P2/PS_Softcore_SA/MB_SSA_Platform/microblaze_0/standalone_microblaze_0/bsp/libsrc/build_configs/gen_bsp
 -- Cache values
 // Choose the type of build, options are: None Debug Release RelWithDebInfo MinSizeRel ...
 CMAKE_BUILD_TYPE:STRING=
@@ -35,10 +35,10 @@ CMAKE_MACHINE:STRING=artix7
 CMAKE_SIZE:FILEPATH=mb-size
 
 // Specs file path for using CMAKE toolchain files
-CMAKE_SPECS_FILE:STRING=C:/IMR_Projects/IMR/Softcore_SA/PS_Softcore_SA/MB_SSA_Platform/microblaze_0/standalone_microblaze_0/bsp/Xilinx.spec
+CMAKE_SPECS_FILE:STRING=C:/IMR_Projects/IMR/Softcore_SA_P2/PS_Softcore_SA/MB_SSA_Platform/microblaze_0/standalone_microblaze_0/bsp/Xilinx.spec
 
 // The CMake toolchain file
-CMAKE_TOOLCHAIN_FILE:FILEPATH=C:/IMR_Projects/IMR/Softcore_SA/PS_Softcore_SA/MB_SSA_Platform/microblaze_0/standalone_microblaze_0/bsp/microblaze_toolchain.cmake
+CMAKE_TOOLCHAIN_FILE:FILEPATH=C:/IMR_Projects/IMR/Softcore_SA_P2/PS_Softcore_SA/MB_SSA_Platform/microblaze_0/standalone_microblaze_0/bsp/microblaze_toolchain.cmake
 
 // Device Id
 DEVICE_ID:STRING=7a100t

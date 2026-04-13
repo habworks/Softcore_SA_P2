@@ -67,7 +67,7 @@ endif()
 
 
 
-set(CMAKE_C_IMPLICIT_INCLUDE_DIRECTORIES "C:/IMR_Projects/IMR/Softcore_SA/PS_Softcore_SA/MB_SSA_Platform/microblaze_0/standalone_microblaze_0/bsp/include;C:/Xilinx_Embedded_2024.2/Vitis/2024.2/gnu/microblaze/nt/x86_64-oesdk-mingw32/usr/lib/microblaze-xilinx-elf/gcc/microblaze-xilinx-elf/13.3.0/include;C:/Xilinx_Embedded_2024.2/Vitis/2024.2/gnu/microblaze/nt/x86_64-oesdk-mingw32/usr/lib/microblaze-xilinx-elf/gcc/microblaze-xilinx-elf/13.3.0/include-fixed;C:/Xilinx_Embedded_2024.2/Vitis/2024.2/gnu/microblaze/nt/microblazeeb-xilinx-elf/usr/include")
+set(CMAKE_C_IMPLICIT_INCLUDE_DIRECTORIES "C:/IMR_Projects/IMR/Softcore_SA_P2/PS_Softcore_SA/MB_SSA_Platform/microblaze_0/standalone_microblaze_0/bsp/include;C:/Xilinx_Embedded_2024.2/Vitis/2024.2/gnu/microblaze/nt/x86_64-oesdk-mingw32/usr/lib/microblaze-xilinx-elf/gcc/microblaze-xilinx-elf/13.3.0/include;C:/Xilinx_Embedded_2024.2/Vitis/2024.2/gnu/microblaze/nt/x86_64-oesdk-mingw32/usr/lib/microblaze-xilinx-elf/gcc/microblaze-xilinx-elf/13.3.0/include-fixed;C:/Xilinx_Embedded_2024.2/Vitis/2024.2/gnu/microblaze/nt/microblazeeb-xilinx-elf/usr/include")
 set(CMAKE_C_IMPLICIT_LINK_LIBRARIES "")
 set(CMAKE_C_IMPLICIT_LINK_DIRECTORIES "")
 set(CMAKE_C_IMPLICIT_LINK_FRAMEWORK_DIRECTORIES "")

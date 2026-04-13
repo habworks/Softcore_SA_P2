@@ -1,6 +1,6 @@
 sdt: hw_artifacts\microblaze_0_baremetal.dts
 family: artix7
-path: C:\IMR_Projects\IMR\Softcore_SA\PS_Softcore_SA\MB_SSA_Platform\microblaze_0\standalone_microblaze_0\bsp
+path: C:\IMR_Projects\IMR\Softcore_SA_P2\PS_Softcore_SA\MB_SSA_Platform\microblaze_0\standalone_microblaze_0\bsp
 config: None
 os: standalone
 os_info:

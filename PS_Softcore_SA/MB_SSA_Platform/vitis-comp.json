@@ -3,7 +3,7 @@
   "type": "PLATFORM",
   "configuration": {
     "description": "",
-    "xsa": "C:\\IMR_Projects\\IMR\\Softcore_SA\\PL_Softcore_SA\\BD_Softcore_SA_wrapper.xsa",
+    "xsa": "C:\\IMR_Projects\\IMR\\Softcore_SA_P2\\PL_Softcore_SA\\BD_Softcore_SA_wrapper.xsa",
     "xsaPathInPlatform": "MB_SSA_Platform\\hw\\BD_Softcore_SA_wrapper.xsa",
     "emulationXsa": "",
     "emulationXsaPathInPlatform": "",

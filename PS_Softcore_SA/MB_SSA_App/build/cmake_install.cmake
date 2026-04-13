@@ -1,4 +1,4 @@
-# Install script for directory: C:/IMR_Projects/IMR/Softcore_SA/PS_Softcore_SA/MB_SSA_App/src
+# Install script for directory: C:/IMR_Projects/IMR/Softcore_SA_P2/PS_Softcore_SA/MB_SSA_App/src
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -45,5 +45,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "C:/IMR_Projects/IMR/Softcore_SA/PS_Softcore_SA/MB_SSA_App/build/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "C:/IMR_Projects/IMR/Softcore_SA_P2/PS_Softcore_SA/MB_SSA_App/build/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

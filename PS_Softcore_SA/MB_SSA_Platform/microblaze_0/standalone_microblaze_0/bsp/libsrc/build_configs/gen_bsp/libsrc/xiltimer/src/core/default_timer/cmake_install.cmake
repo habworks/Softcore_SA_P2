@@ -1,4 +1,4 @@
-# Install script for directory: C:/IMR_Projects/IMR/Softcore_SA/PS_Softcore_SA/MB_SSA_Platform/microblaze_0/standalone_microblaze_0/bsp/libsrc/xiltimer/src/core/default_timer
+# Install script for directory: C:/IMR_Projects/IMR/Softcore_SA_P2/PS_Softcore_SA/MB_SSA_Platform/microblaze_0/standalone_microblaze_0/bsp/libsrc/xiltimer/src/core/default_timer
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)

@@ -1,9 +1,9 @@
-# 0 "C:\\IMR_Projects\\IMR\\Softcore_SA\\PS_Softcore_SA\\MB_SSA_Platform\\hw\\sdt\\system-top.dts"
+# 0 "C:\\IMR_Projects\\IMR\\Softcore_SA_P2\\PS_Softcore_SA\\MB_SSA_Platform\\hw\\sdt\\system-top.dts"
 # 0 "<built-in>"
 # 0 "<command-line>"
-# 1 "C:\\IMR_Projects\\IMR\\Softcore_SA\\PS_Softcore_SA\\MB_SSA_Platform\\hw\\sdt\\system-top.dts"
+# 1 "C:\\IMR_Projects\\IMR\\Softcore_SA_P2\\PS_Softcore_SA\\MB_SSA_Platform\\hw\\sdt\\system-top.dts"
 /dts-v1/;
-# 1 "C:\\IMR_Projects\\IMR\\Softcore_SA\\PS_Softcore_SA\\MB_SSA_Platform\\hw\\sdt\\pl.dtsi" 1
+# 1 "C:\\IMR_Projects\\IMR\\Softcore_SA_P2\\PS_Softcore_SA\\MB_SSA_Platform\\hw\\sdt\\pl.dtsi" 1
 / {
  cpus_microblaze_0: cpus_microblaze@0 {
   #cpu-mask-cells = <1>;
@@ -86,7 +86,7 @@
    xlnx,opcode-0x0-illegal = <1>;
    xlnx,icache-line-len = <8>;
    xlnx,ecc-use-ce-exception = <0>;
-   xlnx,base-vectors = <0x0>;
+   xlnx,base-vectors = <0x80000000>;
    xlnx,edk-special = "microblaze";
    xlnx,use-dcache = <1>;
    xlnx,use-barrel = <1>;
@@ -238,8 +238,8 @@
   };
   IMR_PL_Revision_0: IMR_PL_Revision@44a20000 {
    compatible = "xlnx,IMR-PL-Revision-1.0";
-   xlnx,revision-test = <22>;
-   xlnx,revision-major = <1>;
+   xlnx,revision-test = <0>;
+   xlnx,revision-major = <2>;
    xlnx,s00-axi-data-width = <32>;
    xlnx,rable = <0>;
    xlnx,ip-name = "IMR_PL_Revision";
@@ -589,7 +589,7 @@
   };
  };
 };
-# 3 "C:\\IMR_Projects\\IMR\\Softcore_SA\\PS_Softcore_SA\\MB_SSA_Platform\\hw\\sdt\\system-top.dts" 2
+# 3 "C:\\IMR_Projects\\IMR\\Softcore_SA_P2\\PS_Softcore_SA\\MB_SSA_Platform\\hw\\sdt\\system-top.dts" 2
 / {
  device_id = "7a100t";
  #address-cells = <1>;

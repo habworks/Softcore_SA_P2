@@ -44,7 +44,7 @@ rule CUSTOM_COMMAND
 # Rule for re-running cmake.
 
 rule RERUN_CMAKE
-  command = C:\Xilinx_Embedded_2024.2\Vitis\2024.2\tps\win64\cmake-3.24.2\bin\cmake.exe --regenerate-during-build -SC:\IMR_Projects\IMR\Softcore_SA\PS_Softcore_SA\MB_SSA_App\src -BC:\IMR_Projects\IMR\Softcore_SA\PS_Softcore_SA\MB_SSA_App\build
+  command = C:\Xilinx_Embedded_2024.2\Vitis\2024.2\tps\win64\cmake-3.24.2\bin\cmake.exe --regenerate-during-build -SC:\IMR_Projects\IMR\Softcore_SA_P2\PS_Softcore_SA\MB_SSA_App\src -BC:\IMR_Projects\IMR\Softcore_SA_P2\PS_Softcore_SA\MB_SSA_App\build
   description = Re-running CMake...
   generator = 1
 

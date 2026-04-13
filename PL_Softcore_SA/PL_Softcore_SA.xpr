@@ -4,7 +4,7 @@
 <!-- Copyright 1986-2022 Xilinx, Inc. All Rights Reserved.                   -->
 <!-- Copyright 2022-2024 Advanced Micro Devices, Inc. All Rights Reserved.   -->
 
-<Project Product="Vivado" Version="7" Minor="68" Path="C:/IMR_Projects/IMR/Softcore_SA/PL_Softcore_SA/PL_Softcore_SA.xpr">
+<Project Product="Vivado" Version="7" Minor="68" Path="C:/IMR_Projects/IMR/Softcore_SA_P2/PL_Softcore_SA/PL_Softcore_SA.xpr">
   <DefaultLaunch Dir="$PRUNDIR"/>
   <Configuration>
     <Option Name="Id" Val="79be51d4d1224a42be00437d804b61e3"/>
@@ -69,13 +69,13 @@
     <Option Name="WTVcsLaunchSim" Val="0"/>
     <Option Name="WTRivieraLaunchSim" Val="0"/>
     <Option Name="WTActivehdlLaunchSim" Val="0"/>
-    <Option Name="WTXSimExportSim" Val="121"/>
-    <Option Name="WTModelSimExportSim" Val="121"/>
-    <Option Name="WTQuestaExportSim" Val="121"/>
+    <Option Name="WTXSimExportSim" Val="124"/>
+    <Option Name="WTModelSimExportSim" Val="124"/>
+    <Option Name="WTQuestaExportSim" Val="124"/>
     <Option Name="WTIesExportSim" Val="0"/>
     <Option Name="WTVcsExportSim" Val="0"/>
-    <Option Name="WTRivieraExportSim" Val="121"/>
-    <Option Name="WTActivehdlExportSim" Val="121"/>
+    <Option Name="WTRivieraExportSim" Val="124"/>
+    <Option Name="WTActivehdlExportSim" Val="124"/>
     <Option Name="GenerateIPUpgradeLog" Val="TRUE"/>
     <Option Name="XSimRadix" Val="hex"/>
     <Option Name="XSimTimeUnit" Val="ns"/>
@@ -138,8 +138,6 @@
           <Attr Name="ImportPath" Val="$PPRDIR/../Bootloader_Softcore_SA/MB_SSA_BL_App/build/MB_SSA_BL_App.elf"/>
           <Attr Name="ImportTime" Val="1774178142"/>
           <Attr Name="UsedIn" Val="implementation"/>
-          <Attr Name="ScopedToRef" Val="BD_Softcore_SA"/>
-          <Attr Name="ScopedToCell" Val="microblaze_0"/>
           <Attr Name="IsVisible" Val="1"/>
         </FileInfo>
       </File>
@@ -167,8 +165,6 @@
       <File Path="$PPRDIR/../Bootloader_Softcore_SA/MB_SSA_BL_App/build/MB_SSA_BL_App.elf">
         <FileInfo>
           <Attr Name="UsedIn" Val="simulation"/>
-          <Attr Name="ScopedToRef" Val="BD_Softcore_SA"/>
-          <Attr Name="ScopedToCell" Val="microblaze_0"/>
           <Attr Name="IsVisible" Val="1"/>
         </FileInfo>
       </File>
@@ -248,9 +244,7 @@
     </Run>
     <Run Id="BD_Softcore_SA_mig_7series_0_0_synth_1" Type="Ft3:Synth" SrcSet="BD_Softcore_SA_mig_7series_0_0" Part="xc7a100tcsg324-1" ConstrsSet="BD_Softcore_SA_mig_7series_0_0" Description="Vivado Synthesis Defaults" AutoIncrementalCheckpoint="false" WriteIncrSynthDcp="false" Dir="$PRUNDIR/BD_Softcore_SA_mig_7series_0_0_synth_1" IncludeInArchive="true" IsChild="false" AutoIncrementalDir="$PSRCDIR/utils_1/imports/BD_Softcore_SA_mig_7series_0_0_synth_1" AutoRQSDir="$PSRCDIR/utils_1/imports/BD_Softcore_SA_mig_7series_0_0_synth_1" ParallelReportGen="true">
       <Strategy Version="1" Minor="2">
-        <StratHandle Name="Vivado Synthesis Defaults" Flow="Vivado Synthesis 2024">
-          <Desc>Vivado Synthesis Defaults</Desc>
-        </StratHandle>
+        <StratHandle Name="Vivado Synthesis Defaults" Flow="Vivado Synthesis 2024"/>
         <Step Id="synth_design"/>
       </Strategy>
       <GeneratedRun Dir="$PRUNDIR" File="gen_run.xml"/>
@@ -260,9 +254,7 @@
     </Run>
     <Run Id="BD_Softcore_SA_IMR_PL_Revision_0_0_synth_1" Type="Ft3:Synth" SrcSet="BD_Softcore_SA_IMR_PL_Revision_0_0" Part="xc7a100tcsg324-1" ConstrsSet="BD_Softcore_SA_IMR_PL_Revision_0_0" Description="Vivado Synthesis Defaults" AutoIncrementalCheckpoint="false" WriteIncrSynthDcp="false" Dir="$PRUNDIR/BD_Softcore_SA_IMR_PL_Revision_0_0_synth_1" IncludeInArchive="true" IsChild="false" AutoIncrementalDir="$PSRCDIR/utils_1/imports/BD_Softcore_SA_IMR_PL_Revision_0_0_synth_1" AutoRQSDir="$PSRCDIR/utils_1/imports/BD_Softcore_SA_IMR_PL_Revision_0_0_synth_1" ParallelReportGen="true">
       <Strategy Version="1" Minor="2">
-        <StratHandle Name="Vivado Synthesis Defaults" Flow="Vivado Synthesis 2024">
-          <Desc>Vivado Synthesis Defaults</Desc>
-        </StratHandle>
+        <StratHandle Name="Vivado Synthesis Defaults" Flow="Vivado Synthesis 2024"/>
         <Step Id="synth_design"/>
       </Strategy>
       <GeneratedRun Dir="$PRUNDIR" File="gen_run.xml"/>
@@ -290,9 +282,7 @@
     </Run>
     <Run Id="BD_Softcore_SA_mig_7series_0_0_impl_1" Type="Ft2:EntireDesign" Part="xc7a100tcsg324-1" ConstrsSet="BD_Softcore_SA_mig_7series_0_0" Description="Default settings for Implementation." AutoIncrementalCheckpoint="false" WriteIncrSynthDcp="false" SynthRun="BD_Softcore_SA_mig_7series_0_0_synth_1" IncludeInArchive="false" IsChild="false" GenFullBitstream="true" AutoIncrementalDir="$PSRCDIR/utils_1/imports/BD_Softcore_SA_mig_7series_0_0_impl_1" AutoRQSDir="$PSRCDIR/utils_1/imports/BD_Softcore_SA_mig_7series_0_0_impl_1" ParallelReportGen="true">
       <Strategy Version="1" Minor="2">
-        <StratHandle Name="Vivado Implementation Defaults" Flow="Vivado Implementation 2024">
-          <Desc>Default settings for Implementation.</Desc>
-        </StratHandle>
+        <StratHandle Name="Vivado Implementation Defaults" Flow="Vivado Implementation 2024"/>
         <Step Id="init_design"/>
         <Step Id="opt_design"/>
         <Step Id="power_opt_design"/>
@@ -309,9 +299,7 @@
     </Run>
     <Run Id="BD_Softcore_SA_IMR_PL_Revision_0_0_impl_1" Type="Ft2:EntireDesign" Part="xc7a100tcsg324-1" ConstrsSet="BD_Softcore_SA_IMR_PL_Revision_0_0" Description="Default settings for Implementation." AutoIncrementalCheckpoint="false" WriteIncrSynthDcp="false" SynthRun="BD_Softcore_SA_IMR_PL_Revision_0_0_synth_1" IncludeInArchive="false" IsChild="false" GenFullBitstream="true" AutoIncrementalDir="$PSRCDIR/utils_1/imports/BD_Softcore_SA_IMR_PL_Revision_0_0_impl_1" AutoRQSDir="$PSRCDIR/utils_1/imports/BD_Softcore_SA_IMR_PL_Revision_0_0_impl_1" ParallelReportGen="true">
       <Strategy Version="1" Minor="2">
-        <StratHandle Name="Vivado Implementation Defaults" Flow="Vivado Implementation 2024">
-          <Desc>Default settings for Implementation.</Desc>
-        </StratHandle>
+        <StratHandle Name="Vivado Implementation Defaults" Flow="Vivado Implementation 2024"/>
         <Step Id="init_design"/>
         <Step Id="opt_design"/>
         <Step Id="power_opt_design"/>
