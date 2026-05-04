@@ -1,0 +1,37 @@
+* C:\IMR_Projects\IMR\Softcore_SA_P2\Simulation\SPICE\Sallen & Key LPF.asc
+V1 VCC 0 3.3V
+V2 VIN 0 SINE(.344 .306 1E5 0 0 0 50) AC 1
+R3 VOUT N005 440
+R2 N007 N002 220
+R1 N002 VBUF 220
+C2 N007 0 100e-12
+C1 VOUT N002 200e-12
+R4 VBUF N004 100
+R5 N008 VIN 1K
+D1 N008 VCC 1N4148
+D2 0 N008 1N4148
+R6 VOUT_2 N003 440
+R7 N006 N001 220
+R8 N001 VOUT 220
+C3 N006 0 100e-12
+C4 VOUT_2 N001 200e-12
+R9 VBUF 0 10K
+R10 N008 N009 1K
+V3 N009 0 1.5V
+R11 N004 0 100
+V4 VTEST 0 1V
+XU2 N008 N004 VCC 0 VBUF ADA4896-2
+XU1 N007 N005 VOUT VCC 0 LT1818
+XU3 N006 N003 VOUT_2 VCC 0 LT1818
+.model D D
+.lib C:\Users\habco\Documents\LTspiceXVII\lib\cmp\standard.dio
+.tran 10e-5
+;ac dec 100 100 10e6
+* R3 and R6 can be their value or 0.  When sum of input resistors a balance of the input impedance to both + / - terminals.\nOtherwise it does not play into circuit calculation
+* w = 2piF = 1 / SQRT(R1*R2*C1*C2)\nQ = SQRT(R1*R2*C1*C2) / (C2(R1 + R2))
+* Per Stage -40dB/Decade\nPer Q = 0.707\nTotal Roll Off -80dB/Decade\nvoltage noise per stage = 2.44uV @5MHz\ncumulative voltage noise - vector sum = 3.87uV @5MHz
+* U2 ADA4896 has a wider input Common Mode Voltage range.  \nU1 and U3 are cheaper componets but still have a large GBP necessary for filter operation
+.lib ADA4896-2.lib
+.lib LTC2.LIB
+.backanno
+.end

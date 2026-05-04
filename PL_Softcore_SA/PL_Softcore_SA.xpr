@@ -127,12 +127,6 @@
           <Attr Name="ScopedToCell" Val="BD_Softcore_SA_mig_7series_0_0"/>
         </FileInfo>
       </File>
-      <File Path="$PSRCDIR/sources_1/bd/BD_Softcore_SA/ip/BD_Softcore_SA_mig_7series_0_0/mig_a.prj">
-        <FileInfo>
-          <Attr Name="UsedIn" Val="synthesis"/>
-          <Attr Name="ScopedToCell" Val="BD_Softcore_SA_mig_7series_0_0"/>
-        </FileInfo>
-      </File>
       <File Path="$PSRCDIR/sources_1/imports/build/MB_SSA_BL_App.elf">
         <FileInfo>
           <Attr Name="ImportPath" Val="$PPRDIR/../Bootloader_Softcore_SA/MB_SSA_BL_App/build/MB_SSA_BL_App.elf"/>
