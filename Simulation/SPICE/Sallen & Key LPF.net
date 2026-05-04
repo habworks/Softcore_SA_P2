@@ -15,7 +15,6 @@ R7 N006 N001 220
 R8 N001 VOUT 220
 C3 N006 0 100e-12
 C4 VOUT_2 N001 200e-12
-R9 VBUF 0 10K
 R10 N008 N009 1K
 V3 N009 0 1.5V
 R11 N004 0 100
@@ -25,8 +24,8 @@ XU1 N007 N005 VOUT VCC 0 LT1818
 XU3 N006 N003 VOUT_2 VCC 0 LT1818
 .model D D
 .lib C:\Users\habco\Documents\LTspiceXVII\lib\cmp\standard.dio
-.tran 10e-5
-;ac dec 100 100 10e6
+;tran 10e-5
+.ac dec 100 100 10e6
 * R3 and R6 can be their value or 0.  When sum of input resistors a balance of the input impedance to both + / - terminals.\nOtherwise it does not play into circuit calculation
 * w = 2piF = 1 / SQRT(R1*R2*C1*C2)\nQ = SQRT(R1*R2*C1*C2) / (C2(R1 + R2))
 * Per Stage -40dB/Decade\nPer Q = 0.707\nTotal Roll Off -80dB/Decade\nvoltage noise per stage = 2.44uV @5MHz\ncumulative voltage noise - vector sum = 3.87uV @5MHz
