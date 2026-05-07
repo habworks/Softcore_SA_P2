@@ -1,7 +1,10 @@
 Protel Design System Design Rule Check
 PCB File : C:\IMR_Projects\IMR\Softcore_SA_P2\Hardware\PCB\SoftCore_SA_P2.CSPcbDoc
-Date     : 5/6/2026
-Time     : 3:40:26 PM
+Date     : 5/7/2026
+Time     : 2:33:22 PM
+
+Processing Rule : Minimum Solder Mask Sliver (Gap=1mil) (HasFootprint('SOT-353')),(All)
+Rule Violations :0
 
 Processing Rule : Minimum Solder Mask Sliver (Gap=1mil) (HasFootprint('CONV_TPS552892RYQR')),(All)
 Rule Violations :0
@@ -46,13 +49,7 @@ Processing Rule : Hole To Hole Clearance (Gap=10mil) (All),(All)
 Rule Violations :0
 
 Processing Rule : Minimum Solder Mask Sliver (Gap=6mil) (All),(All)
-   Violation between Via (5255.905mil,1486.22mil) Top Layer to Bottom Layer and 
-                     Pad R75-2(5216.535mil,1438.583mil)  Top Layer
-   Violation between Pad U7-2(5484.252mil,1751.968mil)  Top Layer and 
-                     Pad U7-3(5484.252mil,1726.378mil)  Top Layer
-   Violation between Pad U7-1(5484.252mil,1777.559mil)  Top Layer and 
-                     Pad U7-2(5484.252mil,1751.968mil)  Top Layer
-Rule Violations :3
+Rule Violations :0
 
 Processing Rule : Silk To Solder Mask (Clearance=6mil) (IsPad),(All)
 Rule Violations :0
@@ -82,5 +79,5 @@ Processing Rule : Component Clearance Constraint ( Horizontal Gap = 0mil, Vertic
 Rule Violations :0
 
 
-Violations Detected : 3
+Violations Detected : 0
 Time Elapsed        : 00:00:02
