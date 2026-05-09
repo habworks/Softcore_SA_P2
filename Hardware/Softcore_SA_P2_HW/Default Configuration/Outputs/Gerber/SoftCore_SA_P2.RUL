@@ -1,0 +1,5 @@
+DRC Rules Export File for PCB: C:\IMR_Projects\IMR\Softcore_SA_P2\Hardware\PCB\SoftCore_SA_P2.CSPcbDoc
+RuleKind=SolderMaskExpansion|RuleName=SolderMaskExpansion|Scope=Board|Minimum=4.00
+RuleKind=Width|RuleName=Width|Scope=Board|Minimum=8.00
+RuleKind=Clearance|RuleName=Clearance|Scope=Board|Minimum=10.00
+RuleKind=ShortCircuit|RuleName=ShortCircuit|Scope=Board|Allowed=0

@@ -1,0 +1,7 @@
+[OutputStatus]
+OutputFileNames0=C:\IMR_Projects\IMR\Softcore_SA_P2\Hardware\Softcore_SA_P2_HW\Default Configuration\Outputs\NC Drill\SoftCore_SA_P2-RoundHoles.TXT
+OutputFileNames1=C:\IMR_Projects\IMR\Softcore_SA_P2\Hardware\Softcore_SA_P2_HW\Default Configuration\Outputs\NC Drill\SoftCore_SA_P2-SquareHoles.TXT
+OutputFileNames2=C:\IMR_Projects\IMR\Softcore_SA_P2\Hardware\Softcore_SA_P2_HW\Default Configuration\Outputs\NC Drill\SoftCore_SA_P2.LDP
+OutputFileNames3=C:\IMR_Projects\IMR\Softcore_SA_P2\Hardware\Softcore_SA_P2_HW\Default Configuration\Outputs\NC Drill\SoftCore_SA_P2.DRR
+Success=1
+HasRun=1

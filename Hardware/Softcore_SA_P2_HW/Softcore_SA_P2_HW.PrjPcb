@@ -29,7 +29,7 @@ PushECOToAnnotationFile=1
 DItemRevisionGUID=
 ReportSuppressedErrorsInMessages=0
 ForceUpdateCount=0
-OutputPath=
+OutputPath=Outputs
 LogFolderPath=
 ManagedProjectGUID=
 LinkedManagedProjectGUID=
@@ -209,29 +209,130 @@ DItemRevisionGUID=
 GenerateClassCluster=0
 DocumentUniqueId=PFPGDMRP
 
+[Document11]
+DocumentPath=Softcore_SA_P2_HW.OutJob
+AnnotationEnabled=1
+AnnotateStartValue=1
+AnnotationIndexControlEnabled=0
+AnnotateSuffix=
+AnnotateScope=All
+AnnotateOrder=-1
+DoLibraryUpdate=1
+DoDatabaseUpdate=1
+ClassGenCCAutoEnabled=1
+ClassGenCCAutoRoomEnabled=1
+ClassGenNCAutoScope=None
+DItemRevisionGUID=
+GenerateClassCluster=0
+DocumentUniqueId=
+
 [GeneratedDocument1]
+DocumentPath=Default Configuration\Outputs\BOM\BOM_PartType-Softcore_SA_P2_HW.xlsx
+DItemRevisionGUID=
+
+[GeneratedDocument2]
 DocumentPath=Outputs\Design Rule Check - SoftCore_SA_P2.html
 DItemRevisionGUID=
 
+[GeneratedDocument3]
+DocumentPath=Default Configuration\Outputs\NC Drill\SoftCore_SA_P2-RoundHoles.TXT
+DItemRevisionGUID=
+
+[GeneratedDocument4]
+DocumentPath=Default Configuration\Outputs\NC Drill\SoftCore_SA_P2-SquareHoles.TXT
+DItemRevisionGUID=
+
+[GeneratedDocument5]
+DocumentPath=Default Configuration\Outputs\NC Drill\SoftCore_SA_P2.DRR
+DItemRevisionGUID=
+
+[GeneratedDocument6]
+DocumentPath=Default Configuration\Outputs\Gerber\SoftCore_SA_P2.EXTREP
+DItemRevisionGUID=
+
+[GeneratedDocument7]
+DocumentPath=Default Configuration\Outputs\Gerber\SoftCore_SA_P2.G1
+DItemRevisionGUID=
+
+[GeneratedDocument8]
+DocumentPath=Default Configuration\Outputs\Gerber\SoftCore_SA_P2.G2
+DItemRevisionGUID=
+
+[GeneratedDocument9]
+DocumentPath=Default Configuration\Outputs\Gerber\SoftCore_SA_P2.GBL
+DItemRevisionGUID=
+
+[GeneratedDocument10]
+DocumentPath=Default Configuration\Outputs\Gerber\SoftCore_SA_P2.GBO
+DItemRevisionGUID=
+
+[GeneratedDocument11]
+DocumentPath=Default Configuration\Outputs\Gerber\SoftCore_SA_P2.GBP
+DItemRevisionGUID=
+
+[GeneratedDocument12]
+DocumentPath=Default Configuration\Outputs\Gerber\SoftCore_SA_P2.GBS
+DItemRevisionGUID=
+
+[GeneratedDocument13]
+DocumentPath=Default Configuration\Outputs\Gerber\SoftCore_SA_P2.GD1
+DItemRevisionGUID=
+
+[GeneratedDocument14]
+DocumentPath=Default Configuration\Outputs\Gerber\SoftCore_SA_P2.GG1
+DItemRevisionGUID=
+
+[GeneratedDocument15]
+DocumentPath=Default Configuration\Outputs\Gerber\SoftCore_SA_P2.GTL
+DItemRevisionGUID=
+
+[GeneratedDocument16]
+DocumentPath=Default Configuration\Outputs\Gerber\SoftCore_SA_P2.GTO
+DItemRevisionGUID=
+
+[GeneratedDocument17]
+DocumentPath=Default Configuration\Outputs\Gerber\SoftCore_SA_P2.GTP
+DItemRevisionGUID=
+
+[GeneratedDocument18]
+DocumentPath=Default Configuration\Outputs\Gerber\SoftCore_SA_P2.GTS
+DItemRevisionGUID=
+
+[GeneratedDocument19]
+DocumentPath=Default Configuration\Outputs\NC Drill\SoftCore_SA_P2.LDP
+DItemRevisionGUID=
+
+[GeneratedDocument20]
+DocumentPath=Default Configuration\Outputs\Gerber\SoftCore_SA_P2.REP
+DItemRevisionGUID=
+
+[GeneratedDocument21]
+DocumentPath=Default Configuration\Outputs\Gerber\SoftCore_SA_P2.RUL
+DItemRevisionGUID=
+
+[GeneratedDocument22]
+DocumentPath=Default Configuration\Outputs\ExportSTEP\SoftCore_SA_P2.step
+DItemRevisionGUID=
+
 [Parameter1]
-Name=ProjectTitle
-Value=SoftCore_SA P2 Adapter
+Name=ProjectDate
+Value=05/11/2026
 
 [Parameter2]
-Name=ProjectTime
-Value=08:00
+Name=ProjectDocumentNumber
+Value=IMR-107-SCH
 
 [Parameter3]
 Name=ProjectRevision
 Value=1
 
 [Parameter4]
-Name=ProjectDocumentNumber
-Value=IMR-107-SCH
+Name=ProjectTime
+Value=08:00
 
 [Parameter5]
-Name=ProjectDate
-Value=05/11/2026
+Name=ProjectTitle
+Value=SoftCore_SA P2 Adapter
 
 [Configuration1]
 Name=Default Configuration
@@ -241,7 +342,12 @@ ReleaseItemId=
 CurrentRevision=
 Variant=[No Variations]
 GenerateBOM=0
-OutputJobsCount=0
+OutputJobsCount=1
+DocumentReferenceClass1=DocumentReference
+OutputJobFileName1=Softcore_SA_P2_HW.OutJob
+
+[Generic_EDE]
+OutputDir=Outputs
 
 [OutputGroup1]
 Name=Netlist Outputs

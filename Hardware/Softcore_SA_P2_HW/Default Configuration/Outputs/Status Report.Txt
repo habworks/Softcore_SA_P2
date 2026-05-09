@@ -1,0 +1,14 @@
+Project Outputs Generation Report
+---------------------------------
+Start Output Generation At 7:35:50 AM On 5/9/2026
+
+Output: ExportSTEP
+Type  : ExportSTEP
+From  : Variant [[No Variations]] of PCB Document [SoftCore_SA_P2.CSPcbDoc]
+   Generated File[SoftCore_SA_P2.step]
+
+
+Files Generated   : 1
+Documents Printed : 0
+
+Finished Output Generation At 7:36:16 AM On 5/9/2026
