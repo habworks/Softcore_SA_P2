@@ -51,7 +51,14 @@ bool init_QSPI_PollingMode(XSpi *QSPI_Handle, UINTPTR IPB_BaseAddress)
     int AXI_Status; 
 
     // STEP 1: Init SPI and reset to a known start postiion for configuration
-    AXI_Status = XSpi_Initialize(QSPI_Handle,IPB_BaseAddress);
+    memset(QSPI_Handle, 0, sizeof(XSpi));
+    AXI_Status = XSpi_Initialize(QSPI_Handle, IPB_BaseAddress);
+    if (AXI_Status == XST_DEVICE_IS_STARTED)
+    {
+        XSpi_Stop(QSPI_Handle);
+        XSpi_Start(QSPI_Handle);
+        AXI_Status = XSpi_Initialize(QSPI_Handle, IPB_BaseAddress);
+    }
     if (AXI_Status != XST_SUCCESS)
         return(false);
     XSpi_Reset(QSPI_Handle);

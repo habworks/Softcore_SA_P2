@@ -315,6 +315,7 @@ bool MCP23S08_WriteOutput(Type_MCP23S08_Driver *MCP23S08_Handle, uint8_t OutputV
 } // END OF MCP23S08_WriteOutput
 
 
+
 /********************************************************************************************************
 * @brief MCP23S08 on interrupt read and clear the interrupt.  This function to be called to service the 
 * device interrupt pin going active.  This function will capture both rising and falling edges.  The input
@@ -340,7 +341,7 @@ bool MCP23S08_WriteOutput(Type_MCP23S08_Driver *MCP23S08_Handle, uint8_t OutputV
 uint8_t MCP23S08_ReadClear_IRQ(Type_MCP23S08_Driver *MCP23S08_Handle, Type_InterruptCapture EdgeCapture)
 {
     uint8_t InterruptFlags = 0;
-    uint8_t InterruptInputState;
+    uint8_t InterruptInputState = 0;
 
     // STEP 1: Simple test
     if ((MCP23S08_Handle == NULL) || (!MCP23S08_Handle->Ready))

@@ -40,7 +40,7 @@ extern"C" {
 
 // DEFINES
 // PS FW REVSION
-#define FW_MAJOR_REV            2
+#define FW_MAJOR_REV            1
 #define FW_MINOR_REV            0
 #define FW_TEST_REV             0
 #define HW_REV                  1
@@ -71,8 +71,8 @@ extern"C" {
 #define IOX_2_CS_NUMBER         ((uint8_t)(0x01 << 2))
 #define IOX_2_DEVICE_ADDR       ((uint8_t)(0x01))
 #define IOX_2_IO_DIRECTION      ((uint8_t)(0xFF))
-#define IOX_2_INPUT_POLARITY    ((uint8_t)(0x00))
-#define IOX_2_IRQ_ON_CHANGE     ((uint8_t)(0x1F))
+#define IOX_2_INPUT_POLARITY    ((uint8_t)(0xC0))   // Was 0x00
+#define IOX_2_IRQ_ON_CHANGE     ((uint8_t)(0xFF))   // WAS 0X1F
 #define IOX_2_IRQ_DEFAULT_VALUE ((uint8_t)(0x00))
 #define IOX_2_IRQ_CONTROL       ((uint8_t)(0x00))
 #define IOX_2_CONFIGURATION     (MCP23S08_SEQOP_BIT_MASK | MCP23S08_INTPOL_BIT_MASK)
@@ -94,13 +94,17 @@ extern"C" {
 #define IOX_2_INPUT_2_MASK      ((uint8_t)(0x01 << 2))
 #define IOX_2_INPUT_3_MASK      ((uint8_t)(0x01 << 3))
 #define IOX_2_INPUT_4_MASK      ((uint8_t)(0x01 << 4))
-#define UI_SW5                  IOX_2_INPUT_0_MASK
-#define UI_SW4                  IOX_2_INPUT_1_MASK
-#define UI_SW3                  IOX_2_INPUT_2_MASK
-#define UI_SW2                  IOX_2_INPUT_3_MASK
-#define UI_SW1                  IOX_2_INPUT_4_MASK
-#define MODE_SW                 IOX_2_INPUT_4_MASK
-#define SELECT_SW               IOX_2_INPUT_3_MASK
+#define IOX_2_INPUT_5_MASK      ((uint8_t)(0x01 << 5))
+#define IOX_2_INPUT_6_MASK      ((uint8_t)(0x01 << 6))
+#define IOX_2_INPUT_7_MASK      ((uint8_t)(0x01 << 7))
+#define UI_SW6_PLAY_HOME        IOX_2_INPUT_0_MASK
+#define UI_SW5_PAUSE_AF_TOGGLE  IOX_2_INPUT_1_MASK
+#define UI_SW4_STOP_SPAN_TOGGLE IOX_2_INPUT_2_MASK
+#define UI_SW3_SELECT           IOX_2_INPUT_3_MASK
+#define UI_SW2_MODE             IOX_2_INPUT_4_MASK
+#define UI_SW1_FREQ_ADJ_TOGGLE  IOX_2_INPUT_5_MASK
+#define UI_SW1_ENCODER_B        IOX_2_INPUT_6_MASK
+#define UI_SW1_ENCODER_A        IOX_2_INPUT_7_MASK
 // MISC
 #define MODE_PERIODIC_IRQ_TIME  0.500                                                   // Value in sec
 #define MODE_TIMER_COUNT        (MODE_PERIODIC_IRQ_TIME * XPAR_CPU_CORE_CLOCK_FREQ_HZ)  // Count that lead to Value in sec delay

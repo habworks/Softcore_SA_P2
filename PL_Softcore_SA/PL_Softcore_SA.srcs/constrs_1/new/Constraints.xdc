@@ -8,7 +8,7 @@ set_property PACKAGE_PIN D9 [get_ports RST_PB]
 set_property IOSTANDARD LVCMOS33 [get_ports RST_PB]
 set_property PULLTYPE PULLDOWN [get_ports RST_PB]
 
-# TEST SWITCH x2 AND PUSH BUTTON INPUTS x3
+# ARTY A7 TEST SWITCHS x2 AND PUSH BUTTONS x3
 # Switch input (SW0 on A8)
 set_property PACKAGE_PIN A8 [get_ports SW_0]
 set_property IOSTANDARD LVCMOS33 [get_ports SW_0]
@@ -33,138 +33,144 @@ set_false_path -from [get_ports PB_*]
 
 
 # BOTH A7 DEDICATED AND CONNECTIONS THAT FEED THROUGH TO THE SSA: JA = J6, JB = J3, JC = J1, JD = J4 {A7_Connector = SSA_Connector)
-# TIMER TEST SIGNALS OUTPUTS x2
-# TIMER 1 output PIN (TIM1 on JA10 K16) = J6.10 FW TIMER_1_OUTPUT
-set_property PACKAGE_PIN K16 [get_ports {gpio2_io_o_0[0]}]
+# TIMER TEST SIGNALS OUTPUTS x2 ON ARTY A7 J4 CONNECTOR
+# TIMER 1 output PIN TIM1 on A7 J4.2 U11
+set_property PACKAGE_PIN U11 [get_ports {gpio2_io_o_0[0]}]
 set_property IOSTANDARD LVCMOS33 [get_ports {gpio2_io_o_0[0]}]
-# TIMER 2 output PIN (TIM2 on JA9 A18) = J6.9 FW_TIMER_2_OUTPUT
-set_property PACKAGE_PIN A18 [get_ports {gpio2_io_o_0[1]}]
+# TIMER 2 output PIN TIM2 on A7 J4.4 V16
+set_property PACKAGE_PIN V16 [get_ports {gpio2_io_o_0[1]}]
 set_property IOSTANDARD LVCMOS33 [get_ports {gpio2_io_o_0[1]}]
 
-# UART
-# UART TX output PIN (JD7 E2) = J4.7
+# UART (AXI_UARTLITE_0)
+# UART TX output PIN (A7 JD.7 E2) = SA J4.7
 set_property PACKAGE_PIN E2 [get_ports UART_RX]
 set_property IOSTANDARD LVCMOS33 [get_ports UART_RX]
-# UART RX input PIN (JD8 D2) = J4.8
+# UART RX input PIN (A7 JD.8 D2) = SA J4.8
 set_property PACKAGE_PIN D2 [get_ports UART_TX]
 set_property IOSTANDARD LVCMOS33 [get_ports UART_TX]
 
-#SSD1309 OLED DISPLAY
-#CS OUPTUT PIN (JD1 D4) = J4.1 FW: DISPLAY_CS
+#SSD1309 OLED DISPLAY (SHARES AXI_QUAD_SPI_0)
+#CS OUPTUT PIN (A7 JD.1 D4) = SA J4.1 FW: DISPLAY_CS
 set_property PACKAGE_PIN D4 [get_ports {gpio2_io_o_0[4]}]
 set_property IOSTANDARD LVCMOS33 [get_ports {gpio2_io_o_0[4]}]
-# Command(0) / Data(1) PIN (JD2 D3) = J4.2 FW: DISPLAY_CMD_DATA
+# Command(0) / Data(1) PIN (A7 JD.2 D3) = SA J4.2 FW: DISPLAY_CMD_DATA
 set_property PACKAGE_PIN D3 [get_ports {gpio2_io_o_0[3]}]
 set_property IOSTANDARD LVCMOS33 [get_ports {gpio2_io_o_0[3]}]
-# RESET (ACTIVE LOW) PIN (JD3 F4) = J4.3 FW: DISPLAY_RESET_RUN
+# RESET (ACTIVE LOW) PIN (A7 JD.3 F4) = SA J4.3 FW: DISPLAY_RESET_RUN
 set_property PACKAGE_PIN F4 [get_ports {gpio2_io_o_0[2]}]
 set_property IOSTANDARD LVCMOS33 [get_ports {gpio2_io_o_0[2]}]
-#MOSI OUPTUT PIN (JD4 F3) = J4.4
+#MOSI OUPTUT PIN (A7 JD.4 F3) = SA J4.4
 set_property PACKAGE_PIN F3 [get_ports DISPLAY_MOSI]
 set_property IOSTANDARD LVCMOS33 [get_ports DISPLAY_MOSI]
-#SCLK OUTPUT PIN (JD10 G2) = J4.10
+#SCLK OUTPUT PIN (A7 JD.10 G2) = SA J4.10
 set_property PACKAGE_PIN G2 [get_ports DISPLAY_SCLK]
 set_property IOSTANDARD LVCMOS33 [get_ports DISPLAY_SCLK]
 #MISO INPUT PIN ***NOT USED***
-# DISPLAY_CSn PIN (CK_IO5 ON J4.11) ***NOT USED***
-set_property PACKAGE_PIN T14 [get_ports {UI_CSn[0]}]
-set_property IOSTANDARD LVCMOS33 [get_ports {UI_CSn[0]}]
+# DISPLAY_CSn PIN (A7 CK_IO5 ON J4.11) ***NOT USED***
+set_property PACKAGE_PIN T14 [get_ports {IOX_CSn[0]}]
+set_property IOSTANDARD LVCMOS33 [get_ports {IOX_CSn[0]}]
 
-#IO EXPANDER X2
-#SCLK OUTPUT PIN (JC1 U12) = J1.1
+#IO EXPANDER X2 AND WAVEFORM GENERATOR X1 (SHARES AXI_QUAD_SPI_0)
+#COMMON SCLK OUTPUT PIN (A7 JC.1 U12) = SA J1.1
 set_property PACKAGE_PIN U12 [get_ports IOX_SCLK]
 set_property IOSTANDARD LVCMOS33 [get_ports IOX_SCLK]
-#MOSI OUTPUT PIN (JC2 V12) = J1.2
+#COMMON MOSI OUTPUT PIN (A7 JC.2 V12) = SA J1.2
 set_property PACKAGE_PIN V12 [get_ports IOX_MOSI]
 set_property IOSTANDARD LVCMOS33 [get_ports IOX_MOSI]
-#MISO INPUT PIN (JC3 V10 ON J1.3)
-set_property PACKAGE_PIN V10 [get_ports DISPLAY_MISO]
-set_property IOSTANDARD LVCMOS33 [get_ports DISPLAY_MISO]
-# RESET OUTPUT PIN (JC4 V11) = J1.4
+#IOX MISO INPUT PIN (A7 JC.3 V10 = SA J1.3)
+set_property PACKAGE_PIN V10 [get_ports IOX_MISO]
+set_property IOSTANDARD LVCMOS33 [get_ports IOX_MISO]
+# IOX RESET OUTPUT PIN (A7 JC.4 V11) = SA J1.4
 set_property PACKAGE_PIN V11 [get_ports {gpio2_io_o_0[8]}]
 set_property IOSTANDARD LVCMOS33 [get_ports {gpio2_io_o_0[8]}]
-# IO EXPANDER 1 CS PIN (JC10 U13) = J1.10
-set_property PACKAGE_PIN U13 [get_ports {UI_CSn[1]}]
-set_property IOSTANDARD LVCMOS33 [get_ports {UI_CSn[1]}]
-# IO EXPANDER 2 CS PIN (JC9 T13) = J1.9
-set_property PACKAGE_PIN T13 [get_ports {UI_CSn[2]}]
-set_property IOSTANDARD LVCMOS33 [get_ports {UI_CSn[2]}]
-# IO EXPANDER 2 IRQ PIN (JC8 V14) = J1.8
+# IO EXPANDER 1 CS PIN (A7 JC.10 U13) = SA J1.10
+set_property PACKAGE_PIN U13 [get_ports {IOX_CSn[1]}]
+set_property IOSTANDARD LVCMOS33 [get_ports {IOX_CSn[1]}]
+# IO EXPANDER 2 CS PIN (A7 JC.9 T13) = SA J1.9
+set_property PACKAGE_PIN T13 [get_ports {IOX_CSn[2]}]
+set_property IOSTANDARD LVCMOS33 [get_ports {IOX_CSn[2]}]
+# IO EXPANDER 2 IRQ PIN (A7 JC.8 V14) = SA J1.8
 set_property PACKAGE_PIN V14 [get_ports IOX_2_IRQ]
 set_property IOSTANDARD LVCMOS33 [get_ports IOX_2_IRQ]
+# WAVEFORM GENERATOR CS / FSYNC PIN (A7 JB.10 J15) = SA J3.10
+set_property PACKAGE_PIN J15 [get_ports {IOX_CSn[3]}]
+set_property IOSTANDARD LVCMOS33 [get_ports {IOX_CSn[3]}]
 
-#MICRO-SD
-#CS OUPTUT PIN (JB1 E15) = J3.1
+#MICRO-SD (AXi_QUAD_SPI_1)
+#CS OUPTUT PIN (A7 JB.1 E15) = SA J3.1
 set_property PACKAGE_PIN E15 [get_ports {USD_CSn[0]}]
 set_property IOSTANDARD LVCMOS33 [get_ports {USD_CSn[0]}]
-#MOSI OUPTUT PIN (JB2 E16) = J3.2
+#MOSI OUPTUT PIN (A7 JB.2 E16) = SA J3.2
 set_property PACKAGE_PIN E16 [get_ports USD_MOSI]
 set_property IOSTANDARD LVCMOS33 [get_ports USD_MOSI]
-#MISO INPUT PIN (JB3 D15) = J3.3
+#MISO INPUT PIN (A7 JB.3 D15) = SA J3.3
 set_property PACKAGE_PIN D15 [get_ports USD_MISO]
 set_property IOSTANDARD LVCMOS33 [get_ports USD_MISO]
-#SCLK OUTPUT PIN (JB4 C15) = J3.4
+#SCLK OUTPUT PIN (A7 JB.4 C15) = SA J3.4
 set_property PACKAGE_PIN C15 [get_ports USD_SCLK]
 set_property IOSTANDARD LVCMOS33 [get_ports USD_SCLK]
-# CARD DETECT (JB9 on K15) = J3.9
+# CARD DETECT PIN (A7 JB.9 on K15) = SA J3.9
 set_property PACKAGE_PIN K15 [get_ports USD_CD]
 set_property IOSTANDARD LVCMOS33 [get_ports USD_CD]
 
-# ADC DUAL 7476A
-# ADC_CSn PIN (JA1 on G13) = J6.1
-set_property PACKAGE_PIN G13 [get_ports ADC_CSn]
-set_property IOSTANDARD LVCMOS33 [get_ports ADC_CSn]
-# ADC_MISO_A PIN (JA2 on B11) = J6.2
-set_property PACKAGE_PIN B11 [get_ports ADC_MISO_A]
-set_property IOSTANDARD LVCMOS33 [get_ports ADC_MISO_A]
-# ADC_MISO_B PIN (JA3 on A11) = J6.3
-set_property PACKAGE_PIN A11 [get_ports ADC_MISO_B]
-set_property IOSTANDARD LVCMOS33 [get_ports ADC_MISO_B]
-# ADC_SCLK PIN (JA4 on D12) = J6.4
-set_property PACKAGE_PIN D12 [get_ports ADC_SCLK]
-set_property IOSTANDARD LVCMOS33 [get_ports ADC_SCLK]
-# ADC_IP_IRQ PIN (CK_IO6 on T15)
-set_property PACKAGE_PIN T15 [get_ports ADC_IP_IRQ]
-set_property IOSTANDARD LVCMOS33 [get_ports ADC_IP_IRQ]
-# ADC_IRQ_N_DONE PIN (CK_IO4 on R12)
-set_property PACKAGE_PIN R12 [get_ports {ADC_IRQ_N_DONE[0]}]
-set_property IOSTANDARD LVCMOS33 [get_ports {ADC_IRQ_N_DONE[0]}]
-# ADC_IRQ_N_DONE (SPILT ON GPIO) PIN (CK_IO7 on T16)
-set_property PACKAGE_PIN T16 [get_ports {gpio2_io_o_0[5]}]
-set_property IOSTANDARD LVCMOS33 [get_ports {gpio2_io_o_0[5]}]
+## ADC DUAL 7476A
+## ADC_CSn PIN (JA1 on G13) = J6.1
+#set_property PACKAGE_PIN G13 [get_ports ADC_CSn]
+#set_property IOSTANDARD LVCMOS33 [get_ports ADC_CSn]
+## ADC_MISO_A PIN (JA2 on B11) = J6.2
+#set_property PACKAGE_PIN B11 [get_ports ADC_MISO_A]
+#set_property IOSTANDARD LVCMOS33 [get_ports ADC_MISO_A]
+## ADC_MISO_B PIN (JA3 on A11) = J6.3
+#set_property PACKAGE_PIN A11 [get_ports ADC_MISO_B]
+#set_property IOSTANDARD LVCMOS33 [get_ports ADC_MISO_B]
+## ADC_SCLK PIN (JA4 on D12) = J6.4
+#set_property PACKAGE_PIN D12 [get_ports ADC_SCLK]
+#set_property IOSTANDARD LVCMOS33 [get_ports ADC_SCLK]
+## ADC_IP_IRQ PIN (CK_IO6 on T15)
+#set_property PACKAGE_PIN T15 [get_ports ADC_IP_IRQ]
+#set_property IOSTANDARD LVCMOS33 [get_ports ADC_IP_IRQ]
+## ADC_IRQ_N_DONE PIN (CK_IO4 on R12)
+#set_property PACKAGE_PIN R12 [get_ports {ADC_IRQ_N_DONE[0]}]
+#set_property IOSTANDARD LVCMOS33 [get_ports {ADC_IRQ_N_DONE[0]}]
+## ADC_IRQ_N_DONE (SPILT ON GPIO) PIN (CK_IO7 on T16)
+#set_property PACKAGE_PIN T16 [get_ports {gpio2_io_o_0[5]}]
+#set_property IOSTANDARD LVCMOS33 [get_ports {gpio2_io_o_0[5]}]
 
 #AUDIO
-# AUDIO PWM (JB10 on J15) = J3.10 FW: AUDIO_PWM
-set_property PACKAGE_PIN J15 [get_ports AUDIO_PWM]
+# AUDIO PWM PIN (A7 JD.9 on H2) = SA J4.9 FW: AUDIO_PWM
+set_property PACKAGE_PIN H2 [get_ports AUDIO_PWM]
 set_property IOSTANDARD LVCMOS33 [get_ports AUDIO_PWM]
-# AUDIO EN (JA7 ON D13) = J6.7 FW: AUDIO_EN
-set_property PACKAGE_PIN D13 [get_ports {gpio2_io_o_0[6]}]
+# AUDIO EN PIN (A7 JC.7 ON U14) = SA J1.7 FW: AUDIO_EN
+set_property PACKAGE_PIN U14 [get_ports {gpio2_io_o_0[6]}]
 set_property IOSTANDARD LVCMOS33 [get_ports {gpio2_io_o_0[6]}]
 set_property PULLTYPE PULLDOWN [get_ports {gpio2_io_o_0[6]}]
 
 # INPUT SIGNAL SELECT
-# SIG_SEL (JA8 ON B18) = J6.8 FW: SIG_SEL
+# SIG_SEL PIN (A7 JA.8 ON B18) = SA J6.8 FW: SIG_SEL
 set_property PACKAGE_PIN B18 [get_ports {gpio2_io_o_0[7]}]
 set_property IOSTANDARD LVCMOS33 [get_ports {gpio2_io_o_0[7]}]
 
 #TEST SIGNALS
-#TEST_IO_0(JD9 ON H2) = J4.9
-set_property PACKAGE_PIN H2 [get_ports {gpio2_io_o_0[9]}]
+#TEST_IO_0 PIN (A7 J4.6 ON M13)
+set_property PACKAGE_PIN M13 [get_ports {gpio2_io_o_0[9]}]
 set_property IOSTANDARD LVCMOS33 [get_ports {gpio2_io_o_0[9]}]
-#TEST_IO_1(CK_IO0 ON J4.1)
-set_property PACKAGE_PIN V15 [get_ports {gpio2_io_o_0[10]}]
+#TEST_IO_1 PIN (A7 ON J4.8 ON R10)
+set_property PACKAGE_PIN R10 [get_ports {gpio2_io_o_0[10]}]
 set_property IOSTANDARD LVCMOS33 [get_ports {gpio2_io_o_0[10]}]
-#MB_CLK (CK_1O1 ON J4.3)
+#MB_CLK PIN (A7 J4.3 ON U16)
 set_property PACKAGE_PIN U16 [get_ports MB_CLK]
 set_property IOSTANDARD LVCMOS33 [get_ports MB_CLK]
-# TEST_IRQ (CK_IO2 ON J4.5)
+# TEST_IRQ PIN (A7 J4.5 ON P14)
 set_property PACKAGE_PIN P14 [get_ports TEST_IRQ]
 set_property IOSTANDARD LVCMOS33 [get_ports TEST_IRQ]
-# MB_RESET (CK_IO3 ON J4.7)
+# MB_RESET PIN(A7 J4.7 ON T11)
 set_property PACKAGE_PIN T11 [get_ports MB_RST]
 set_property IOSTANDARD LVCMOS33 [get_ports MB_RST]
+# gpio2_io_o_0[5] PIN (A7 J4.10 ON R11) TEMP PLACEMENT
+set_property PACKAGE_PIN R11 [get_ports {gpio2_io_o_0[5]}]
+set_property IOSTANDARD LVCMOS33 [get_ports {gpio2_io_o_0[5]}]
 
-# TEST LEDS
+# ARTY A7 LEDS:
 # DDR3 CALIBRATION COMPLETE ACTIVE HIGH (LED_4 on H5)
 set_property PACKAGE_PIN H5 [get_ports LED_4]
 set_property IOSTANDARD LVCMOS33 [get_ports LED_4]

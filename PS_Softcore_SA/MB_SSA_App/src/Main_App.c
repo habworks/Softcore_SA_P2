@@ -295,7 +295,7 @@ static void main_InitApplication(void)
     printGreen("IMR Engineering, LLC\r\n");
     printGreen("  Hab Collector, Principal Engineer\r\n");
     printGreen("  http://www.imrengineering.com\r\n\n");
-    xil_printf("Softcore Spectrum Analyzer\r\n");
+    xil_printf("Softcore Spectrum Analyzer P2\r\n");
     xil_printf("FW REV: %02d.%02d.%02d\r\n", FW_MAJOR_REV, FW_MINOR_REV, FW_TEST_REV);
     xil_printf("PL REV: %02d.%02d.%02d\r\n", PL_Revision.Major, PL_Revision.Minor, PL_Revision.Test);
     xil_printf("PL BLK: %d\r\n", PL_Ver);
@@ -582,13 +582,15 @@ static void ADC_7476A_Primary_ISR(void)
 
 
 /********************************************************************************************************
-* @brief Process the user input - this function should be called when IO Expander 2 IRQ goes active. IO
-* Expander 2 represents all UI inputs
+* @brief Poll this function to determine if there was a user input.  User input is associated with IO Expander
+* 2.  There is new user input if the IOX 2 IRQ has been set.  If so process to determine which input was
+* activated and take a unique action based on Mode of operation.  
 *
 * @author original: Hab Collector \n
 *
 * @note: IO Expander 2 must be init
 * @note: Only process on IRQ from IO Expander 2
+* @note: IO Expander 2 is all inputs
 *
 * @param SoftCore_SA: Pointer to the application main handle
 *
@@ -608,19 +610,37 @@ static void processUserInput(Type_SoftCore_SA *SoftCore_SA)
     uint8_t UI_Input = MCP23S08_ReadClear_IRQ(&IOX_2, RISING_EDGE);
     switch (UI_Input)
     {
-        case MODE_SW:
+        case UI_SW1_FREQ_ADJ_TOGGLE:
+        {
+            printYellow("Encoder Pressed\r\n");
+        }
+        break;
+
+        case UI_SW1_ENCODER_A:
+        {
+            printYellow("A.\r\n");
+        }
+        break;
+        
+        case UI_SW1_ENCODER_B:
+        {
+            printYellow("B.\r\n");
+        }
+        break;
+
+        case UI_SW2_MODE:
         {
             modeSwitch(SoftCore_SA);
         }
         break;
 
-        case SELECT_SW:
+        case UI_SW3_SELECT:
         {
             selectSwitch(SoftCore_SA);
         }
         break;
 
-        case UI_SW3:
+        case UI_SW4_STOP_SPAN_TOGGLE:
         {
             if (SoftCore_SA->Mode == MODE_AUDIO_SA)
             {
@@ -630,7 +650,7 @@ static void processUserInput(Type_SoftCore_SA *SoftCore_SA)
         }
         break;
 
-        case UI_SW4:
+        case UI_SW5_PAUSE_AF_TOGGLE:
         {
             if (SoftCore_SA->Mode == MODE_AUDIO_SA)
             {
@@ -640,7 +660,7 @@ static void processUserInput(Type_SoftCore_SA *SoftCore_SA)
         }
         break;
 
-        case UI_SW5:
+        case UI_SW6_PLAY_HOME:
         {
             if (SoftCore_SA->Mode == MODE_AUDIO_SA)
             {

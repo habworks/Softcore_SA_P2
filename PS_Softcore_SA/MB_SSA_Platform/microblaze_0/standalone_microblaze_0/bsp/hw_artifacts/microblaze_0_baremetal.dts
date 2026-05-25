@@ -251,23 +251,20 @@
                         xlnx,has-fast = <0x1>;
                         xlnx,ivar-rst-val = <0x10>;
                         interrupt-controller;
-                        xlnx,async-intr = <0xfffffff8>;
+                        xlnx,async-intr = <0xfffffffc>;
                         xlnx,name = "axi_intc_0";
                         phandle = <0x6>;
                 };
 
                 IMR_ADC_7476A_X2_0: IMR_ADC_7476A_X2@44a30000 {
-                        compatible = "xlnx,IMR-ADC-7476A-X2-1.0";
-                        interrupts = <0x2 0x2>;
-                        xlnx,s00-axi-data-width = <0x20>;
                         xlnx,rable = <0x0>;
-                        interrupt-parent = <&axi_intc_0>;
-                        xlnx,ip-name = "IMR_ADC_7476A_X2";
-                        reg = <0x44a30000 0x10000>;
-                        xlnx,edk-iptype = "PERIPHERAL";
+                        xlnx,s00-axi-data-width = <0x20>;
+                        compatible = "xlnx,IMR-ADC-7476A-X2-1.0";
                         status = "okay";
                         xlnx,s00-axi-addr-width = <0x5>;
-                        interrupt-names = "IRQ";
+                        xlnx,ip-name = "IMR_ADC_7476A_X2";
+                        xlnx,edk-iptype = "PERIPHERAL";
+                        reg = <0x44a30000 0x10000>;
                         xlnx,name = "IMR_ADC_7476A_X2_0";
                         phandle = <0xe>;
                 };
@@ -322,13 +319,13 @@
                         xlnx,select-xpm = <0x0>;
                         compatible = "xlnx,axi-quad-spi-3.2", "xlnx,xps-spi-2.00.a";
                         xlnx,lsb-stup = <0x0>;
-                        xlnx,num-ss-bits = <0x3>;
+                        xlnx,num-ss-bits = <0x4>;
                         xlnx,hasfifos = <0x1>;
                         xlnx,xip-mode = <0x0>;
                         xlnx,use-startup-ext = <0x0>;
                         xlnx,s-axi4-addr-width = <0x18>;
                         xlnx,byte-level-interrupt-en = <0x0>;
-                        num-cs = <0x3>;
+                        num-cs = <0x4>;
                         xlnx,xip-perf-mode = <0x1>;
                         xlnx,sck-ratio = <0x2>;
                         xlnx,s-axi4-id-width = <0x4>;

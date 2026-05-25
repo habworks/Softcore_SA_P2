@@ -219,21 +219,18 @@
    xlnx,has-fast = <1>;
    xlnx,ivar-rst-val = <0x10>;
    interrupt-controller;
-   xlnx,async-intr = <0xfffffff8>;
+   xlnx,async-intr = <0xfffffffc>;
    xlnx,name = "axi_intc_0";
   };
   IMR_ADC_7476A_X2_0: IMR_ADC_7476A_X2@44a30000 {
-   compatible = "xlnx,IMR-ADC-7476A-X2-1.0";
-   interrupts = < 2 2 >;
-   xlnx,s00-axi-data-width = <32>;
    xlnx,rable = <0>;
-   interrupt-parent = <&axi_intc_0>;
-   xlnx,ip-name = "IMR_ADC_7476A_X2";
-   reg = <0x44a30000 0x10000>;
-   xlnx,edk-iptype = "PERIPHERAL";
+   xlnx,s00-axi-data-width = <32>;
+   compatible = "xlnx,IMR-ADC-7476A-X2-1.0";
    status = "okay";
    xlnx,s00-axi-addr-width = <5>;
-   interrupt-names = "IRQ";
+   xlnx,ip-name = "IMR_ADC_7476A_X2";
+   xlnx,edk-iptype = "PERIPHERAL";
+   reg = <0x44a30000 0x10000>;
    xlnx,name = "IMR_ADC_7476A_X2_0";
   };
   IMR_PL_Revision_0: IMR_PL_Revision@44a20000 {
@@ -282,13 +279,13 @@
    xlnx,select-xpm = <0>;
    compatible = "xlnx,axi-quad-spi-3.2" , "xlnx,xps-spi-2.00.a";
    xlnx,lsb-stup = <0>;
-   xlnx,num-ss-bits = <0x3>;
+   xlnx,num-ss-bits = <0x4>;
    xlnx,hasfifos = <1>;
    xlnx,xip-mode = <0>;
    xlnx,use-startup-ext = <0>;
    xlnx,s-axi4-addr-width = <24>;
    xlnx,byte-level-interrupt-en = <0>;
-   num-cs = <0x3>;
+   num-cs = <0x4>;
    xlnx,xip-perf-mode = <1>;
    xlnx,sck-ratio = <2>;
    xlnx,s-axi4-id-width = <4>;

@@ -1,7 +1,7 @@
 {
   "design": {
     "design_info": {
-      "boundary_crc": "0xC210B799ADCAF684",
+      "boundary_crc": "0x9F700DA069278328",
       "device": "xc7a100tcsg324-1",
       "gen_directory": "../../../../PL_Softcore_SA.gen/sources_1/bd/BD_Softcore_SA",
       "name": "BD_Softcore_SA",
@@ -46,7 +46,9 @@
       "axi_timer_3": "",
       "IMR_PL_Revision_0": "",
       "IMR_ADC_7476A_X2_0": "",
-      "axi_quad_spi_2": ""
+      "axi_quad_spi_2": "",
+      "xlconstant_1": "",
+      "xlconstant_2": ""
     },
     "interface_ports": {
       "DDR3_0": {
@@ -301,9 +303,9 @@
       "DISPLAY_MOSI": {
         "direction": "O"
       },
-      "UI_CSn": {
+      "IOX_CSn": {
         "direction": "O",
-        "left": "2",
+        "left": "3",
         "right": "0"
       },
       "DISPLAY_SCLK": {
@@ -314,31 +316,8 @@
         "left": "10",
         "right": "0"
       },
-      "DISPLAY_MISO": {
+      "IOX_MISO": {
         "direction": "I"
-      },
-      "ADC_IRQ_N_DONE": {
-        "direction": "O",
-        "left": "0",
-        "right": "0",
-        "parameters": {
-          "PortType": {
-            "value": "intr",
-            "value_src": "ip_prop"
-          },
-          "PortType.PROP_SRC": {
-            "value": "false",
-            "value_src": "ip_prop"
-          },
-          "PortWidth": {
-            "value": "1",
-            "value_src": "default_prop"
-          },
-          "SENSITIVITY": {
-            "value": "LEVEL_HIGH",
-            "value_src": "const_prop"
-          }
-        }
       },
       "LED_4": {
         "direction": "O"
@@ -424,32 +403,6 @@
       },
       "IOX_2_IRQ": {
         "direction": "I"
-      },
-      "ADC_MISO_A": {
-        "direction": "I"
-      },
-      "ADC_MISO_B": {
-        "direction": "I"
-      },
-      "ADC_IP_IRQ": {
-        "type": "intr",
-        "direction": "O",
-        "parameters": {
-          "PortWidth": {
-            "value": "1",
-            "value_src": "default_prop"
-          },
-          "SENSITIVITY": {
-            "value": "LEVEL_HIGH",
-            "value_src": "const_prop"
-          }
-        }
-      },
-      "ADC_CSn": {
-        "direction": "O"
-      },
-      "ADC_SCLK": {
-        "direction": "O"
       }
     },
     "components": {
@@ -1591,7 +1544,7 @@
         "inst_hier_path": "axi_quad_spi_0",
         "parameters": {
           "C_NUM_SS_BITS": {
-            "value": "3"
+            "value": "4"
           },
           "C_SCK_RATIO": {
             "value": "2"
@@ -1809,6 +1762,30 @@
             "value": "2"
           }
         }
+      },
+      "xlconstant_1": {
+        "vlnv": "xilinx.com:ip:xlconstant:1.1",
+        "ip_revision": "9",
+        "xci_name": "BD_Softcore_SA_xlconstant_1_0",
+        "xci_path": "ip\\BD_Softcore_SA_xlconstant_1_0\\BD_Softcore_SA_xlconstant_1_0.xci",
+        "inst_hier_path": "xlconstant_1",
+        "parameters": {
+          "CONST_VAL": {
+            "value": "0"
+          }
+        }
+      },
+      "xlconstant_2": {
+        "vlnv": "xilinx.com:ip:xlconstant:1.1",
+        "ip_revision": "9",
+        "xci_name": "BD_Softcore_SA_xlconstant_2_0",
+        "xci_path": "ip\\BD_Softcore_SA_xlconstant_2_0\\BD_Softcore_SA_xlconstant_2_0.xci",
+        "inst_hier_path": "xlconstant_2",
+        "parameters": {
+          "CONST_VAL": {
+            "value": "0"
+          }
+        }
       }
     },
     "interface_nets": {
@@ -1952,18 +1929,6 @@
       }
     },
     "nets": {
-      "ADC_MISO_A_0_1": {
-        "ports": [
-          "ADC_MISO_A",
-          "IMR_ADC_7476A_X2_0/ADC_MISO_A"
-        ]
-      },
-      "ADC_MISO_B_0_1": {
-        "ports": [
-          "ADC_MISO_B",
-          "IMR_ADC_7476A_X2_0/ADC_MISO_B"
-        ]
-      },
       "CLK_100MHZ_1": {
         "ports": [
           "CLK_100MHZ",
@@ -1972,27 +1937,8 @@
       },
       "DISPLAY_MISO_1": {
         "ports": [
-          "DISPLAY_MISO",
+          "IOX_MISO",
           "axi_quad_spi_0/io1_i"
-        ]
-      },
-      "IMR_ADC_7476A_X2_0_ADC_CS_n": {
-        "ports": [
-          "IMR_ADC_7476A_X2_0/ADC_CS_n",
-          "ADC_CSn"
-        ]
-      },
-      "IMR_ADC_7476A_X2_0_ADC_SCLK": {
-        "ports": [
-          "IMR_ADC_7476A_X2_0/ADC_SCLK",
-          "ADC_SCLK"
-        ]
-      },
-      "IMR_ADC_7476A_X2_0_IRQ": {
-        "ports": [
-          "IMR_ADC_7476A_X2_0/IRQ",
-          "xlconcat_1/In2",
-          "ADC_IP_IRQ"
         ]
       },
       "IOX_2_IRQ_1": {
@@ -2080,7 +2026,7 @@
       "axi_quad_spi_0_ss_o": {
         "ports": [
           "axi_quad_spi_0/ss_o",
-          "UI_CSn"
+          "IOX_CSn"
         ]
       },
       "axi_quad_spi_1_io0_o": {
@@ -2312,6 +2258,19 @@
           "proc_sys_reset_DDR3/mb_debug_sys_rst"
         ]
       },
+      "xlconstant_1_dout": {
+        "ports": [
+          "xlconstant_1/dout",
+          "xlconcat_1/In2"
+        ]
+      },
+      "xlconstant_2_dout": {
+        "ports": [
+          "xlconstant_2/dout",
+          "IMR_ADC_7476A_X2_0/ADC_MISO_A",
+          "IMR_ADC_7476A_X2_0/ADC_MISO_B"
+        ]
+      },
       "xlconstant_3_dout": {
         "ports": [
           "xlconstant_3/dout",
@@ -2321,8 +2280,7 @@
       "xlslice_0_Dout": {
         "ports": [
           "xlslice_0/Dout",
-          "xlconcat_1/In3",
-          "ADC_IRQ_N_DONE"
+          "xlconcat_1/In3"
         ]
       }
     },

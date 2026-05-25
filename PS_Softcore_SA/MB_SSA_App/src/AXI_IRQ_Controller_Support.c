@@ -56,6 +56,7 @@ bool init_IRQ_Controller(XIntc *IRQ_ControllerHandle, UINTPTR IPB_BaseAddress)
     int AXI_Status;
 
     // STEP 1: Initializes a specific AXI INTC instance
+    memset(IRQ_ControllerHandle, 0, sizeof(XIntc));
     AXI_Status = XIntc_Initialize(IRQ_ControllerHandle, IPB_BaseAddress);
     if (AXI_Status != XST_SUCCESS)
         return(false);

@@ -43,18 +43,18 @@ extern"C" {
 #define HW_PL_VER_OFFSET    8U
 #define ARTY_A7_UI          (SW_0 | SW_1 | PB_1 | PB_2 | PB_3)
 
-// DEFINES GPIO BIT MASK: OUTPUTS
-#define TIMER_1_OUTPUT      ((uint32_t)(0x01 << 0))     // JA.10 - J6.10 - TP6 ON PCB
-#define TIMER_2_OUTPUT      ((uint32_t)(0x01 << 1))     // JA.9 - J6.9   - TP7 ON PCB
+// DEFINES GPIO BIT MASK: OUTPUTS                       // A7   - SSA
+#define TIMER_1_OUTPUT      ((uint32_t)(0x01 << 0))     // J4.2
+#define TIMER_2_OUTPUT      ((uint32_t)(0x01 << 1))     // J4.4
 #define DISPLAY_RESET_RUN   ((uint32_t)(0x01 << 2))     // JD.3 - J4.3
 #define DISPLAY_CMD_DATA    ((uint32_t)(0x01 << 3))     // JD.2 - J4.2
 #define DISPLAY_CS          ((uint32_t)(0x01 << 4))     // JD.1 - J4.1
 #define ADC_IRQ_N_DONE      ((uint32_t)(0x01 << 5))     // JD.9 - J4.9
-#define AUDIO_EN            ((uint32_t)(0x01 << 6))     // JA.7 - J6.7
+#define AUDIO_EN            ((uint32_t)(0x01 << 6))     // JC.7 - J1.7
 #define SIG_SEL             ((uint32_t)(0x01 << 7))     // JA.8 - J6.8  
 #define IOX_RESET           ((uint32_t)(0x01 << 8))     // JC.4 - J1.4
-#define TEST_IO_0           ((uint32_t)(0x01 << 9))     // JD.9 - J4.9 -   TP4 ON PCB
-#define TEST_IO_1           ((uint32_t)(0x01 << 10))    // J4.1        -   On Arty A7
+#define TEST_IO_0           ((uint32_t)(0x01 << 9))     // J4.6
+#define TEST_IO_1           ((uint32_t)(0x01 << 10))    // J4.8
 
 #ifdef __cplusplus
 }
