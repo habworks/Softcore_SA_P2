@@ -652,6 +652,8 @@ static void processUserInput(Type_SoftCore_SA *SoftCore_SA)
                 DummyVar--;
                 InProgress_CCW = false;
                 Ignore_B = false;
+                InProgress_CW = false;
+                Ignore_A = false;
                 xil_printf("%d %d %d\r\n", DummyVar, InProgress_CW, InProgress_CCW);
             }
         }
@@ -670,6 +672,8 @@ static void processUserInput(Type_SoftCore_SA *SoftCore_SA)
                 DummyVar++;
                 InProgress_CW = false;
                 Ignore_A = false;
+                InProgress_CCW = false;
+                Ignore_B = false;
                 xil_printf("%d %d %d\r\n", DummyVar, InProgress_CW, InProgress_CCW);
             }
         }
