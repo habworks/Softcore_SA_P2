@@ -41,8 +41,8 @@ extern"C" {
 // DEFINES
 // PS FW REVSION
 #define FW_MAJOR_REV            1
-#define FW_MINOR_REV            0
-#define FW_TEST_REV             0
+#define FW_MINOR_REV            1
+#define FW_TEST_REV             3
 #define HW_REV                  1
 // USED IN IO ACCESS
 #define GPIO_INPUT_CHANNEL      1          

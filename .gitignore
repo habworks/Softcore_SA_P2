@@ -61,3 +61,9 @@ Hardware/Softcore_SA_P2_HW/Logs/
 Hardware/SCH/__Previews/
 Hardware/PCB/__Previews/
 Hardware/PCB/*.html
+
+
+###############################################################################
+#Added for C / C++
+###############################################################################
+PS_Softcore_SA/MB_SSA_App/build/

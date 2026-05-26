@@ -215,6 +215,7 @@ bool init_PeriodicTimer(XTmrCtr *TimerHandle, UINTPTR IPB_BaseAddress, u8 TimerN
     #ifdef USE_SIMPLE_PWM_TIMER_CONFIG
     XTmrCtr_Initialize(TimerHandle, IPB_BaseAddress);
     #else
+    memset(TimerHandle, 0, sizeof(XTmrCtr));
     XTmrCtr_Config *TimerConfig;
     TimerConfig = XTmrCtr_LookupConfig(IPB_BaseAddress);
     if (TimerConfig == NULL)

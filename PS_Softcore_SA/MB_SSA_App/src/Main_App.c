@@ -46,6 +46,7 @@
 #include <stdio.h>
 #include <math.h>
 #include <string.h>
+#include <sys/_stdint.h>
 #include "AXI_Timer_PWM_Support.h"
 #include "AXI_UART_Lite_Support.h"
 #include "AXI_IRQ_Controller_Support.h"
@@ -106,6 +107,11 @@ uint32_t StackUsedWaterMark = 0;
 extern uint8_t __Hab_Fast_Text_start;
 extern uint8_t __Hab_Fast_Text_end;
 extern uint8_t __Hab_Fast_Text_load;
+
+
+    static bool Ignore_A = false;
+    static bool Ignore_B = false;
+    static bool Locked = false;
 
 
 /********************************************************************************************************
@@ -531,6 +537,7 @@ static void TimerCallbackSampleRate_ISR(void)
 __attribute__((section(".Hab_Fast_Text")))
 static void TimerCallbackModeStatus_ISR(void)
 {
+    static uint8_t EncoderResetCount = 0;
     // STEP 1: Clear the interrupt
     uint32_t ControlStatusReg = XTmrCtr_ReadReg(XPAR_AXI_TIMER_2_BASEADDR, 0, XTC_TCSR_OFFSET);
     XTmrCtr_WriteReg(XPAR_AXI_TIMER_2_BASEADDR, 0, XTC_TCSR_OFFSET, ControlStatusReg);
@@ -557,6 +564,14 @@ static void TimerCallbackModeStatus_ISR(void)
 
     // STEP 4: Ack at interrupt Controller
     XIntc_AckIntr(XPAR_AXI_INTC_0_BASEADDR, 1 << XPAR_FABRIC_AXI_TIMER_2_INTR);
+
+    // EncoderResetCount++;
+    // if ((EncoderResetCount >= 1) && (!Locked) && !Ignore_A && !Ignore_B)
+    // {
+    //     Ignore_A = false;
+    //     Ignore_B = false;
+    //     EncoderResetCount = 0;
+    // }
 
 } // END OF TimerCallbackModeStatus_ISR
 
@@ -599,7 +614,13 @@ static void ADC_7476A_Primary_ISR(void)
 ********************************************************************************************************/
 static void processUserInput(Type_SoftCore_SA *SoftCore_SA)
 {
-    static uint32_t PreviousUserInput = 0;
+    static uint8_t UI_InputPrevious = 0;
+    // static bool Ignore_A = false;
+    // static bool Ignore_B = false;
+    static bool InProgress_CW = false;
+    static bool InProgress_CCW = false;
+    int8_t DummyVar = 0;
+    static int8_t ClickCount = 0;
 
     // STEP 1: Only act upon change in input
     uint32_t PresentSwitchState = XGpio_DiscreteRead(&AXI_GPIO_Handle, GPIO_INPUT_CHANNEL);
@@ -613,18 +634,44 @@ static void processUserInput(Type_SoftCore_SA *SoftCore_SA)
         case UI_SW1_FREQ_ADJ_TOGGLE:
         {
             printYellow("Encoder Pressed\r\n");
+            Ignore_A = false;
+            Ignore_B = false;
         }
         break;
 
         case UI_SW1_ENCODER_A:
         {
-            printYellow("A.\r\n");
+            if ((!Ignore_A) && (!InProgress_CW))
+            {
+                InProgress_CW = true;
+                Ignore_B = true;
+                break;
+            }
+            if (InProgress_CCW)
+            {
+                DummyVar--;
+                InProgress_CCW = false;
+                Ignore_B = false;
+                xil_printf("%d %d %d\r\n", DummyVar, InProgress_CW, InProgress_CCW);
+            }
         }
         break;
         
         case UI_SW1_ENCODER_B:
         {
-            printYellow("B.\r\n");
+            if ((!Ignore_B) && (!InProgress_CCW))
+            {
+                InProgress_CCW = true;
+                Ignore_A = true;
+                break;
+            }
+            if (InProgress_CW)
+            {
+                DummyVar++;
+                InProgress_CW = false;
+                Ignore_A = false;
+                xil_printf("%d %d %d\r\n", DummyVar, InProgress_CW, InProgress_CCW);
+            }
         }
         break;
 
@@ -673,6 +720,7 @@ static void processUserInput(Type_SoftCore_SA *SoftCore_SA)
         default:
         break;
     } // END OF CASE
+
 
 } // END OF processUserInput
 
