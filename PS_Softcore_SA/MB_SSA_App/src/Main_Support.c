@@ -162,6 +162,7 @@ bool userInterfaceTrasmitReceive(XSpi *SPI_UI_Handle, uint8_t ChipSelect_N, uint
         return(false);
 
     // STEP 2: Select the correct slave device
+     XSpi_SetSlaveSelect(SPI_UI_Handle, 0x00); 
     XSpi_SetSlaveSelect(SPI_UI_Handle, ChipSelect_N);
 
     // STEP 3: Transfer the data

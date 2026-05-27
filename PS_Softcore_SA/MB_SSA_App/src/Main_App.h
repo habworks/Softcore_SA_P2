@@ -52,11 +52,13 @@ extern"C" {
 #define INIT_FAIL_SPI_0                 ((uint16_t)(0x01 << 5))
 #define INIT_FAIL_SPI_1                 ((uint16_t)(0x01 << 6))
 #define INIT_FAIL_IRQ_CONTROLLER        ((uint16_t)(0x01 << 7))
-#define INIT_FAIL_UI_IO                 ((uint16_t)(0x01 << 8))
-#define INIT_FAIL_FAT_FS                ((uint16_t)(0x01 << 9))
-#define INIT_FAIL_UI_DISPLAY            ((uint16_t)(0x01 << 10))
-#define INIT_FAIL_SOFTCORE_SA           ((uint16_t)(0x01 << 11))
-#define INIT_FAIL_ADC7476A              ((uint16_t)(0x01 << 12))
+#define INIT_FAIL_UI_IOX_1              ((uint16_t)(0x01 << 8))
+#define INIT_FAIL_UI_IOX_2              ((uint16_t)(0x01 << 9))
+#define INIT_FAIL_UI_AD9833             ((uint16_t)(0x01 << 10))
+#define INIT_FAIL_FAT_FS                ((uint16_t)(0x01 << 11))
+#define INIT_FAIL_UI_DISPLAY            ((uint16_t)(0x01 << 12))
+#define INIT_FAIL_SOFTCORE_SA           ((uint16_t)(0x01 << 13))
+#define INIT_FAIL_ADC7476A              ((uint16_t)(0x01 << 14))
 // MISC
 #define MAX_PRINT_BUFFER                255U
 #define SPLASH_SCREEN_HOLD_TIME         3000U   // Value in ms

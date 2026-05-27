@@ -61,6 +61,7 @@
 #include "MCP23S08_Driver.h"
 #include "Water_Mark.h"
 #include "Application_Display.h"
+#include "AD9833_Driver.h"
 
 
 // STATIC FUNCTIONS
@@ -96,6 +97,7 @@ Type_SoftCore_SA __attribute__ ((section (".Hab_Fast_Data"))) SoftCore_SA;
 Type_Display_SSD1309 __attribute__ ((section (".Hab_Fast_Data"))) Display_SSD1309; 
 Type_MCP23S08_Driver __attribute__ ((section (".Hab_Fast_Data"))) IOX_1;
 Type_MCP23S08_Driver __attribute__ ((section (".Hab_Fast_Data"))) IOX_2;
+Type_AD9833_Driver __attribute__ ((section (".Hab_Fast_Data"))) AD9833_Handle;
 u8g2_t __attribute__ ((section (".Hab_Fast_Data"))) U8G2; 
 FATFS __attribute__ ((section (".Hab_Fast_Data"))) FatFs;
 #define ADC_SAMPLE_SIZE 3
@@ -104,14 +106,20 @@ volatile uint16_t __attribute__ ((section (".Hab_Fast_Data"))) BatteryVoltage[AD
 uint32_t StackUsedWaterMark = 0;
 
 
+// ENCODER SWITCH:
+// #define TEST_AB
+static bool EncoderIgnore_A = false;
+static bool EncoderIgnore_B = false;
+static bool EncoderInProgress_CW = false;
+static bool EncoderInProgress_CCW = false;
+static uint8_t Encoder_AB_Count = 0;
+
+
+// EXTERNS
 extern uint8_t __Hab_Fast_Text_start;
 extern uint8_t __Hab_Fast_Text_end;
 extern uint8_t __Hab_Fast_Text_load;
 
-
-    static bool Ignore_A = false;
-    static bool Ignore_B = false;
-    static bool Locked = false;
 
 
 /********************************************************************************************************
@@ -247,13 +255,17 @@ static void main_InitApplication(void)
                            &AXI_SPI_UI_Handle, IOX_1_CS_NUMBER, IOX_1_DEVICE_ADDR, IOX_1_IO_DIRECTION, IOX_1_INPUT_POLARITY, IOX_1_IRQ_ON_CHANGE, 
                            IOX_1_IRQ_DEFAULT_VALUE, IOX_1_IRQ_CONTROL, IOX_1_CONFIGURATION, IOX_1_PULLUP, false, true);
     if (Status != true)
-        InitFailMode |= INIT_FAIL_UI_IO;
+        InitFailMode |= INIT_FAIL_UI_IOX_1;
     // IO Expander 2:
     Status = init_MCP23S08(&IOX_2, IOX_Reset, IOX_ChipSelect, userInterfaceTrasmitReceive, sleep_ms_Wrapper, 
                            &AXI_SPI_UI_Handle, IOX_2_CS_NUMBER, IOX_2_DEVICE_ADDR, IOX_2_IO_DIRECTION, IOX_2_INPUT_POLARITY, IOX_2_IRQ_ON_CHANGE, 
                            IOX_2_IRQ_DEFAULT_VALUE, IOX_2_IRQ_CONTROL, IOX_2_CONFIGURATION, IOX_2_PULLUP, false, false);
     if (Status != true)
-        InitFailMode |= INIT_FAIL_UI_IO;
+        InitFailMode |= INIT_FAIL_UI_IOX_2;
+    // DDS Waveform Generator:
+    Status = init_AD9833(&AD9833_Handle, &AXI_SPI_UI_Handle, AD9833_CS_NUMBER, AD9833_MCLK, userInterfaceTrasmitReceive);
+    if (Status != true)
+        InitFailMode |= INIT_FAIL_UI_AD9833;
 
 
     // STEP 4: Init Middleware
@@ -520,6 +532,7 @@ static void TimerCallbackSampleRate_ISR(void)
 /********************************************************************************************************
 * @brief This is the ISR callback for Timer 21.  Timer 1 serves as the periodic timer for status LEDs.  LED7
 * (Audio Status) and LED8 (Signal Staus) will blink at this ISR rate depending on the moode the device is in.
+* Also works with  the rotary encoder logic - see header notes for function processUserInput 
 *
 * @author original: Hab Collector \n
 *
@@ -533,11 +546,13 @@ static void TimerCallbackSampleRate_ISR(void)
 * STEP 2: Toggle the test point
 * STEP 3: Update the Mode LED with toggle action
 * STEP 4: Ack at interrupt Controller
+* STEP 5: Reset the encoder switch logic - see header notes for function processUserInput
 ********************************************************************************************************/
 __attribute__((section(".Hab_Fast_Text")))
 static void TimerCallbackModeStatus_ISR(void)
 {
-    static uint8_t EncoderResetCount = 0;
+    static uint8_t Previous_Encoder_AB_Count = 99; // Dummy vaue init
+
     // STEP 1: Clear the interrupt
     uint32_t ControlStatusReg = XTmrCtr_ReadReg(XPAR_AXI_TIMER_2_BASEADDR, 0, XTC_TCSR_OFFSET);
     XTmrCtr_WriteReg(XPAR_AXI_TIMER_2_BASEADDR, 0, XTC_TCSR_OFFSET, ControlStatusReg);
@@ -565,13 +580,24 @@ static void TimerCallbackModeStatus_ISR(void)
     // STEP 4: Ack at interrupt Controller
     XIntc_AckIntr(XPAR_AXI_INTC_0_BASEADDR, 1 << XPAR_FABRIC_AXI_TIMER_2_INTR);
 
-    // EncoderResetCount++;
-    // if ((EncoderResetCount >= 1) && (!Locked) && !Ignore_A && !Ignore_B)
-    // {
-    //     Ignore_A = false;
-    //     Ignore_B = false;
-    //     EncoderResetCount = 0;
-    // }
+
+    // STEP 5: Reset the encoder switch logic - see header notes for function processUserInput
+    if (Encoder_AB_Count != 0)
+    {
+        // TODO: Hab consider this for later
+        // uint8_t Present_AB = MCP23S08_Read_GPIO(&IOX_2) & 0xC0;
+        // if (Present_AB == 0x00)
+        if (Encoder_AB_Count == Previous_Encoder_AB_Count)
+        {
+            EncoderIgnore_A = false;
+            EncoderIgnore_B = false;
+            EncoderInProgress_CW = false;
+            EncoderInProgress_CCW = false;
+            Encoder_AB_Count = 0;
+        }
+    }
+    Previous_Encoder_AB_Count = Encoder_AB_Count;
+
 
 } // END OF TimerCallbackModeStatus_ISR
 
@@ -599,29 +625,41 @@ static void ADC_7476A_Primary_ISR(void)
 /********************************************************************************************************
 * @brief Poll this function to determine if there was a user input.  User input is associated with IO Expander
 * 2.  There is new user input if the IOX 2 IRQ has been set.  If so process to determine which input was
-* activated and take a unique action based on Mode of operation.  
+* activated and take a unique action based on Mode of operation.  All inputs are configured active high. 
+* 
+* Encoder AB Inputs: 
+* Of special note is the Encoder A B input.  For CW rotation of the encoder the order of switch activation is 
+* A then B, take action on B.  For CCW rotation the order of switch activaition is B then A, take action on A. 
+* In CW or CCW rotaion there will always be 2 activiations for a valid rotation.  See magic "2" in code below.
+* A B Switches have a fair amount of contact bounce and slop. Bounce is addressed in the HW and here in FW.
+* Slop (meaning sometimes you might get an A A or B B) is addressed here.  The switch cases UI_SW1_ENCODER_A
+* and UI_SW1_ENCODER_B handle when A and B are made active.  The logic here also works with the TimerCallbackModeStatus_ISR
+* TimerCallbackModeStatus_ISR is used to reset the switch logic.  At the interrupt frequency of this ISR it would
+* be an invalid condition for the switch to hold the same count.  This works good, but not perfect.  At issue
+* is the encoder is tied to IOX and the IOX will IRQ on any change in A B state so no "delay blanking" can
+* be invoked to miss unwanted events as the IOX will always present the IRQ to be processed.
 *
 * @author original: Hab Collector \n
 *
 * @note: IO Expander 2 must be init
 * @note: Only process on IRQ from IO Expander 2
 * @note: IO Expander 2 is all inputs
+* @note: Encoder A B are actually active low in HW, but polarity is inverted in configuration of IOX 2
 *
 * @param SoftCore_SA: Pointer to the application main handle
 *
 * STEP 1: Only act upon change in input
 * STEP 2: Process the input and perform an action based unique to Audio or Signal Spectrum Mode
+* STEP 3: Reset encoder logic after 2 switch (AB or BA) inputs
 ********************************************************************************************************/
 static void processUserInput(Type_SoftCore_SA *SoftCore_SA)
 {
-    static uint8_t UI_InputPrevious = 0;
-    // static bool Ignore_A = false;
-    // static bool Ignore_B = false;
-    static bool InProgress_CW = false;
-    static bool InProgress_CCW = false;
     int8_t DummyVar = 0;
-    static int8_t ClickCount = 0;
-
+    bool WaveGenEnable = false;
+    static double WaveGenFrequency = 10000;
+    bool Status;
+    bool Status2;
+    
     // STEP 1: Only act upon change in input
     uint32_t PresentSwitchState = XGpio_DiscreteRead(&AXI_GPIO_Handle, GPIO_INPUT_CHANNEL);
     if (!(PresentSwitchState & IOX_2_IRQ))
@@ -634,48 +672,95 @@ static void processUserInput(Type_SoftCore_SA *SoftCore_SA)
         case UI_SW1_FREQ_ADJ_TOGGLE:
         {
             printYellow("Encoder Pressed\r\n");
-            Ignore_A = false;
-            Ignore_B = false;
+            EncoderIgnore_A = false;
+            EncoderIgnore_B = false;
+            Encoder_AB_Count = 0;
+            //xil_printf("\r\n");
+            WaveGenEnable = !WaveGenEnable;
+            if (WaveGenEnable)
+            {
+                Status = AD9833_Enable(&AD9833_Handle, AD9833_CH0);
+                xil_printf("WG On");
+            }
+            else
+            {
+                Status = AD9833_Disable(&AD9833_Handle);
+                xil_printf("WG Off");
+            }
+            if (Status)
+                xil_printf("\r\n");
+            else
+                xil_printf(" - ***Error\r\n");
         }
         break;
 
         case UI_SW1_ENCODER_A:
         {
-            if ((!Ignore_A) && (!InProgress_CW))
+            #ifdef TEST_AB
+            xil_printf("A");
+            Encoder_AB_Count++;
+            #else
+            Encoder_AB_Count++;
+            if ((!EncoderIgnore_A) && (!EncoderInProgress_CW) && (Encoder_AB_Count == 1))
             {
-                InProgress_CW = true;
-                Ignore_B = true;
+                EncoderInProgress_CW = true;
+                EncoderIgnore_B = true;
                 break;
             }
-            if (InProgress_CCW)
+            if (EncoderInProgress_CW)
+            {
+                Encoder_AB_Count = 2;
+                break;
+            }
+            if ((EncoderInProgress_CCW) && (Encoder_AB_Count == 2))
             {
                 DummyVar--;
-                InProgress_CCW = false;
-                Ignore_B = false;
-                InProgress_CW = false;
-                Ignore_A = false;
-                xil_printf("%d %d %d\r\n", DummyVar, InProgress_CW, InProgress_CCW);
+                //xil_printf("%d\r\n", DummyVar);
+                WaveGenFrequency -= 1000;
+                Status = AD9833_SetFrequency(&AD9833_Handle, AD9833_CH0, WaveGenFrequency);
+                Status2 = AD9833_Enable(&AD9833_Handle, AD9833_CH0);
+                xil_printf("Frequency: %d", (int)WaveGenFrequency);
+                if (Status && Status2)
+                    xil_printf("\r\n");
+                else
+                    xil_printf(" ***Error\r\n");                
             }
+            #endif
         }
         break;
         
         case UI_SW1_ENCODER_B:
         {
-            if ((!Ignore_B) && (!InProgress_CCW))
+            #ifdef TEST_AB
+            xil_printf("B");
+            Encoder_AB_Count++;
+            #else
+            Encoder_AB_Count++;
+            if ((!EncoderIgnore_B) && (!EncoderInProgress_CCW) && (Encoder_AB_Count == 1))
             {
-                InProgress_CCW = true;
-                Ignore_A = true;
+                EncoderInProgress_CCW = true;
+                EncoderIgnore_A = true;
                 break;
             }
-            if (InProgress_CW)
+            if (EncoderInProgress_CCW)
+            {
+                Encoder_AB_Count = 2;
+                break;
+            }
+            if ((EncoderInProgress_CW) && (Encoder_AB_Count == 2))
             {
                 DummyVar++;
-                InProgress_CW = false;
-                Ignore_A = false;
-                InProgress_CCW = false;
-                Ignore_B = false;
-                xil_printf("%d %d %d\r\n", DummyVar, InProgress_CW, InProgress_CCW);
+                // xil_printf("%d\r\n", DummyVar);
+                WaveGenFrequency += 1000;
+                Status = AD9833_SetFrequency(&AD9833_Handle, AD9833_CH0, WaveGenFrequency);
+                Status2 = AD9833_Enable(&AD9833_Handle, AD9833_CH0);
+                xil_printf("Frequency: %d", (int)WaveGenFrequency);
+                if (Status && Status2)
+                    xil_printf("\r\n");
+                else
+                    xil_printf(" ***Error\r\n");
             }
+            #endif
         }
         break;
 
@@ -724,6 +809,21 @@ static void processUserInput(Type_SoftCore_SA *SoftCore_SA)
         default:
         break;
     } // END OF CASE
+
+    // STEP 3: Reset encoder logic after 2 switch (AB or BA) inputs
+    if (Encoder_AB_Count == 2)
+    {
+        #ifdef TEST_AB
+        xil_printf("\r\n");
+        Encoder_AB_Count = 0;
+        #else
+        EncoderIgnore_A = false;
+        EncoderIgnore_B = false;
+        EncoderInProgress_CW = false;
+        EncoderInProgress_CCW = false;
+        Encoder_AB_Count = 0;
+        #endif
+    }        
 
 
 } // END OF processUserInput

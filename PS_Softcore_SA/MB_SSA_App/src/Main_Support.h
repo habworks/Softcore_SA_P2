@@ -55,10 +55,12 @@ extern"C" {
 #define XPAR_MICROBLAZE_USE_MSR_INSTR   1
 #define XPAR_MICROBLAZE_ICACHE_BYTE_SIZE 65536  // Value must match MicroBlaze Instruction cache
 #define XPAR_MICROBLAZE_DCACHE_BYTE_SIZE 32768  // Value must match MicroBlaze Data cache
-// DISPLAY
+// AXI SPI UI CHIP SELECT
 #define DISPLAY_CS_NUMBER       ((uint8_t)(0x01 << 0))
-// IO EXPANDER 1 CONFIGURATION
 #define IOX_1_CS_NUMBER         ((uint8_t)(0x01 << 1))
+#define IOX_2_CS_NUMBER         ((uint8_t)(0x01 << 2))
+#define AD9833_CS_NUMBER        ((uint8_t)(0x01 << 3))
+// IO EXPANDER 1 CONFIGURATION
 #define IOX_1_DEVICE_ADDR       ((uint8_t)(0x00))
 #define IOX_1_IO_DIRECTION      ((uint8_t)(0x00))
 #define IOX_1_INPUT_POLARITY    ((uint8_t)(0x00))
@@ -68,11 +70,10 @@ extern"C" {
 #define IOX_1_CONFIGURATION     MCP23S08_SEQOP_BIT_MASK
 #define IOX_1_PULLUP            ((uint8_t)(0x00))
 // IO EXPANDER 2 CONFIGURATION
-#define IOX_2_CS_NUMBER         ((uint8_t)(0x01 << 2))
 #define IOX_2_DEVICE_ADDR       ((uint8_t)(0x01))
 #define IOX_2_IO_DIRECTION      ((uint8_t)(0xFF))
-#define IOX_2_INPUT_POLARITY    ((uint8_t)(0xC0))   // Was 0x00
-#define IOX_2_IRQ_ON_CHANGE     ((uint8_t)(0xFF))   // WAS 0X1F
+#define IOX_2_INPUT_POLARITY    ((uint8_t)(0xC0))   // Two most MSb inputs are active low - so invert
+#define IOX_2_IRQ_ON_CHANGE     ((uint8_t)(0xFF))
 #define IOX_2_IRQ_DEFAULT_VALUE ((uint8_t)(0x00))
 #define IOX_2_IRQ_CONTROL       ((uint8_t)(0x00))
 #define IOX_2_CONFIGURATION     (MCP23S08_SEQOP_BIT_MASK | MCP23S08_INTPOL_BIT_MASK)

@@ -270,8 +270,8 @@
 
                 IMR_PL_Revision_0: IMR_PL_Revision@44a20000 {
                         compatible = "xlnx,IMR-PL-Revision-1.0";
-                        xlnx,revision-test = <0x0>;
-                        xlnx,revision-major = <0x2>;
+                        xlnx,revision-test = <0x2>;
+                        xlnx,revision-major = <0x1>;
                         xlnx,s00-axi-data-width = <0x20>;
                         xlnx,rable = <0x0>;
                         xlnx,ip-name = "IMR_PL_Revision";
@@ -280,7 +280,7 @@
                         status = "okay";
                         xlnx,s00-axi-addr-width = <0x4>;
                         xlnx,name = "IMR_PL_Revision_0";
-                        xlnx,revision-minor = <0x0>;
+                        xlnx,revision-minor = <0x1>;
                         phandle = <0xd>;
                 };
 

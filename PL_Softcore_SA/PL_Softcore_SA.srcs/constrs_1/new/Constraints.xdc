@@ -66,7 +66,7 @@ set_property IOSTANDARD LVCMOS33 [get_ports DISPLAY_MOSI]
 set_property PACKAGE_PIN G2 [get_ports DISPLAY_SCLK]
 set_property IOSTANDARD LVCMOS33 [get_ports DISPLAY_SCLK]
 #MISO INPUT PIN ***NOT USED***
-# DISPLAY_CSn PIN (A7 CK_IO5 ON J4.11) ***NOT USED***
+# DISPLAY_CSn PIN (A7 CK_IO5 ON J4.11) ***NOT USED - GPIO gpio2_io_o_0[4] is used instead***
 set_property PACKAGE_PIN T14 [get_ports {IOX_CSn[0]}]
 set_property IOSTANDARD LVCMOS33 [get_ports {IOX_CSn[0]}]
 
@@ -80,21 +80,26 @@ set_property IOSTANDARD LVCMOS33 [get_ports IOX_MOSI]
 #IOX MISO INPUT PIN (A7 JC.3 V10 = SA J1.3)
 set_property PACKAGE_PIN V10 [get_ports IOX_MISO]
 set_property IOSTANDARD LVCMOS33 [get_ports IOX_MISO]
-# IOX RESET OUTPUT PIN (A7 JC.4 V11) = SA J1.4
+#IOX RESET OUTPUT PIN (A7 JC.4 V11) = SA J1.4
 set_property PACKAGE_PIN V11 [get_ports {gpio2_io_o_0[8]}]
 set_property IOSTANDARD LVCMOS33 [get_ports {gpio2_io_o_0[8]}]
-# IO EXPANDER 1 CS PIN (A7 JC.10 U13) = SA J1.10
+#IO EXPANDER 1 CS PIN (A7 JC.10 U13) = SA J1.10
 set_property PACKAGE_PIN U13 [get_ports {IOX_CSn[1]}]
 set_property IOSTANDARD LVCMOS33 [get_ports {IOX_CSn[1]}]
-# IO EXPANDER 2 CS PIN (A7 JC.9 T13) = SA J1.9
+#IO EXPANDER 2 CS PIN (A7 JC.9 T13) = SA J1.9
 set_property PACKAGE_PIN T13 [get_ports {IOX_CSn[2]}]
 set_property IOSTANDARD LVCMOS33 [get_ports {IOX_CSn[2]}]
-# IO EXPANDER 2 IRQ PIN (A7 JC.8 V14) = SA J1.8
+#IO EXPANDER 2 IRQ PIN (A7 JC.8 V14) = SA J1.8
 set_property PACKAGE_PIN V14 [get_ports IOX_2_IRQ]
 set_property IOSTANDARD LVCMOS33 [get_ports IOX_2_IRQ]
-# WAVEFORM GENERATOR CS / FSYNC PIN (A7 JB.10 J15) = SA J3.10
+#WAVEFORM GENERATOR CS / FSYNC PIN (A7 JB.10 J15) = SA J3.10
 set_property PACKAGE_PIN J15 [get_ports {IOX_CSn[3]}]
 set_property IOSTANDARD LVCMOS33 [get_ports {IOX_CSn[3]}]
+#WAVEFORM GENERATOR MCLK PIN (A7 JA.7 D13) = SA J6.7
+set_property PACKAGE_PIN D13 [get_ports MCLK]
+set_property IOSTANDARD LVCMOS33 [get_ports MCLK]
+set_property DRIVE 8 [get_ports MCLK]
+set_property SLEW SLOW [get_ports MCLK]
 
 #MICRO-SD (AXi_QUAD_SPI_1)
 #CS OUPTUT PIN (A7 JB.1 E15) = SA J3.1
@@ -160,6 +165,8 @@ set_property IOSTANDARD LVCMOS33 [get_ports {gpio2_io_o_0[10]}]
 #MB_CLK PIN (A7 J4.3 ON U16)
 set_property PACKAGE_PIN U16 [get_ports MB_CLK]
 set_property IOSTANDARD LVCMOS33 [get_ports MB_CLK]
+set_property DRIVE 8 [get_ports MB_CLK]
+set_property SLEW FAST [get_ports MB_CLK]
 # TEST_IRQ PIN (A7 J4.5 ON P14)
 set_property PACKAGE_PIN P14 [get_ports TEST_IRQ]
 set_property IOSTANDARD LVCMOS33 [get_ports TEST_IRQ]

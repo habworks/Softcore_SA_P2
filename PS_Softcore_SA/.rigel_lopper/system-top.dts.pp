@@ -235,8 +235,8 @@
   };
   IMR_PL_Revision_0: IMR_PL_Revision@44a20000 {
    compatible = "xlnx,IMR-PL-Revision-1.0";
-   xlnx,revision-test = <0>;
-   xlnx,revision-major = <2>;
+   xlnx,revision-test = <2>;
+   xlnx,revision-major = <1>;
    xlnx,s00-axi-data-width = <32>;
    xlnx,rable = <0>;
    xlnx,ip-name = "IMR_PL_Revision";
@@ -245,7 +245,7 @@
    status = "okay";
    xlnx,s00-axi-addr-width = <4>;
    xlnx,name = "IMR_PL_Revision_0";
-   xlnx,revision-minor = <0>;
+   xlnx,revision-minor = <1>;
   };
   axi_gpio_0: gpio@40000000 {
    xlnx,gpio-board-interface = "Custom";

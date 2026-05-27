@@ -1,7 +1,7 @@
 {
   "design": {
     "design_info": {
-      "boundary_crc": "0x9F700DA069278328",
+      "boundary_crc": "0x3404E4785680027D",
       "device": "xc7a100tcsg324-1",
       "gen_directory": "../../../../PL_Softcore_SA.gen/sources_1/bd/BD_Softcore_SA",
       "name": "BD_Softcore_SA",
@@ -403,6 +403,32 @@
       },
       "IOX_2_IRQ": {
         "direction": "I"
+      },
+      "MCLK": {
+        "type": "clk",
+        "direction": "O",
+        "parameters": {
+          "CLK_DOMAIN": {
+            "value": "/clk_wiz_1_clk_out1",
+            "value_src": "ip_prop"
+          },
+          "FREQ_HZ": {
+            "value": "25000000",
+            "value_src": "ip_prop"
+          },
+          "FREQ_TOLERANCE_HZ": {
+            "value": "0",
+            "value_src": "default"
+          },
+          "INSERT_VIP": {
+            "value": "0",
+            "value_src": "default"
+          },
+          "PHASE": {
+            "value": "0.0",
+            "value_src": "ip_prop"
+          }
+        }
       }
     },
     "components": {
@@ -845,6 +871,18 @@
           "CLKOUT5_USED": {
             "value": "true"
           },
+          "CLKOUT6_JITTER": {
+            "value": "175.402"
+          },
+          "CLKOUT6_PHASE_ERROR": {
+            "value": "98.575"
+          },
+          "CLKOUT6_REQUESTED_OUT_FREQ": {
+            "value": "25"
+          },
+          "CLKOUT6_USED": {
+            "value": "true"
+          },
           "MMCM_CLKOUT1_DIVIDE": {
             "value": "6"
           },
@@ -857,8 +895,11 @@
           "MMCM_CLKOUT4_DIVIDE": {
             "value": "20"
           },
+          "MMCM_CLKOUT5_DIVIDE": {
+            "value": "40"
+          },
           "NUM_OUT_CLKS": {
-            "value": "5"
+            "value": "6"
           },
           "PRIM_SOURCE": {
             "value": "Single_ended_clock_capable_pin"
@@ -1511,7 +1552,7 @@
         "inst_hier_path": "xlconstant_3",
         "parameters": {
           "CONST_VAL": {
-            "value": "0"
+            "value": "1"
           },
           "CONST_WIDTH": {
             "value": "4"
@@ -1734,10 +1775,13 @@
         "inst_hier_path": "IMR_PL_Revision_0",
         "parameters": {
           "C_REVISION_MAJOR": {
-            "value": "2"
+            "value": "1"
+          },
+          "C_REVISION_MINOR": {
+            "value": "1"
           },
           "C_REVISION_TEST": {
-            "value": "0"
+            "value": "2"
           }
         }
       },
@@ -2095,6 +2139,12 @@
           "clk_wiz_1/clk_out5",
           "axi_quad_spi_1/ext_spi_clk",
           "axi_quad_spi_2/ext_spi_clk"
+        ]
+      },
+      "clk_wiz_1_clk_out6": {
+        "ports": [
+          "clk_wiz_1/clk_out6",
+          "MCLK"
         ]
       },
       "clk_wiz_1_locked": {

@@ -1,7 +1,7 @@
 {
    "ActiveEmotionalView":"Default View",
-   "Default View_ScaleFactor":"1.0",
-   "Default View_TopLeft":"3067,-718",
+   "Default View_ScaleFactor":"0.709983",
+   "Default View_TopLeft":"1961,1062",
    "ExpandedHierarchyInLayout":"",
    "HierExpandStatus_comment_0":"false",
    "HierExpandStatus_comment_1":"false",
@@ -30,8 +30,8 @@ preplace port port-id_SW_1 -pg 1 -lvl 13 -x 4090 -y -770 -defaultsOSRD -right
 preplace port port-id_UART_RX -pg 1 -lvl 13 -x 4090 -y 70 -defaultsOSRD -right
 preplace port port-id_UART_TX -pg 1 -lvl 13 -x 4090 -y 90 -defaultsOSRD
 preplace port port-id_DISPLAY_MOSI -pg 1 -lvl 13 -x 4090 -y 250 -defaultsOSRD
-preplace port port-id_DISPLAY_SCLK -pg 1 -lvl 13 -x 4090 -y 290 -defaultsOSRD
-preplace port port-id_IOX_MISO -pg 1 -lvl 13 -x 4090 -y 270 -defaultsOSRD -right
+preplace port port-id_DISPLAY_SCLK -pg 1 -lvl 13 -x 4090 -y 220 -defaultsOSRD
+preplace port port-id_IOX_MISO -pg 1 -lvl 13 -x 4090 -y 330 -defaultsOSRD -right
 preplace port port-id_LED_4 -pg 1 -lvl 13 -x 4090 -y 410 -defaultsOSRD
 preplace port port-id_MB_RST -pg 1 -lvl 13 -x 4090 -y 10 -defaultsOSRD
 preplace port port-id_MB_CLK -pg 1 -lvl 13 -x 4090 -y -20 -defaultsOSRD
@@ -44,25 +44,26 @@ preplace port port-id_TEST_IRQ -pg 1 -lvl 13 -x 4090 -y -940 -defaultsOSRD
 preplace port port-id_IOX_MOSI -pg 1 -lvl 13 -x 4090 -y 180 -defaultsOSRD
 preplace port port-id_IOX_SCLK -pg 1 -lvl 13 -x 4090 -y 200 -defaultsOSRD
 preplace port port-id_IOX_2_IRQ -pg 1 -lvl 13 -x 4090 -y -910 -defaultsOSRD -right
+preplace port port-id_MCLK -pg 1 -lvl 13 -x 4090 -y 30 -defaultsOSRD
 preplace portBus IOX_CSn -pg 1 -lvl 13 -x 4090 -y 310 -defaultsOSRD
 preplace portBus gpio2_io_o_0 -pg 1 -lvl 13 -x 4090 -y -390 -defaultsOSRD
 preplace portBus USD_CSn -pg 1 -lvl 13 -x 4090 -y 550 -defaultsOSRD
 preplace inst microblaze_0 -pg 1 -lvl 3 -x 500 -y -210 -defaultsOSRD
-preplace inst microblaze_0_local_memory -pg 1 -lvl 4 -x 980 -y -470 -defaultsOSRD
+preplace inst microblaze_0_local_memory -pg 1 -lvl 4 -x 990 -y -470 -defaultsOSRD
 preplace inst mdm_1 -pg 1 -lvl 3 -x 500 -y 10 -defaultsOSRD
 preplace inst clk_wiz_1 -pg 1 -lvl 3 -x 500 -y 220 -defaultsOSRD
-preplace inst proc_sys_reset_CPU -pg 1 -lvl 5 -x 1280 -y 230 -defaultsOSRD
+preplace inst proc_sys_reset_CPU -pg 1 -lvl 5 -x 1290 -y 230 -defaultsOSRD
 preplace inst util_ds_buf_0 -pg 1 -lvl 1 -x -340 -y -60 -defaultsOSRD
 preplace inst util_vector_logic_0 -pg 1 -lvl 1 -x -340 -y 210 -defaultsOSRD
 preplace inst smartconnect_CPU -pg 1 -lvl 6 -x 1670 -y -620 -defaultsOSRD
 preplace inst axi_clock_converter_0 -pg 1 -lvl 6 -x 1670 -y -220 -defaultsOSRD
 preplace inst axi_gpio_0 -pg 1 -lvl 8 -x 2410 -y -420 -defaultsOSRD
-preplace inst xlconcat_0 -pg 1 -lvl 12 -x 3950 -y -560 -defaultsOSRD
+preplace inst xlconcat_0 -pg 1 -lvl 12 -x 3920 -y -560 -defaultsOSRD
 preplace inst axi_uartlite_0 -pg 1 -lvl 8 -x 2410 -y 80 -defaultsOSRD
 preplace inst axi_intc_0 -pg 1 -lvl 8 -x 2410 -y -730 -defaultsOSRD
 preplace inst xlconcat_1 -pg 1 -lvl 10 -x 3060 -y -730 -defaultsOSRD
-preplace inst xlconstant_3 -pg 1 -lvl 11 -x 3650 -y -480 -defaultsOSRD
-preplace inst xlslice_0 -pg 1 -lvl 11 -x 3650 -y -310 -defaultsOSRD
+preplace inst xlconstant_3 -pg 1 -lvl 11 -x 3640 -y -480 -defaultsOSRD
+preplace inst xlslice_0 -pg 1 -lvl 11 -x 3640 -y -310 -defaultsOSRD
 preplace inst axi_quad_spi_0 -pg 1 -lvl 8 -x 2410 -y 280 -defaultsOSRD
 preplace inst smartconnect_DDR3 -pg 1 -lvl 3 -x 500 -y 600 -defaultsOSRD
 preplace inst proc_sys_reset_DDR3 -pg 1 -lvl 3 -x 500 -y 1010 -defaultsOSRD
@@ -80,83 +81,84 @@ preplace inst axi_quad_spi_2 -pg 1 -lvl 8 -x 2410 -y 1950 -defaultsOSRD
 preplace inst xlconstant_1 -pg 1 -lvl 9 -x 2700 -y -860 -defaultsOSRD
 preplace inst xlconstant_2 -pg 1 -lvl 7 -x 1920 -y 1600 -defaultsOSRD
 preplace netloc CLK_100MHZ_1 1 0 1 N -60
-preplace netloc DISPLAY_MISO_1 1 8 5 N 270 N 270 N 270 N 270 N
-preplace netloc IOX_2_IRQ_1 1 11 2 3790 -910 N
-preplace netloc PB_1_1 1 11 2 3830 -790 NJ
-preplace netloc PB_2_1 1 11 2 3820 -810 NJ
-preplace netloc PB_3_1 1 11 2 3810 -830 N
-preplace netloc RST_PB_1 1 0 3 -490 270 -180 210 N
-preplace netloc SW_0_1 1 11 2 3850 -750 NJ
-preplace netloc SW_1_1 1 11 2 3840 -770 NJ
-preplace netloc USD_CD_1 1 11 2 3800 -850 N
-preplace netloc axi_gpio_0_gpio2_io_o 1 8 5 NJ -390 N -390 3550 -390 N -390 NJ
+preplace netloc DISPLAY_MISO_1 1 8 5 N 270 N 270 N 270 N 270 4020
+preplace netloc IOX_2_IRQ_1 1 11 2 3760 -910 N
+preplace netloc PB_1_1 1 11 2 3800 -790 NJ
+preplace netloc PB_2_1 1 11 2 3790 -810 NJ
+preplace netloc PB_3_1 1 11 2 3780 -830 N
+preplace netloc RST_PB_1 1 0 3 -490 270 N 270 180
+preplace netloc SW_0_1 1 11 2 3820 -750 NJ
+preplace netloc SW_1_1 1 11 2 3810 -770 NJ
+preplace netloc USD_CD_1 1 11 2 3770 -850 N
+preplace netloc axi_gpio_0_gpio2_io_o 1 8 5 NJ -390 N -390 3540 -390 N -390 NJ
 preplace netloc axi_intc_0_interrupt_address 1 2 7 220 -340 NJ -340 NJ -340 NJ -340 NJ -340 2190 -330 2570
-preplace netloc axi_intc_0_irq 1 2 7 220 -70 NJ -70 NJ -70 NJ -70 NJ -70 N -70 2580
+preplace netloc axi_intc_0_irq 1 2 7 210 -90 NJ -90 NJ -90 NJ -90 NJ -90 N -90 2580
 preplace netloc axi_quad_spi_0_io0_o 1 8 5 NJ 250 N 250 N 250 NJ 250 4060
-preplace netloc axi_quad_spi_0_sck_o 1 8 5 N 290 N 290 N 290 NJ 290 4070J
+preplace netloc axi_quad_spi_0_sck_o 1 8 5 2610 220 N 220 N 220 NJ 220 4070J
 preplace netloc axi_quad_spi_0_ss_o 1 8 5 N 310 N 310 N 310 NJ 310 NJ
 preplace netloc axi_quad_spi_1_io0_o 1 8 5 NJ 490 N 490 NJ 490 NJ 490 NJ
 preplace netloc axi_quad_spi_1_sck_o 1 8 5 NJ 530 N 530 NJ 530 NJ 530 NJ
 preplace netloc axi_quad_spi_1_ss_o 1 8 5 NJ 550 N 550 NJ 550 NJ 550 NJ
 preplace netloc axi_timer_1_interrupt 1 8 5 2600 -640 2940 -940 N -940 N -940 N
-preplace netloc axi_timer_2_interrupt 1 8 2 2610 -630 2960
+preplace netloc axi_timer_2_interrupt 1 8 2 2620 -630 2960
 preplace netloc axi_timer_3_pwm0 1 8 5 NJ 1230 N 1230 NJ 1230 NJ 1230 N
 preplace netloc axi_uartlite_0_tx 1 8 5 NJ 90 N 90 N 90 N 90 NJ
-preplace netloc clk_wiz_1_clk_out2 1 2 2 220 110 780
-preplace netloc clk_wiz_1_clk_out3 1 2 2 200 100 790
-preplace netloc clk_wiz_1_clk_out4 1 3 5 N 230 1080 330 NJ 330 N 330 2210
-preplace netloc clk_wiz_1_clk_out5 1 3 5 850J 130 NJ 130 NJ 130 N 130 2080
-preplace netloc clk_wiz_1_locked 1 3 2 N 270 N
+preplace netloc clk_wiz_1_clk_out2 1 2 2 200 340 770
+preplace netloc clk_wiz_1_clk_out3 1 2 2 220 100 780
+preplace netloc clk_wiz_1_clk_out4 1 3 5 N 220 1090 330 NJ 330 N 330 2190
+preplace netloc clk_wiz_1_clk_out5 1 3 5 860J 120 NJ 120 NJ 120 N 120 2080
+preplace netloc clk_wiz_1_locked 1 3 2 800 270 N
 preplace netloc io1_i_0_1 1 8 5 N 510 N 510 N 510 N 510 N
 preplace netloc mdm_1_debug_sys_rst 1 3 2 N 20 1100
-preplace netloc microblaze_0_Clk 1 2 11 190 80 830 -90 1110 -90 1480 -120 N -120 2170 -20 N -20 N -20 N -20 N -20 N
-preplace netloc microblaze_0_Interrupt_Ack 1 2 7 230 -330 NJ -330 NJ -330 NJ -330 NJ -330 2140 -320 2590
-preplace netloc mig_7series_0_init_calib_complete 1 3 10 880 750 1090 410 N 410 N 410 N 410 NJ 410 N 410 N 410 3780 410 N
+preplace netloc microblaze_0_Clk 1 2 11 200 80 830 -100 1120 -100 1490 -120 N -120 2150 -20 N -20 N -20 N -20 N -20 N
+preplace netloc microblaze_0_Interrupt_Ack 1 2 7 230 -330 NJ -330 NJ -330 NJ -330 NJ -330 2170 -320 2590
+preplace netloc mig_7series_0_init_calib_complete 1 3 10 890 260 1110 130 N 130 N 130 2110 170 NJ 170 N 170 N 170 3750 210 4030
 preplace netloc mig_7series_0_mmcm_locked 1 2 2 230 900 780
-preplace netloc mig_7series_0_ui_clk 1 2 4 190 520 840 -200 N -200 N
+preplace netloc mig_7series_0_ui_clk 1 2 4 190 690 840 -200 N -200 N
 preplace netloc mig_7series_0_ui_clk_sync_rst 1 1 3 -180 680 N 680 770
-preplace netloc proc_sys_reset_0_peripheral_aresetn 1 2 4 210 690 870 -100 N -100 1490
-preplace netloc proc_sys_reset_CPU_peripheral_aresetn 1 5 3 1500 -50 N -50 2180
-preplace netloc rst_clk_wiz_1_100M_bus_struct_reset 1 3 3 880 -110 N -110 1450J
-preplace netloc rst_clk_wiz_1_100M_mb_reset 1 2 11 200 -60 N -60 N -60 1470 -60 N -60 2160 -80 N -80 N -80 N -80 N -80 4050
+preplace netloc proc_sys_reset_0_peripheral_aresetn 1 2 4 210 700 870 -180 N -180 N
+preplace netloc proc_sys_reset_CPU_peripheral_aresetn 1 5 3 1500 -70 N -70 2160
+preplace netloc rst_clk_wiz_1_100M_bus_struct_reset 1 3 3 890 -110 N -110 1460J
+preplace netloc rst_clk_wiz_1_100M_mb_reset 1 2 11 220 -60 N -60 N -60 1480 -60 N -60 2240 -30 N -30 N -30 N -30 N -30 4050
 preplace netloc rx_0_1 1 8 5 N 70 N 70 N 70 N 70 N
-preplace netloc util_ds_buf_0_BUFG_O 1 1 2 N -60 180
-preplace netloc util_vector_logic_0_Res 1 1 4 -190 220 170 330 860 210 N
+preplace netloc util_ds_buf_0_BUFG_O 1 1 2 N -60 190
+preplace netloc util_vector_logic_0_Res 1 1 4 N 210 170 90 N 90 1090
 preplace netloc util_vector_logic_1_Res 1 2 1 130 840n
-preplace netloc xlconcat_0_dout 1 8 5 N -430 N -430 3150 -420 N -420 4050
+preplace netloc xlconcat_0_dout 1 8 5 N -430 N -430 3150 -420 N -420 4040
 preplace netloc xlconcat_1_dout 1 7 4 2250 -620 NJ -620 N -620 3150
 preplace netloc xlconstant_0_dout 1 2 1 120 950n
 preplace netloc xlconstant_1_dout 1 9 1 2950 -860n
 preplace netloc xlconstant_3_dout 1 11 1 N -480
-preplace netloc xlslice_0_Dout 1 9 3 2970 -610 NJ -610 3750
+preplace netloc xlslice_0_Dout 1 9 3 2970 -610 NJ -610 3740
 preplace netloc xlconstant_2_dout 1 7 1 2250 1600n
-preplace netloc axi_clock_converter_0_M_AXI 1 2 5 230 -80 N -80 N -80 N -80 1830
+preplace netloc clk_wiz_1_clk_out6 1 3 10 850J -10 NJ -10 NJ -10 NJ -10 NJ -10 NJ -10 NJ -10 NJ -10 NJ -10 4040J
+preplace netloc axi_clock_converter_0_M_AXI 1 2 5 210 -80 N -80 N -80 N -80 1830
 preplace netloc axi_quad_spi_2_SPI_0 1 8 5 NJ 1930 N 1930 NJ 1930 NJ 1930 NJ
-preplace netloc microblaze_0_M_AXI_DC 1 3 3 800J -570 N -570 1460
-preplace netloc microblaze_0_M_AXI_DP 1 3 3 780J -580 N -580 1450
-preplace netloc microblaze_0_M_AXI_IC 1 3 3 820J -560 N -560 1470
-preplace netloc microblaze_0_debug 1 2 2 230 -90 780J
+preplace netloc microblaze_0_M_AXI_DC 1 3 3 800J -570 N -570 1470
+preplace netloc microblaze_0_M_AXI_DP 1 3 3 780J -580 N -580 1460
+preplace netloc microblaze_0_M_AXI_IC 1 3 3 820J -560 N -560 1480
+preplace netloc microblaze_0_debug 1 2 2 230 -70 780J
 preplace netloc microblaze_0_dlmb_1 1 3 1 790 -500n
 preplace netloc microblaze_0_ilmb_1 1 3 1 810 -480n
-preplace netloc mig_7series_0_DDR3 1 3 10 N 760 1110 640 N 640 N 640 N 640 N 640 N 640 N 640 N 640 N
-preplace netloc smartconnect_0_M00_AXI 1 2 2 230 700 780
+preplace netloc mig_7series_0_DDR3 1 3 10 880 640 N 640 N 640 N 640 N 640 N 640 N 640 N 640 N 640 N
+preplace netloc smartconnect_0_M00_AXI 1 2 2 230 520 780
 preplace netloc smartconnect_CPU_M00_AXI 1 6 2 1830 -780 N
-preplace netloc smartconnect_CPU_M01_AXI 1 6 2 N -720 2240
-preplace netloc smartconnect_CPU_M02_AXI 1 6 2 N -700 2010
-preplace netloc smartconnect_CPU_M03_AXI 1 6 2 N -680 2000
-preplace netloc smartconnect_CPU_M04_AXI 1 6 2 N -660 2230
-preplace netloc smartconnect_CPU_M05_AXI 1 6 2 N -640 2220
-preplace netloc smartconnect_CPU_M06_AXI 1 6 2 N -620 2200
+preplace netloc smartconnect_CPU_M01_AXI 1 6 2 N -720 2230
+preplace netloc smartconnect_CPU_M02_AXI 1 6 2 N -700 2000
+preplace netloc smartconnect_CPU_M03_AXI 1 6 2 N -680 2220
+preplace netloc smartconnect_CPU_M04_AXI 1 6 2 N -660 2210
+preplace netloc smartconnect_CPU_M05_AXI 1 6 2 N -640 2200
+preplace netloc smartconnect_CPU_M06_AXI 1 6 2 N -620 2180
 preplace netloc smartconnect_CPU_M07_AXI 1 5 2 1510 -440 1830
-preplace netloc smartconnect_CPU_M08_AXI 1 6 2 N -580 2150
+preplace netloc smartconnect_CPU_M08_AXI 1 6 2 N -580 2140
 preplace netloc smartconnect_CPU_M09_AXI 1 6 2 N -560 2130
 preplace netloc smartconnect_CPU_M10_AXI 1 6 2 N -540 2120
-preplace netloc smartconnect_CPU_M11_AXI 1 6 2 N -520 2110
-preplace netloc smartconnect_CPU_M12_AXI 1 6 2 N -500 2100
+preplace netloc smartconnect_CPU_M11_AXI 1 6 2 N -520 2100
+preplace netloc smartconnect_CPU_M12_AXI 1 6 2 N -500 2090
 preplace cgraphic comment_2 place bot 2556 -500 textcolor 4 linecolor 3 linewidth 2
 preplace cgraphic comment_1 place bot 2514 -641 textcolor 4 linecolor 3 linewidth 2
 preplace cgraphic comment_0 place bot 2308 -219 textcolor 4 linecolor 3 linewidth 2
-levelinfo -pg 1 -510 -340 -30 500 980 1280 1670 1920 2410 2700 3060 3650 3950 4090
+levelinfo -pg 1 -510 -340 -30 500 990 1290 1670 1920 2410 2700 3060 3640 3920 4090
 pagesize -pg 1 -db -bbox -sgen -690 -2490 4300 2040
 "
 }

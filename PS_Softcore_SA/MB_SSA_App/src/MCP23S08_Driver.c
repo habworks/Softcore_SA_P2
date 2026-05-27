@@ -364,3 +364,31 @@ uint8_t MCP23S08_ReadClear_IRQ(Type_MCP23S08_Driver *MCP23S08_Handle, Type_Inter
 } // END OF MCP23S08_ReadClear_IRQ
 
 
+
+/********************************************************************************************************
+* @brief Read the present value of the GPIO state.
+*
+* @author original: Hab Collector \n
+*
+* @note:  For this function to work as expected.  The following registers (per pin) should be as such:
+* MCP23S08_REG_GPINTEN = 1
+* MCP23S08_REG_DEFVAL = 0
+* MCP23S08_REG_INTCON = 0
+*
+* @param MCP23S08_Handle: Pointer to the MCP23S08 handle
+*
+* @return Return the present value of the GPIO state - note will return 0x00 on error (which may also be valid)
+*
+* STEP 1: Return GPIO present value
+********************************************************************************************************/
+uint8_t MCP23S08_Read_GPIO(Type_MCP23S08_Driver *MCP23S08_Handle)
+{
+    uint8_t GPIO_Value = 0;
+
+    // STEP 1: Return GPIO present value
+    if (!MCP23S08_ReadRegister(MCP23S08_Handle, MCP23S08_REG_GPIO, &GPIO_Value))
+        return(0x00);
+    else
+        return(GPIO_Value);
+
+} // END OF MCP23S08_Read_GPIO

@@ -98,6 +98,7 @@ bool MCP23S08_ReadRegister(Type_MCP23S08_Driver *MCP23S08_Handle, uint8_t Regist
 bool MCP23S08_HAEN(Type_MCP23S08_Driver *MCP23S08_Handle);
 bool MCP23S08_WriteOutput(Type_MCP23S08_Driver *MCP23S08_Handle, uint8_t OutputValue);
 uint8_t MCP23S08_ReadClear_IRQ(Type_MCP23S08_Driver *MCP23S08_Handle, Type_InterruptCapture EdgeCapture);
+uint8_t MCP23S08_Read_GPIO(Type_MCP23S08_Driver *MCP23S08_Handle);
 
 #ifdef __cplusplus
 }
