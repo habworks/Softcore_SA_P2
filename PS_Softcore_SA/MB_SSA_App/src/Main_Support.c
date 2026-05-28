@@ -134,9 +134,10 @@ void displayChipSelect(Type_Display_CS DisplaySelect)
 
 
 /********************************************************************************************************
-* @brief This is the communication function for use with the QSPI interface that interfaces to both the display
-* and the IO expanders (1 and 2).  As this is SPI it is full duplex transmit and receive.  It is passed by 
-* reference for use with the display and IO drivers.  This will generally be referred to as the UI SPI Tx Rx.
+* @brief This is communication for use with the QSPI interface that interfaces to the display (0 not used)
+* IO expanders (1 and 2), and Waveform Generator (3).  As this is SPI it is full duplex transmit and receive.  
+* It is passed by reference for use with the display and IO drivers.  This will generally be referred to as 
+* the UI SPI Tx Rx.
 *
 * @author original: Hab Collector \n
 *
@@ -162,7 +163,7 @@ bool userInterfaceTrasmitReceive(XSpi *SPI_UI_Handle, uint8_t ChipSelect_N, uint
         return(false);
 
     // STEP 2: Select the correct slave device
-     XSpi_SetSlaveSelect(SPI_UI_Handle, 0x00); 
+    XSpi_SetSlaveSelect(SPI_UI_Handle, 0x00); 
     XSpi_SetSlaveSelect(SPI_UI_Handle, ChipSelect_N);
 
     // STEP 3: Transfer the data
