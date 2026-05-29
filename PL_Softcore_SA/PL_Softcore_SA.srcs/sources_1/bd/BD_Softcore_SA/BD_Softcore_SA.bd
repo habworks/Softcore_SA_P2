@@ -33,7 +33,6 @@
       "xlconcat_1": "",
       "xlconstant_3": "",
       "xlslice_0": "",
-      "axi_quad_spi_0": "",
       "smartconnect_DDR3": "",
       "proc_sys_reset_DDR3": "",
       "xlconstant_0": "",
@@ -48,7 +47,8 @@
       "IMR_ADC_7476A_X2_0": "",
       "axi_quad_spi_2": "",
       "xlconstant_1": "",
-      "xlconstant_2": ""
+      "xlconstant_2": "",
+      "axi_quad_spi_0": ""
     },
     "interface_ports": {
       "DDR3_0": {
@@ -1552,7 +1552,7 @@
         "inst_hier_path": "xlconstant_3",
         "parameters": {
           "CONST_VAL": {
-            "value": "1"
+            "value": "2"
           },
           "CONST_WIDTH": {
             "value": "4"
@@ -1574,24 +1574,6 @@
           },
           "DIN_WIDTH": {
             "value": "11"
-          }
-        }
-      },
-      "axi_quad_spi_0": {
-        "vlnv": "xilinx.com:ip:axi_quad_spi:3.2",
-        "ip_revision": "32",
-        "xci_name": "BD_Softcore_SA_axi_quad_spi_0_1",
-        "xci_path": "ip\\BD_Softcore_SA_axi_quad_spi_0_1\\BD_Softcore_SA_axi_quad_spi_0_1.xci",
-        "inst_hier_path": "axi_quad_spi_0",
-        "parameters": {
-          "C_NUM_SS_BITS": {
-            "value": "4"
-          },
-          "C_SCK_RATIO": {
-            "value": "2"
-          },
-          "C_USE_STARTUP": {
-            "value": "0"
           }
         }
       },
@@ -1778,10 +1760,10 @@
             "value": "1"
           },
           "C_REVISION_MINOR": {
-            "value": "1"
+            "value": "2"
           },
           "C_REVISION_TEST": {
-            "value": "3"
+            "value": "6"
           }
         }
       },
@@ -1827,6 +1809,24 @@
         "inst_hier_path": "xlconstant_2",
         "parameters": {
           "CONST_VAL": {
+            "value": "0"
+          }
+        }
+      },
+      "axi_quad_spi_0": {
+        "vlnv": "xilinx.com:ip:axi_quad_spi:3.2",
+        "ip_revision": "32",
+        "xci_name": "BD_Softcore_SA_axi_quad_spi_0_2",
+        "xci_path": "ip\\BD_Softcore_SA_axi_quad_spi_0_2\\BD_Softcore_SA_axi_quad_spi_0_2.xci",
+        "inst_hier_path": "axi_quad_spi_0",
+        "parameters": {
+          "C_NUM_SS_BITS": {
+            "value": "4"
+          },
+          "C_SCK_RATIO": {
+            "value": "2"
+          },
+          "C_USE_STARTUP": {
             "value": "0"
           }
         }
@@ -1979,16 +1979,16 @@
           "util_ds_buf_0/BUFG_I"
         ]
       },
-      "DISPLAY_MISO_1": {
-        "ports": [
-          "IOX_MISO",
-          "axi_quad_spi_0/io1_i"
-        ]
-      },
       "IOX_2_IRQ_1": {
         "ports": [
           "IOX_2_IRQ",
           "xlconcat_0/In7"
+        ]
+      },
+      "IOX_MISO_1": {
+        "ports": [
+          "IOX_MISO",
+          "axi_quad_spi_0/io1_i"
         ]
       },
       "PB_1_1": {
@@ -2171,9 +2171,7 @@
           "microblaze_0_local_memory/LMB_Clk",
           "proc_sys_reset_CPU/slowest_sync_clk",
           "axi_clock_converter_0/s_axi_aclk",
-          "axi_gpio_0/s_axi_aclk",
           "axi_uartlite_0/s_axi_aclk",
-          "axi_quad_spi_0/s_axi_aclk",
           "MB_CLK",
           "axi_quad_spi_1/s_axi_aclk",
           "axi_timer_1/s_axi_aclk",
@@ -2184,9 +2182,11 @@
           "axi_timer_3/s_axi_aclk",
           "microblaze_0/Clk",
           "smartconnect_CPU/aclk",
-          "IMR_PL_Revision_0/s00_axi_aclk",
           "IMR_ADC_7476A_X2_0/s00_axi_aclk",
-          "axi_quad_spi_2/s_axi_aclk"
+          "axi_quad_spi_2/s_axi_aclk",
+          "axi_quad_spi_0/s_axi_aclk",
+          "IMR_PL_Revision_0/s00_axi_aclk",
+          "axi_gpio_0/s_axi_aclk"
         ]
       },
       "microblaze_0_Interrupt_Ack": {
@@ -2235,9 +2235,7 @@
         "ports": [
           "proc_sys_reset_CPU/peripheral_aresetn",
           "axi_clock_converter_0/s_axi_aresetn",
-          "axi_gpio_0/s_axi_aresetn",
           "axi_uartlite_0/s_axi_aresetn",
-          "axi_quad_spi_0/s_axi_aresetn",
           "axi_quad_spi_1/s_axi_aresetn",
           "axi_timer_1/s_axi_aresetn",
           "axi_timer_0/s_axi_aresetn",
@@ -2245,9 +2243,11 @@
           "axi_timer_2/s_axi_aresetn",
           "axi_timer_3/s_axi_aresetn",
           "smartconnect_CPU/aresetn",
-          "IMR_PL_Revision_0/s00_axi_aresetn",
           "IMR_ADC_7476A_X2_0/s00_axi_aresetn",
-          "axi_quad_spi_2/s_axi_aresetn"
+          "axi_quad_spi_2/s_axi_aresetn",
+          "axi_quad_spi_0/s_axi_aresetn",
+          "IMR_PL_Revision_0/s00_axi_aresetn",
+          "axi_gpio_0/s_axi_aresetn"
         ]
       },
       "rst_clk_wiz_1_100M_bus_struct_reset": {

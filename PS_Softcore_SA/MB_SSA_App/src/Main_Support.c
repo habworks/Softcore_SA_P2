@@ -156,15 +156,60 @@ void displayChipSelect(Type_Display_CS DisplaySelect)
 * STEP 3: Transfer the data
 * STEP 4: Deselect all slave devices
 ********************************************************************************************************/
+// bool userInterfaceTrasmitReceive(XSpi *SPI_UI_Handle, uint8_t ChipSelect_N, uint8_t *TxBuffer, uint8_t *RxBuffer, uint32_t BytesToTransfer)
+// {
+//     // STEP 1: Simple test
+//     if ((SPI_UI_Handle == NULL) || (ChipSelect_N == 0))
+//         return(false);
+
+//     // STEP 2: Select the correct slave device
+//     XSpi_SetSlaveSelect(SPI_UI_Handle, 0x00); 
+//     XSpi_SetSlaveSelect(SPI_UI_Handle, ChipSelect_N);
+
+//     // STEP 3: Transfer the data
+//     int AXI_Status;
+//     uint8_t DummyRxBuffer[BytesToTransfer];
+//     uint8_t *RxBufferPtr;
+//     if (RxBuffer == NULL)
+//         RxBufferPtr = DummyRxBuffer;
+//     else
+//         RxBufferPtr = RxBuffer;
+//     AXI_Status = XSpi_Transfer(SPI_UI_Handle, TxBuffer, RxBufferPtr, BytesToTransfer);    
+//     if (AXI_Status != XST_SUCCESS)
+//     {
+//         XSpi_Reset(SPI_UI_Handle);
+//         XSpi_SetOptions(SPI_UI_Handle,XSP_MASTER_OPTION | XSP_MANUAL_SSELECT_OPTION);
+//         XSpi_Start(SPI_UI_Handle);
+//         XSpi_IntrGlobalDisable(SPI_UI_Handle);
+//         XSpi_SetSlaveSelect(SPI_UI_Handle, ChipSelect_N);
+//         AXI_Status = XSpi_Transfer(SPI_UI_Handle, TxBuffer, DummyRxBuffer, BytesToTransfer);        
+//     }
+
+//     // STEP 4: Deselect all slave devices
+//     XSpi_SetSlaveSelect(SPI_UI_Handle, 0x00);
+
+//     return(AXI_Status == XST_SUCCESS);
+
+// } // END OF userInterfaceTrasmitReceive
+
 bool userInterfaceTrasmitReceive(XSpi *SPI_UI_Handle, uint8_t ChipSelect_N, uint8_t *TxBuffer, uint8_t *RxBuffer, uint32_t BytesToTransfer)
 {
     // STEP 1: Simple test
     if ((SPI_UI_Handle == NULL) || (ChipSelect_N == 0))
         return(false);
 
+    // Set target options
+    uint32_t TargetOptions = XSP_MASTER_OPTION | XSP_MANUAL_SSELECT_OPTION;
+    if (ChipSelect_N == AD9833_CS_NUMBER)
+        TargetOptions |= XSP_CLK_ACTIVE_LOW_OPTION;
+    XSpi_SetOptions(SPI_UI_Handle, TargetOptions);
+
     // STEP 2: Select the correct slave device
-    XSpi_SetSlaveSelect(SPI_UI_Handle, 0x00); 
-    XSpi_SetSlaveSelect(SPI_UI_Handle, ChipSelect_N);
+    XSpi_SetSlaveSelect(SPI_UI_Handle, 0x00);
+    if (ChipSelect_N == AD9833_CS_NUMBER)
+        XGpio_DiscreteClear(&AXI_GPIO_Handle, GPIO_OUTPUT_CHANNEL, WAVEFORM_GEN_CS);
+    else
+        XSpi_SetSlaveSelect(SPI_UI_Handle, ChipSelect_N);
 
     // STEP 3: Transfer the data
     int AXI_Status;
@@ -178,15 +223,24 @@ bool userInterfaceTrasmitReceive(XSpi *SPI_UI_Handle, uint8_t ChipSelect_N, uint
     if (AXI_Status != XST_SUCCESS)
     {
         XSpi_Reset(SPI_UI_Handle);
-        XSpi_SetOptions(SPI_UI_Handle,XSP_MASTER_OPTION | XSP_MANUAL_SSELECT_OPTION);
+        // XSpi_SetOptions(SPI_UI_Handle,XSP_MASTER_OPTION | XSP_MANUAL_SSELECT_OPTION);
+        XSpi_SetOptions(SPI_UI_Handle,TargetOptions);
         XSpi_Start(SPI_UI_Handle);
         XSpi_IntrGlobalDisable(SPI_UI_Handle);
-        XSpi_SetSlaveSelect(SPI_UI_Handle, ChipSelect_N);
+        // XSpi_SetSlaveSelect(SPI_UI_Handle, ChipSelect_N);
+        if (ChipSelect_N == AD9833_CS_NUMBER)
+            XGpio_DiscreteSet(&AXI_GPIO_Handle, GPIO_OUTPUT_CHANNEL, WAVEFORM_GEN_CS);
+        else
+            XSpi_SetSlaveSelect(SPI_UI_Handle, ChipSelect_N);
         AXI_Status = XSpi_Transfer(SPI_UI_Handle, TxBuffer, DummyRxBuffer, BytesToTransfer);        
     }
 
     // STEP 4: Deselect all slave devices
-    XSpi_SetSlaveSelect(SPI_UI_Handle, 0x00);
+    if (ChipSelect_N == AD9833_CS_NUMBER)
+        XGpio_DiscreteSet(&AXI_GPIO_Handle, GPIO_OUTPUT_CHANNEL, WAVEFORM_GEN_CS);
+    else
+        XSpi_SetSlaveSelect(SPI_UI_Handle, 0x00);
+    // XSpi_SetSlaveSelect(SPI_UI_Handle, 0x00);
 
     return(AXI_Status == XST_SUCCESS);
 

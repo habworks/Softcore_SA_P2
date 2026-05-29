@@ -263,6 +263,7 @@ static void main_InitApplication(void)
     if (Status != true)
         InitFailMode |= INIT_FAIL_UI_IOX_2;
     // DDS Waveform Generator:
+    XGpio_DiscreteSet(&AXI_GPIO_Handle, GPIO_OUTPUT_CHANNEL, WAVEFORM_GEN_CS);
     Status = init_AD9833(&AD9833_Handle, &AXI_SPI_UI_Handle, AD9833_CS_NUMBER, AD9833_MCLK, userInterfaceTrasmitReceive);
     if (Status != true)
         InitFailMode |= INIT_FAIL_UI_AD9833;
@@ -655,8 +656,8 @@ static void ADC_7476A_Primary_ISR(void)
 static void processUserInput(Type_SoftCore_SA *SoftCore_SA)
 {
     int8_t DummyVar = 0;
-    bool WaveGenEnable = false;
-    static double WaveGenFrequency = 10000;
+    static bool WaveGenEnable = false;
+    static double WaveGenFrequency = 100000;
     bool Status;
     bool Status2;
     
@@ -716,7 +717,7 @@ static void processUserInput(Type_SoftCore_SA *SoftCore_SA)
             {
                 DummyVar--;
                 //xil_printf("%d\r\n", DummyVar);
-                WaveGenFrequency -= 1000;
+                WaveGenFrequency -= 100000;
                 Status = AD9833_SetFrequency(&AD9833_Handle, AD9833_CH0, WaveGenFrequency);
                 Status2 = AD9833_Enable(&AD9833_Handle, AD9833_CH0);
                 xil_printf("Frequency: %d", (int)WaveGenFrequency);
@@ -751,7 +752,7 @@ static void processUserInput(Type_SoftCore_SA *SoftCore_SA)
             {
                 DummyVar++;
                 // xil_printf("%d\r\n", DummyVar);
-                WaveGenFrequency += 1000;
+                WaveGenFrequency += 100000;
                 Status = AD9833_SetFrequency(&AD9833_Handle, AD9833_CH0, WaveGenFrequency);
                 Status2 = AD9833_Enable(&AD9833_Handle, AD9833_CH0);
                 xil_printf("Frequency: %d", (int)WaveGenFrequency);

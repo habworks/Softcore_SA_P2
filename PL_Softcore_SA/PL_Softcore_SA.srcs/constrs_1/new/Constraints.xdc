@@ -93,8 +93,8 @@ set_property IOSTANDARD LVCMOS33 [get_ports {IOX_CSn[2]}]
 set_property PACKAGE_PIN V14 [get_ports IOX_2_IRQ]
 set_property IOSTANDARD LVCMOS33 [get_ports IOX_2_IRQ]
 #WAVEFORM GENERATOR CS / FSYNC PIN (A7 JB.10 J15) = SA J3.10
-set_property PACKAGE_PIN J15 [get_ports {IOX_CSn[3]}]
-set_property IOSTANDARD LVCMOS33 [get_ports {IOX_CSn[3]}]
+set_property PACKAGE_PIN J15 [get_ports {gpio2_io_o_0[10]}]
+set_property IOSTANDARD LVCMOS33 [get_ports {gpio2_io_o_0[10]}]
 #WAVEFORM GENERATOR MCLK PIN (A7 JA.7 D13) = SA J6.7
 set_property PACKAGE_PIN D13 [get_ports MCLK]
 set_property IOSTANDARD LVCMOS33 [get_ports MCLK]
@@ -160,8 +160,8 @@ set_property IOSTANDARD LVCMOS33 [get_ports {gpio2_io_o_0[7]}]
 set_property PACKAGE_PIN M13 [get_ports {gpio2_io_o_0[9]}]
 set_property IOSTANDARD LVCMOS33 [get_ports {gpio2_io_o_0[9]}]
 #TEST_IO_1 PIN (A7 ON J4.8 ON R10)
-set_property PACKAGE_PIN R10 [get_ports {gpio2_io_o_0[10]}]
-set_property IOSTANDARD LVCMOS33 [get_ports {gpio2_io_o_0[10]}]
+set_property PACKAGE_PIN R10 [get_ports {IOX_CSn[3]}]
+set_property IOSTANDARD LVCMOS33 [get_ports {IOX_CSn[3]}]
 #MB_CLK PIN (A7 J4.3 ON U16)
 set_property PACKAGE_PIN U16 [get_ports MB_CLK]
 set_property IOSTANDARD LVCMOS33 [get_ports MB_CLK]

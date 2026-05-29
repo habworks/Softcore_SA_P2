@@ -1,11 +1,11 @@
 {
   "schema": "xilinx.com:schema:json_instance:1.0",
   "ip_inst": {
-    "xci_name": "BD_Softcore_SA_axi_quad_spi_0_1",
+    "xci_name": "BD_Softcore_SA_axi_quad_spi_0_2",
     "cell_name": "axi_quad_spi_0",
     "component_reference": "xilinx.com:ip:axi_quad_spi:3.2",
     "ip_revision": "32",
-    "gen_directory": "../../../../../../PL_Softcore_SA.gen/sources_1/bd/BD_Softcore_SA/ip/BD_Softcore_SA_axi_quad_spi_0_1",
+    "gen_directory": "../../../../../../PL_Softcore_SA.gen/sources_1/bd/BD_Softcore_SA/ip/BD_Softcore_SA_axi_quad_spi_0_2",
     "parameters": {
       "component_parameters": {
         "C_SPI_MEMORY": [ { "value": "1", "resolve_type": "user", "format": "long", "usage": "all" } ],
@@ -27,7 +27,7 @@
         "C_SUB_FAMILY": [ { "value": "artix7", "resolve_type": "user", "usage": "all" } ],
         "C_TYPE_OF_AXI4_INTERFACE": [ { "value": "0", "resolve_type": "user", "format": "long", "usage": "all" } ],
         "C_INSTANCE": [ { "value": "axi_quad_spi_inst", "resolve_type": "user", "usage": "all" } ],
-        "Component_Name": [ { "value": "BD_Softcore_SA_axi_quad_spi_0_1", "resolve_type": "user", "usage": "all" } ],
+        "Component_Name": [ { "value": "BD_Softcore_SA_axi_quad_spi_0_2", "resolve_type": "user", "usage": "all" } ],
         "Master_mode": [ { "value": "1", "resolve_type": "user", "format": "long", "usage": "all" } ],
         "FIFO_INCLUDED": [ { "value": "1", "resolve_type": "user", "format": "long", "usage": "all" } ],
         "Multiples16": [ { "value": "1", "resolve_type": "user", "format": "long", "enabled": false, "usage": "all" } ],
@@ -89,7 +89,7 @@
         "IPCONTEXT": [ { "value": "IP_Integrator" } ],
         "IPREVISION": [ { "value": "32" } ],
         "MANAGED": [ { "value": "TRUE" } ],
-        "OUTPUTDIR": [ { "value": "../../../../../../PL_Softcore_SA.gen/sources_1/bd/BD_Softcore_SA/ip/BD_Softcore_SA_axi_quad_spi_0_1" } ],
+        "OUTPUTDIR": [ { "value": "../../../../../../PL_Softcore_SA.gen/sources_1/bd/BD_Softcore_SA/ip/BD_Softcore_SA_axi_quad_spi_0_2" } ],
         "SELECTEDSIMMODEL": [ { "value": "" } ],
         "SHAREDDIR": [ { "value": "../../ipshared" } ],
         "SWVERSION": [ { "value": "2024.2" } ],
@@ -249,7 +249,7 @@
           "mode": "master",
           "parameters": {
             "SENSITIVITY": [ { "value": "EDGE_RISING", "value_src": "constant", "value_permission": "bd", "usage": "all" } ],
-            "PortWidth": [ { "value": "1", "value_src": "default_prop", "value_permission": "bd", "resolve_type": "generated", "format": "long", "is_ips_inferred": true, "is_static_object": false } ]
+            "PortWidth": [ { "value": "1", "value_permission": "bd", "resolve_type": "generated", "format": "long", "is_ips_inferred": true, "is_static_object": false } ]
           },
           "port_maps": {
             "INTERRUPT": [ { "physical_name": "ip2intc_irpt" } ]

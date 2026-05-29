@@ -54,7 +54,7 @@ extern"C" {
 #define SIG_SEL             ((uint32_t)(0x01 << 7))     // JA.8 - J6.8  
 #define IOX_RESET           ((uint32_t)(0x01 << 8))     // JC.4 - J1.4
 #define TEST_IO_0           ((uint32_t)(0x01 << 9))     // J4.6
-#define TEST_IO_1           ((uint32_t)(0x01 << 10))    // J4.8
+#define WAVEFORM_GEN_CS     ((uint32_t)(0x01 << 10))    // J4.8
 
 #ifdef __cplusplus
 }
