@@ -82,10 +82,12 @@ typedef enum
     AD9833_SQUARE
 } Type_Waveform;
 
-typedef bool (*TxRxFunctionPointer)(XSpi *, uint8_t, uint8_t *, uint8_t *, uint32_t);
+typedef bool (*AD9833_CS_FunctionPointer)(bool);
+typedef bool (*AD9833_TxRxFunctionPointer)(XSpi *, uint8_t, uint8_t *, uint8_t *, uint32_t, bool, AD9833_CS_FunctionPointer);
 typedef struct
 {
-    TxRxFunctionPointer         transmitReceive;
+    AD9833_TxRxFunctionPointer  transmitReceive;
+    AD9833_CS_FunctionPointer   chipSelect;
     XSpi                        *SPI_Handle;
     uint8_t                     CS_Number;
     uint32_t                    MCLK_Hz;
@@ -96,7 +98,7 @@ typedef struct
 
 
 // FUNCTION  PROTOTYPES
-bool init_AD9833(Type_AD9833_Driver *AD9833_Handle, XSpi *SPI_Handle, uint8_t CS_Number, uint32_t MCLK_Frequency, TxRxFunctionPointer AD9833_TxRxFunction);
+bool init_AD9833(Type_AD9833_Driver *AD9833_Handle, XSpi *SPI_Handle, uint8_t CS_Number, uint32_t MCLK_Frequency, AD9833_TxRxFunctionPointer AD9833_TxRxFunction, AD9833_CS_FunctionPointer AD9833_CS_Function);
 bool AD9833_Reset(Type_AD9833_Driver *AD9833_Handle, bool ResetEnable);
 bool AD9833_SetFrequency(Type_AD9833_Driver *AD9833_Handle, Type_AD9833_Channel Channel, double Frequency_Hz);
 bool AD9833_SetPhase(Type_AD9833_Driver *AD9833_Handle, Type_AD9833_Channel Channel, double Phase_Degrees);

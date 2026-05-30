@@ -80,60 +80,6 @@ void sleep_ms_Wrapper(uint32_t WaitTime)
 
 
 /********************************************************************************************************
-* @brief Set or clear the output pin to Run or reset the display for SSD1309 Display
-*
-* @author original: Hab Collector \n
-* 
-* @param ResetRunAction: Reset or run action to take
-********************************************************************************************************/
-void displayResetOrRun(Type_DisplayResetRun ResetRunAction)
-{
-    if (ResetRunAction == DISPLAY_RUN)
-        XGpio_DiscreteSet(&GPIO_Handle, GPIO_OUTPUT_CHANNEL, DISPLAY_RESET_RUN);
-    else
-        XGpio_DiscreteClear(&GPIO_Handle, GPIO_OUTPUT_CHANNEL, DISPLAY_RESET_RUN);
-
-} // END OF displayResetOrRun
-
-
-
-/********************************************************************************************************
-* @brief Set or clear the output pin to Data or Command mode for SSD1309 Display
-*
-* @author original: Hab Collector \n
-* 
-* @param CommandDataAction: Data or command action to take
-********************************************************************************************************/
-void displayCommandOrData(Type_DisplayCommandData CommandDataAction)
-{
-    if (CommandDataAction == DISPLAY_DATA)
-        XGpio_DiscreteSet(&GPIO_Handle, GPIO_OUTPUT_CHANNEL, DISPLAY_CMD_DATA);
-    else
-        XGpio_DiscreteClear(&GPIO_Handle, GPIO_OUTPUT_CHANNEL, DISPLAY_CMD_DATA);
-
-} // END OF displayCommandOrData
-
-
-
-/********************************************************************************************************
-* @brief Set or clear the output pin to disable or enable the SSD1309 Display for SPI communication
-*
-* @author original: Hab Collector \n
-* 
-* @param DisplaySelect: Display select action to take
-********************************************************************************************************/
-void displayChipSelect(Type_Display_CS DisplaySelect)
-{
-    if (DisplaySelect == CS_ENABLE)
-        XGpio_DiscreteClear(&GPIO_Handle, GPIO_OUTPUT_CHANNEL, DISPLAY_CS);
-    else
-        XGpio_DiscreteSet(&GPIO_Handle, GPIO_OUTPUT_CHANNEL, DISPLAY_CS);
-
-} // END OF displayChipSelect
-
-
-
-/********************************************************************************************************
 * @brief This is communication for use with the QSPI interface that interfaces to the display (0 not used)
 * IO expanders (1 and 2), and Waveform Generator (3).  As this is SPI it is full duplex transmit and receive.  
 * It is passed by reference for use with the display and IO drivers.  This will generally be referred to as 
@@ -148,6 +94,8 @@ void displayChipSelect(Type_Display_CS DisplaySelect)
 * @param TxBuffer: The transmit buffer - information to send
 * @param RxBuffer: The receive buffer - information to receive
 * @param BytesToTransfer: Bytes to both transmit and receive (always equal for SPI)
+* @param UseNegSpiClk: Sets the polarity of the SPI Clock = data active on positive or negative clock edge
+* @param External_CS_Enable: If not using the CS of the AXI Quad SPI IP then this function pointer if not NULL should be used
 *
 * @return: True if transmission was successful
 *
@@ -156,43 +104,7 @@ void displayChipSelect(Type_Display_CS DisplaySelect)
 * STEP 3: Transfer the data
 * STEP 4: Deselect all slave devices
 ********************************************************************************************************/
-// bool userInterfaceTrasmitReceive(XSpi *SPI_UI_Handle, uint8_t ChipSelect_N, uint8_t *TxBuffer, uint8_t *RxBuffer, uint32_t BytesToTransfer)
-// {
-//     // STEP 1: Simple test
-//     if ((SPI_UI_Handle == NULL) || (ChipSelect_N == 0))
-//         return(false);
-
-//     // STEP 2: Select the correct slave device
-//     XSpi_SetSlaveSelect(SPI_UI_Handle, 0x00); 
-//     XSpi_SetSlaveSelect(SPI_UI_Handle, ChipSelect_N);
-
-//     // STEP 3: Transfer the data
-//     int AXI_Status;
-//     uint8_t DummyRxBuffer[BytesToTransfer];
-//     uint8_t *RxBufferPtr;
-//     if (RxBuffer == NULL)
-//         RxBufferPtr = DummyRxBuffer;
-//     else
-//         RxBufferPtr = RxBuffer;
-//     AXI_Status = XSpi_Transfer(SPI_UI_Handle, TxBuffer, RxBufferPtr, BytesToTransfer);    
-//     if (AXI_Status != XST_SUCCESS)
-//     {
-//         XSpi_Reset(SPI_UI_Handle);
-//         XSpi_SetOptions(SPI_UI_Handle,XSP_MASTER_OPTION | XSP_MANUAL_SSELECT_OPTION);
-//         XSpi_Start(SPI_UI_Handle);
-//         XSpi_IntrGlobalDisable(SPI_UI_Handle);
-//         XSpi_SetSlaveSelect(SPI_UI_Handle, ChipSelect_N);
-//         AXI_Status = XSpi_Transfer(SPI_UI_Handle, TxBuffer, DummyRxBuffer, BytesToTransfer);        
-//     }
-
-//     // STEP 4: Deselect all slave devices
-//     XSpi_SetSlaveSelect(SPI_UI_Handle, 0x00);
-
-//     return(AXI_Status == XST_SUCCESS);
-
-// } // END OF userInterfaceTrasmitReceive
-
-bool userInterfaceTrasmitReceive(XSpi *SPI_UI_Handle, uint8_t ChipSelect_N, uint8_t *TxBuffer, uint8_t *RxBuffer, uint32_t BytesToTransfer)
+bool userInterfaceTrasmitReceive(XSpi *SPI_UI_Handle, uint8_t ChipSelect_N, uint8_t *TxBuffer, uint8_t *RxBuffer, uint32_t BytesToTransfer, bool UseNegSpiClk, CS_FunctionPointer External_CS_Enable)
 {
     // STEP 1: Simple test
     if ((SPI_UI_Handle == NULL) || (ChipSelect_N == 0))
@@ -200,16 +112,15 @@ bool userInterfaceTrasmitReceive(XSpi *SPI_UI_Handle, uint8_t ChipSelect_N, uint
 
     // Set target options
     uint32_t TargetOptions = XSP_MASTER_OPTION | XSP_MANUAL_SSELECT_OPTION;
-    if (ChipSelect_N == AD9833_CS_NUMBER)
+    if (UseNegSpiClk)
         TargetOptions |= XSP_CLK_ACTIVE_LOW_OPTION;
     XSpi_SetOptions(SPI_UI_Handle, TargetOptions);
 
     // STEP 2: Select the correct slave device
-    XSpi_SetSlaveSelect(SPI_UI_Handle, 0x00);
-    if (ChipSelect_N == AD9833_CS_NUMBER)
-        XGpio_DiscreteClear(&AXI_GPIO_Handle, GPIO_OUTPUT_CHANNEL, WAVEFORM_GEN_CS);
-    else
+    if (External_CS_Enable == NULL)
         XSpi_SetSlaveSelect(SPI_UI_Handle, ChipSelect_N);
+    else
+        External_CS_Enable(true);
 
     // STEP 3: Transfer the data
     int AXI_Status;
@@ -219,28 +130,34 @@ bool userInterfaceTrasmitReceive(XSpi *SPI_UI_Handle, uint8_t ChipSelect_N, uint
         RxBufferPtr = DummyRxBuffer;
     else
         RxBufferPtr = RxBuffer;
+
+
     AXI_Status = XSpi_Transfer(SPI_UI_Handle, TxBuffer, RxBufferPtr, BytesToTransfer);    
-    if (AXI_Status != XST_SUCCESS)
+    if (AXI_Status != XST_SUCCESS)  // Something went wrong try again
     {
+        // Reset the SPI and deselect the chip
         XSpi_Reset(SPI_UI_Handle);
-        // XSpi_SetOptions(SPI_UI_Handle,XSP_MASTER_OPTION | XSP_MANUAL_SSELECT_OPTION);
+        if (External_CS_Enable == NULL)
+            XSpi_SetSlaveSelect(SPI_UI_Handle, ChipSelect_N);
+        else
+            External_CS_Enable(false);
+        // Set the options and restart
         XSpi_SetOptions(SPI_UI_Handle,TargetOptions);
         XSpi_Start(SPI_UI_Handle);
         XSpi_IntrGlobalDisable(SPI_UI_Handle);
-        // XSpi_SetSlaveSelect(SPI_UI_Handle, ChipSelect_N);
-        if (ChipSelect_N == AD9833_CS_NUMBER)
-            XGpio_DiscreteSet(&AXI_GPIO_Handle, GPIO_OUTPUT_CHANNEL, WAVEFORM_GEN_CS);
-        else
+        // Enable chip select and repeat transfer
+        if (External_CS_Enable == NULL)
             XSpi_SetSlaveSelect(SPI_UI_Handle, ChipSelect_N);
+        else
+            External_CS_Enable(true);
         AXI_Status = XSpi_Transfer(SPI_UI_Handle, TxBuffer, DummyRxBuffer, BytesToTransfer);        
     }
 
     // STEP 4: Deselect all slave devices
-    if (ChipSelect_N == AD9833_CS_NUMBER)
-        XGpio_DiscreteSet(&AXI_GPIO_Handle, GPIO_OUTPUT_CHANNEL, WAVEFORM_GEN_CS);
-    else
+    if (External_CS_Enable == NULL)
         XSpi_SetSlaveSelect(SPI_UI_Handle, 0x00);
-    // XSpi_SetSlaveSelect(SPI_UI_Handle, 0x00);
+    else
+        External_CS_Enable(false);
 
     return(AXI_Status == XST_SUCCESS);
 
@@ -248,23 +165,4 @@ bool userInterfaceTrasmitReceive(XSpi *SPI_UI_Handle, uint8_t ChipSelect_N, uint
 
 
 
-bool is_MicroSD_Inserted(void)
-{
-    uint32_t SwitchState = XGpio_DiscreteRead(&GPIO_Handle, GPIO_INPUT_CHANNEL);
-    return (SwitchState & USD_CD);
-}
-
-void IOX_Reset(bool Reset)
-{
-    if (Reset)
-        XGpio_DiscreteClear(&GPIO_Handle, GPIO_OUTPUT_CHANNEL, IOX_RESET);
-    else
-        XGpio_DiscreteSet(&GPIO_Handle, GPIO_OUTPUT_CHANNEL, IOX_RESET);
-}
-
-void IOX_ChipSelect(bool ChipSelect)
-{
-    NOT_USED(ChipSelect);
-    DO_NOTHING();
-}
 

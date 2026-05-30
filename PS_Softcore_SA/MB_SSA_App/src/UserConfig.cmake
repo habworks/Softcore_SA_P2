@@ -188,6 +188,7 @@ set(USER_COMPILE_SOURCES
 "Water_Mark.c"
 "U8G2/csrc/SoftCore_SA_Used_Fonts.c"
 "AD9833_Driver.c"
+"IO_Support.c"
 )
 
 # -----------------------------------------

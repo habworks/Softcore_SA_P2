@@ -42,11 +42,8 @@ extern"C" {
 // PS FW REVSION
 #define FW_MAJOR_REV            1
 #define FW_MINOR_REV            1
-#define FW_TEST_REV             3
-#define HW_REV                  1
-// USED IN IO ACCESS
-#define GPIO_INPUT_CHANNEL      1          
-#define GPIO_OUTPUT_CHANNEL     2    
+#define FW_TEST_REV             4
+#define HW_REV                  1 
 // UART USE
 #define RX_BUFFER_SIZE          10  
 // MICROBLAZE CACHE SUPPORT *** THESE LINES SHOULD BE ADDED WITHIN XPARAMETERS.H BUT THERE IS A BUG IN 2024.2 Vivado / Viits
@@ -141,6 +138,8 @@ typedef struct
     kiss_fftr_cfg               FFT_Config;
 } Type_FFT;
 
+typedef void (*CS_FunctionPointer)(bool);
+
 
 // EXTERNS
 extern volatile uint32_t volatile ReceivedBytes;
@@ -148,21 +147,12 @@ extern volatile uint8_t RxDataBuffer[RX_BUFFER_SIZE];
 
 
 // MACROS
-#define NOT_USED(X)             ((void)(X))
-#define DO_NOTHING()            asm volatile ("nop")
-#define DO_NOTHING_REPEAT(X)    do { for (volatile uint32_t i = 0; i < (uint32_t)(X); i++) asm volatile ("nop"); } while (0)
 
 
 // FUNCTION PROTOTYPES
 void sleep_10us_Wrapper(uint32_t WaitTime);
 void sleep_ms_Wrapper(uint32_t WaitTime);
-void displayResetOrRun(Type_DisplayResetRun ResetRunAction);
-void displayCommandOrData(Type_DisplayCommandData CommandDataAction);
-void displayChipSelect(Type_Display_CS DisplaySelect);
-bool userInterfaceTrasmitReceive(XSpi *SPI_DisplayHandle, uint8_t ChipSelect_N, uint8_t *TxBuffer, uint8_t *RxBuffer, uint32_t BytesToTransfer);
-bool is_MicroSD_Inserted(void);
-void IOX_Reset(bool Status);
-void IOX_ChipSelect(bool ChipSelect);
+bool userInterfaceTrasmitReceive(XSpi *SPI_UI_Handle, uint8_t ChipSelect_N, uint8_t *TxBuffer, uint8_t *RxBuffer, uint32_t BytesToTransfer, bool UseNegSpiClk, CS_FunctionPointer External_CS_Enable);
 
 
 #ifdef __cplusplus

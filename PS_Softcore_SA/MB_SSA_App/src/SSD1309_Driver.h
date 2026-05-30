@@ -61,8 +61,8 @@ typedef enum
     DISPLAY_DATA
 }Type_DisplayCommandData;
 typedef void (*displayCommandDataFunctionPtr)(Type_DisplayCommandData);
-
-typedef bool (*displayTxRxFunctionPtr)(XSpi *, uint8_t, uint8_t *, uint8_t *, uint32_t);
+typedef void (*displayDummy_CS_Function)(bool);
+typedef bool (*displayTxRxFunctionPtr)(XSpi *, uint8_t, uint8_t *, uint8_t *, uint32_t, bool, displayDummy_CS_Function);
 typedef void (*displaySleep_msFunctionPtr)(uint32_t);
 typedef void (*displaySleep_10usFunctionPtr)(uint32_t);
 typedef void (*displayChipSelectFunctionPtr)(Type_Display_CS);

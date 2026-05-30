@@ -188,8 +188,9 @@ static void main_InitApplication(void)
     AXI_Status = XGpio_Initialize(&AXI_GPIO_Handle, XPAR_AXI_GPIO_0_BASEADDR);
     if (AXI_Status != XST_SUCCESS)
         InitFailMode |= INIT_FAIL_GPIO;
-    XGpio_SetDataDirection(&AXI_GPIO_Handle, GPIO_INPUT_CHANNEL, 0xFFFF);     // Switches and push buttons as input
-    XGpio_SetDataDirection(&AXI_GPIO_Handle, GPIO_OUTPUT_CHANNEL, 0x0000);  
+    init_GPIO(&AXI_GPIO_Handle);
+    // XGpio_SetDataDirection(&AXI_GPIO_Handle, GPIO_INPUT_CHANNEL, 0xFFFF);     // Switches and push buttons as input
+    // XGpio_SetDataDirection(&AXI_GPIO_Handle, GPIO_OUTPUT_CHANNEL, 0x0000);  
 
     // Init AXI Timer 1 as periodic
     Status = init_PeriodicTimer(&AXI_SampleTimerHandle, XPAR_AXI_TIMER_1_BASEADDR, XTC_TIMER_0, (u32)(XPAR_CPU_CORE_CLOCK_FREQ_HZ / DEFAULT_AUDIO_FREQUENCY), TimerCallbackSampleRate_ISR);
@@ -264,7 +265,7 @@ static void main_InitApplication(void)
         InitFailMode |= INIT_FAIL_UI_IOX_2;
     // DDS Waveform Generator:
     XGpio_DiscreteSet(&AXI_GPIO_Handle, GPIO_OUTPUT_CHANNEL, WAVEFORM_GEN_CS);
-    Status = init_AD9833(&AD9833_Handle, &AXI_SPI_UI_Handle, AD9833_CS_NUMBER, AD9833_MCLK, userInterfaceTrasmitReceive);
+    Status = init_AD9833(&AD9833_Handle, &AXI_SPI_UI_Handle, AD9833_CS_NUMBER, AD9833_MCLK, userInterfaceTrasmitReceive, WaveformGenChipSelect);
     if (Status != true)
         InitFailMode |= INIT_FAIL_UI_AD9833;
 

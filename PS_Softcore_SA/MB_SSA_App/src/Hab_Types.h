@@ -38,6 +38,9 @@ extern"C" {
 
 // MACROS
 #define NOT_USED(x)            (void)(x)
+#define NOT_USED(X)             ((void)(X))
+#define DO_NOTHING()            asm volatile ("nop")
+#define DO_NOTHING_REPEAT(X)    do { for (volatile uint32_t i = 0; i < (uint32_t)(X); i++) asm volatile ("nop"); } while (0)
 
 
 #ifdef __cplusplus

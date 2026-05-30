@@ -59,27 +59,27 @@ extern"C" {
 #define MCP23S08_RESET_TIME_MS      5U                  // Value in ms
 
 // TYPEDEFS AND ENUMS
-typedef void (*chipResetFunctionPointer)(bool);
-typedef void (*chipSelectFunctionPointer)(bool);
-typedef bool (*TxRxFunctionPointer)(XSpi *, uint8_t, uint8_t *, uint8_t *, uint32_t);
-typedef void (*delayFunctionPointer)(uint32_t);
+typedef void (*MCP23S08_ResetFunctionPointer)(bool);
+typedef void (*MCP23S08_CS_FunctionPointer)(bool);
+typedef bool (*MCP23S08_TxRxFunctionPointer)(XSpi *, uint8_t, uint8_t *, uint8_t *, uint32_t, bool, MCP23S08_CS_FunctionPointer);
+typedef void (*MCP23S08_DelayFunctionPointer)(uint32_t);
 typedef struct
 {
-    chipResetFunctionPointer    chipReset;
-    chipSelectFunctionPointer   chipSelect;
-    TxRxFunctionPointer         transmitReceive;
-    delayFunctionPointer        delay_ms;
-    XSpi                        *SPI_Handle;
-    uint8_t                     CS_Number;
-    uint8_t                     DeviceAddress;
-    uint8_t                     IO_Direction;
-    uint8_t                     InputPolarity;
-    uint8_t                     IRQ_OnChange;
-    uint8_t                     IRQ_Default;
-    uint8_t                     IRQ_Control;
-    uint8_t                     Configuration;
-    uint8_t                     PullUp;
-    bool                        Ready;
+    MCP23S08_ResetFunctionPointer   chipReset;
+    MCP23S08_CS_FunctionPointer     chipSelect;
+    MCP23S08_TxRxFunctionPointer    transmitReceive;
+    MCP23S08_DelayFunctionPointer   delay_ms;
+    XSpi                            *SPI_Handle;
+    uint8_t                         CS_Number;
+    uint8_t                         DeviceAddress;
+    uint8_t                         IO_Direction;
+    uint8_t                         InputPolarity;
+    uint8_t                         IRQ_OnChange;
+    uint8_t                         IRQ_Default;
+    uint8_t                         IRQ_Control;
+    uint8_t                         Configuration;
+    uint8_t                         PullUp;
+    bool                            Ready;
 } Type_MCP23S08_Driver;
 
 typedef enum
@@ -90,7 +90,7 @@ typedef enum
 
 
 // FUNCTION PROTOTYPES
-bool init_MCP23S08(Type_MCP23S08_Driver *MCP23S08_Handle, chipResetFunctionPointer chipResetFunction, chipSelectFunctionPointer chipSelectFunction, TxRxFunctionPointer TxRxFunction, delayFunctionPointer delayFunction,
+bool init_MCP23S08(Type_MCP23S08_Driver *MCP23S08_Handle, MCP23S08_ResetFunctionPointer chipResetFunction, MCP23S08_CS_FunctionPointer chipSelectFunction, MCP23S08_TxRxFunctionPointer TxRxFunction, MCP23S08_DelayFunctionPointer delayFunction,
                    XSpi *SPI_Handle, uint8_t CS_Number, uint8_t DeviceAddress, uint8_t IO_Direction, uint8_t InputPolarity, uint8_t IRQ_OnChange, uint8_t IRQ_Default, 
                    uint8_t IRQ_Control, uint8_t Configuration, uint8_t PullUp, bool Set_HAEN, bool InitReset);
 bool MCP23S08_WriteRegister(Type_MCP23S08_Driver *MCP23S08_Handle, uint8_t Register, uint8_t Data);

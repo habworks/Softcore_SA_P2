@@ -327,7 +327,7 @@ void displaySegmented_SPI_Transfer(Type_Display_SSD1309 *SSD1309, uint8_t *DataP
     // STEP 1: If data lenght can fit with in the FIFO buffer no need to segment
     if (DataLength <= SSD1309->FIFO_BufferDepth)
     {
-        SSD1309->displayTxRx(SSD1309->SPI_Handle, SSD1309->ChipSelectBitMask, DataPtr, NULL, DataLength);
+        SSD1309->displayTxRx(SSD1309->SPI_Handle, SSD1309->ChipSelectBitMask, DataPtr, NULL, DataLength, false, NULL);
         return;
     }
 
@@ -347,7 +347,7 @@ void displaySegmented_SPI_Transfer(Type_Display_SSD1309 *SSD1309, uint8_t *DataP
             BytesToTransmit = BytesRemaining;
         // Copy upto the FIFP depth bytes to transmit and transmit
         memcpy(DataBuffer, &DataPtr[DataOffset], BytesToTransmit);
-        SSD1309->displayTxRx(SSD1309->SPI_Handle, SSD1309->ChipSelectBitMask, DataBuffer, NULL, BytesToTransmit);
+        SSD1309->displayTxRx(SSD1309->SPI_Handle, SSD1309->ChipSelectBitMask, DataBuffer, NULL, BytesToTransmit, false, NULL);
         // Update the Buffer poniter, bytes transmitted and test if done
         DataOffset += BytesToTransmit;
         BytesTransmitted += BytesToTransmit;    

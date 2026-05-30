@@ -67,7 +67,7 @@ static bool AD9833_WriteControl(Type_AD9833_Driver *AD9833_Handle, uint16_t Cont
     TxBuffer[1] = (uint8_t)(ControlRegister & 0x00FF);
     TxBuffer[0] = (uint8_t)(ControlRegister >> 8);
 
-    if (AD9833_Handle->transmitReceive(AD9833_Handle->SPI_Handle, AD9833_Handle->CS_Number, TxBuffer, RxBuffer, (uint32_t)sizeof(TxBuffer)))
+    if (AD9833_Handle->transmitReceive(AD9833_Handle->SPI_Handle, AD9833_Handle->CS_Number, TxBuffer, RxBuffer, (uint32_t)sizeof(TxBuffer), true, AD9833_Handle->chipSelect))
     {
         AD9833_Handle->ControlReg = ControlRegister;
         return(true);
@@ -137,13 +137,13 @@ static bool AD9833_WriteFrequencyCount(Type_AD9833_Driver *AD9833_Handle, Type_A
     // STEP 4: Load and transmit the Tx Buffer LSB part of Frequency Register First
     TxBuffer[0] = (uint8_t)(FrequencyRegister_LSB >> 8);
     TxBuffer[1] = (uint8_t)(FrequencyRegister_LSB & 0x00FF);
-    if (!AD9833_Handle->transmitReceive(AD9833_Handle->SPI_Handle, AD9833_Handle->CS_Number, TxBuffer, RxBuffer, (uint32_t)sizeof(TxBuffer)))
+    if (!AD9833_Handle->transmitReceive(AD9833_Handle->SPI_Handle, AD9833_Handle->CS_Number, TxBuffer, RxBuffer, (uint32_t)sizeof(TxBuffer), true, AD9833_Handle->chipSelect))
         return(false);
     
     // STEP 5: Load and transmit the Tx Buffer MSB part of Frequency Register Second
     TxBuffer[0] = (uint8_t)(FrequencyRegister_MSB >> 8);
     TxBuffer[1] = (uint8_t)(FrequencyRegister_MSB & 0x00FF);
-    if (AD9833_Handle->transmitReceive(AD9833_Handle->SPI_Handle, AD9833_Handle->CS_Number, TxBuffer, RxBuffer, (uint32_t)sizeof(TxBuffer)))
+    if (AD9833_Handle->transmitReceive(AD9833_Handle->SPI_Handle, AD9833_Handle->CS_Number, TxBuffer, RxBuffer, (uint32_t)sizeof(TxBuffer), true, AD9833_Handle->chipSelect))
     {
         AD9833_Handle->FrequencyWord[Channel] = FrequencyCount;
         AD9833_Handle->ControlReg = ControlRegister;
@@ -209,7 +209,7 @@ static bool AD9833_WritePhaseCount(Type_AD9833_Driver *AD9833_Handle, Type_AD983
     TxBuffer[1] = (uint8_t)(PhaseCountRegister & 0x00FF);
 
     // STEP 5: Transmit 16b value to AD9833 MSB first
-    if (AD9833_Handle->transmitReceive(AD9833_Handle->SPI_Handle, AD9833_Handle->CS_Number, TxBuffer, RxBuffer, (uint32_t)sizeof(TxBuffer)))
+    if (AD9833_Handle->transmitReceive(AD9833_Handle->SPI_Handle, AD9833_Handle->CS_Number, TxBuffer, RxBuffer, (uint32_t)sizeof(TxBuffer), true, AD9833_Handle->chipSelect))
     {
         AD9833_Handle->PhaseWord[Channel] = PhaseCount;
         AD9833_Handle->ControlReg = ControlRegister;
@@ -245,13 +245,14 @@ static bool AD9833_WritePhaseCount(Type_AD9833_Driver *AD9833_Handle, Type_AD983
 * STEP 2: Reset the device
 * STEP 3: Update the frequency and PhaseCount registers
 ********************************************************************************************************/
-bool init_AD9833(Type_AD9833_Driver *AD9833_Handle, XSpi *SPI_Handle, uint8_t CS_Number, uint32_t MCLK_Frequency, TxRxFunctionPointer AD9833_TxRxFunction)
+bool init_AD9833(Type_AD9833_Driver *AD9833_Handle, XSpi *SPI_Handle, uint8_t CS_Number, uint32_t MCLK_Frequency, AD9833_TxRxFunctionPointer AD9833_TxRxFunction, AD9833_CS_FunctionPointer AD9833_CS_Function)
 {
     // STEP 1: Assign struct member values
     AD9833_Handle->SPI_Handle = SPI_Handle;
     AD9833_Handle->CS_Number = CS_Number;
     AD9833_Handle->MCLK_Hz = MCLK_Frequency;
     AD9833_Handle->transmitReceive = AD9833_TxRxFunction;
+    AD9833_Handle->chipSelect = AD9833_CS_Function;
     // Set frequency and PhaseCount to 0
     AD9833_Handle->FrequencyWord[AD9833_CH0] = 0;
     AD9833_Handle->FrequencyWord[AD9833_CH1] = 0;

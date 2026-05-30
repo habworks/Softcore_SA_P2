@@ -68,9 +68,9 @@
 * STEP 5: Configure the expander for use
 * STEP 6: Make expander ready for use
 ********************************************************************************************************/
-bool init_MCP23S08(Type_MCP23S08_Driver *MCP23S08_Handle, chipResetFunctionPointer chipResetFunction, chipSelectFunctionPointer chipSelectFunction, TxRxFunctionPointer TxRxFunction, delayFunctionPointer delayFunction,
+bool init_MCP23S08(Type_MCP23S08_Driver *MCP23S08_Handle, MCP23S08_ResetFunctionPointer chipResetFunction, MCP23S08_CS_FunctionPointer chipSelectFunction, MCP23S08_TxRxFunctionPointer TxRxFunction, MCP23S08_DelayFunctionPointer delayFunction,
                    XSpi *SPI_Handle, uint8_t CS_Number, uint8_t DeviceAddress, uint8_t IO_Direction, uint8_t InputPolarity, uint8_t IRQ_OnChange, uint8_t IRQ_Default, 
-                   uint8_t IRQ_Control, uint8_t Configuration, uint8_t PullUp, bool Set_HAEN, bool InitReset)
+                   uint8_t IRQ_Control, uint8_t Configuration, uint8_t PullUp, bool Set_HAEN, bool InitReset)                   
 {
     // STEP 1: Simple test
     MCP23S08_Handle->Ready = false;
@@ -170,7 +170,7 @@ bool MCP23S08_WriteRegister(Type_MCP23S08_Driver *MCP23S08_Handle, uint8_t Regis
     MCP23S08_Handle->chipSelect(true);
 
     // STEP 6: Perform SPI transaction (3 bytes)
-    bool Status = MCP23S08_Handle->transmitReceive(MCP23S08_Handle->SPI_Handle, MCP23S08_Handle->CS_Number, TxBuffer, RxBuffer, (uint32_t)sizeof(TxBuffer));
+    bool Status = MCP23S08_Handle->transmitReceive(MCP23S08_Handle->SPI_Handle, MCP23S08_Handle->CS_Number, TxBuffer, RxBuffer, (uint32_t)sizeof(TxBuffer), false, NULL);
     if (Status == false)
         return(false);
 
@@ -228,7 +228,7 @@ bool MCP23S08_ReadRegister(Type_MCP23S08_Driver *MCP23S08_Handle, uint8_t Regist
     MCP23S08_Handle->chipSelect(true);
 
     // STEP 6: Perform SPI transaction (3 bytes)
-    bool Status = MCP23S08_Handle->transmitReceive(MCP23S08_Handle->SPI_Handle, MCP23S08_Handle->CS_Number, TxBuffer, RxBuffer, (uint32_t)sizeof(TxBuffer));
+    bool Status = MCP23S08_Handle->transmitReceive(MCP23S08_Handle->SPI_Handle, MCP23S08_Handle->CS_Number, TxBuffer, RxBuffer, (uint32_t)sizeof(TxBuffer), false, NULL);
 
     // STEP 7: Deassert chip select
     MCP23S08_Handle->chipSelect(false);
@@ -277,7 +277,7 @@ bool MCP23S08_HAEN(Type_MCP23S08_Driver *MCP23S08_Handle)
     MCP23S08_Handle->chipSelect(true);
 
     // STEP 4: SPI transaction (3 bytes)
-    bool Status = MCP23S08_Handle->transmitReceive(MCP23S08_Handle->SPI_Handle, MCP23S08_Handle->CS_Number, TxBuffer, RxBuffer, (uint32_t)sizeof(TxBuffer));
+    bool Status = MCP23S08_Handle->transmitReceive(MCP23S08_Handle->SPI_Handle, MCP23S08_Handle->CS_Number, TxBuffer, RxBuffer, (uint32_t)sizeof(TxBuffer), false, NULL);
 
     // STEP 5: Deassert chip select
     MCP23S08_Handle->chipSelect(false);
