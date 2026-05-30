@@ -80,19 +80,22 @@ void sleep_ms_Wrapper(uint32_t WaitTime)
 
 
 /********************************************************************************************************
-* @brief This is communication for use with the QSPI interface that interfaces to the display (0 not used)
-* IO expanders (1 and 2), and Waveform Generator (3).  As this is SPI it is full duplex transmit and receive.  
-* It is passed by reference for use with the display and IO drivers.  This will generally be referred to as 
-* the UI SPI Tx Rx.
+* @brief This is communication for use with the AXI QSPI interface that interfaces to the: display (0 not used)
+* IO expanders (1 and 2), and Waveform Generator (3 not used).  As this is SPI it is full duplex transmit and 
+* receive.  It is passed by reference for use with the display and IO drivers.  This will generally be referred 
+* to as the UI SPI Tx Rx.  The interface can optionally be used with or wihout the QUAD SPI chip select.  
+* When using the Quad SPI Chip select External_CS_Enable should be NULL.  When using a custom chip select
+* External_CS_Enable must be populated with a valid function.  
 *
 * @author original: Hab Collector \n
 *
 * @note: SPI must be configured in polling mode
+* @note: If using the SPI chip select or not the PL block diagram must still constrain all CS to an FPGA pin
 *
 * @param SPI_UI_Handle: Pointer to QSPI handle
 * @param ChipSelect_N: Chip Select associate with device first device is 1
 * @param TxBuffer: The transmit buffer - information to send
-* @param RxBuffer: The receive buffer - information to receive
+* @param RxBuffer: The receive buffer - information to receive - this can be NULL if nothing is expected back
 * @param BytesToTransfer: Bytes to both transmit and receive (always equal for SPI)
 * @param UseNegSpiClk: Sets the polarity of the SPI Clock = data active on positive or negative clock edge
 * @param External_CS_Enable: If not using the CS of the AXI Quad SPI IP then this function pointer if not NULL should be used
@@ -102,9 +105,10 @@ void sleep_ms_Wrapper(uint32_t WaitTime)
 * STEP 1: Simple test
 * STEP 2: Select the correct slave device
 * STEP 3: Transfer the data
-* STEP 4: Deselect all slave devices
+* STEP 4: Transfer the data - on error attempt a retransmit
+* STEP 5: Deselect all slave devices
 ********************************************************************************************************/
-bool userInterfaceTrasmitReceive(XSpi *SPI_UI_Handle, uint8_t ChipSelect_N, uint8_t *TxBuffer, uint8_t *RxBuffer, uint32_t BytesToTransfer, bool UseNegSpiClk, CS_FunctionPointer External_CS_Enable)
+bool SPI_InterfaceTrasmitReceive(XSpi *SPI_UI_Handle, uint8_t ChipSelect_N, uint8_t *TxBuffer, uint8_t *RxBuffer, uint32_t BytesToTransfer, bool UseNegSpiClk, CS_FunctionPointer External_CS_Enable)
 {
     // STEP 1: Simple test
     if ((SPI_UI_Handle == NULL) || (ChipSelect_N == 0))
@@ -122,16 +126,12 @@ bool userInterfaceTrasmitReceive(XSpi *SPI_UI_Handle, uint8_t ChipSelect_N, uint
     else
         External_CS_Enable(true);
 
-    // STEP 3: Transfer the data
+    // STEP 3: Assign the RxBuffer
     int AXI_Status;
     uint8_t DummyRxBuffer[BytesToTransfer];
-    uint8_t *RxBufferPtr;
-    if (RxBuffer == NULL)
-        RxBufferPtr = DummyRxBuffer;
-    else
-        RxBufferPtr = RxBuffer;
+    uint8_t *RxBufferPtr = (RxBuffer == NULL)? DummyRxBuffer : RxBuffer;
 
-
+    // STEP 4: Transfer the data - on error attempt a retransmit
     AXI_Status = XSpi_Transfer(SPI_UI_Handle, TxBuffer, RxBufferPtr, BytesToTransfer);    
     if (AXI_Status != XST_SUCCESS)  // Something went wrong try again
     {
@@ -150,10 +150,10 @@ bool userInterfaceTrasmitReceive(XSpi *SPI_UI_Handle, uint8_t ChipSelect_N, uint
             XSpi_SetSlaveSelect(SPI_UI_Handle, ChipSelect_N);
         else
             External_CS_Enable(true);
-        AXI_Status = XSpi_Transfer(SPI_UI_Handle, TxBuffer, DummyRxBuffer, BytesToTransfer);        
+        AXI_Status = XSpi_Transfer(SPI_UI_Handle, TxBuffer, RxBufferPtr, BytesToTransfer);        
     }
 
-    // STEP 4: Deselect all slave devices
+    // STEP 5: Deselect all slave devices
     if (External_CS_Enable == NULL)
         XSpi_SetSlaveSelect(SPI_UI_Handle, 0x00);
     else
@@ -161,7 +161,7 @@ bool userInterfaceTrasmitReceive(XSpi *SPI_UI_Handle, uint8_t ChipSelect_N, uint
 
     return(AXI_Status == XST_SUCCESS);
 
-} // END OF userInterfaceTrasmitReceive
+} // END OF SPI_InterfaceTrasmitReceive
 
 
 

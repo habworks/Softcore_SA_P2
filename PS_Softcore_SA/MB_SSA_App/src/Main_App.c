@@ -252,20 +252,20 @@ static void main_InitApplication(void)
 
     // STEP 3: Init Drivers
     // IO Expander 1:
-    Status = init_MCP23S08(&IOX_1, IOX_Reset, IOX_ChipSelect, userInterfaceTrasmitReceive, sleep_ms_Wrapper, 
+    Status = init_MCP23S08(&IOX_1, IOX_Reset, IOX_ChipSelect, SPI_InterfaceTrasmitReceive, sleep_ms_Wrapper, 
                            &AXI_SPI_UI_Handle, IOX_1_CS_NUMBER, IOX_1_DEVICE_ADDR, IOX_1_IO_DIRECTION, IOX_1_INPUT_POLARITY, IOX_1_IRQ_ON_CHANGE, 
                            IOX_1_IRQ_DEFAULT_VALUE, IOX_1_IRQ_CONTROL, IOX_1_CONFIGURATION, IOX_1_PULLUP, false, true);
     if (Status != true)
         InitFailMode |= INIT_FAIL_UI_IOX_1;
     // IO Expander 2:
-    Status = init_MCP23S08(&IOX_2, IOX_Reset, IOX_ChipSelect, userInterfaceTrasmitReceive, sleep_ms_Wrapper, 
+    Status = init_MCP23S08(&IOX_2, IOX_Reset, IOX_ChipSelect, SPI_InterfaceTrasmitReceive, sleep_ms_Wrapper, 
                            &AXI_SPI_UI_Handle, IOX_2_CS_NUMBER, IOX_2_DEVICE_ADDR, IOX_2_IO_DIRECTION, IOX_2_INPUT_POLARITY, IOX_2_IRQ_ON_CHANGE, 
                            IOX_2_IRQ_DEFAULT_VALUE, IOX_2_IRQ_CONTROL, IOX_2_CONFIGURATION, IOX_2_PULLUP, false, false);
     if (Status != true)
         InitFailMode |= INIT_FAIL_UI_IOX_2;
     // DDS Waveform Generator:
     XGpio_DiscreteSet(&AXI_GPIO_Handle, GPIO_OUTPUT_CHANNEL, WAVEFORM_GEN_CS);
-    Status = init_AD9833(&AD9833_Handle, &AXI_SPI_UI_Handle, AD9833_CS_NUMBER, AD9833_MCLK, userInterfaceTrasmitReceive, WaveformGenChipSelect);
+    Status = init_AD9833(&AD9833_Handle, &AXI_SPI_UI_Handle, AD9833_CS_NUMBER, AD9833_MCLK, SPI_InterfaceTrasmitReceive, WaveformGenChipSelect);
     if (Status != true)
         InitFailMode |= INIT_FAIL_UI_AD9833;
 
@@ -280,7 +280,7 @@ static void main_InitApplication(void)
     }
 
     // Init Display
-    Status = init_Display_SSD1309(&Display_SSD1309, &AXI_SPI_UI_Handle, DISPLAY_CS_NUMBER, XPAR_AXI_QUAD_SPI_0_FIFO_SIZE, displayResetOrRun, displayCommandOrData, userInterfaceTrasmitReceive, displayChipSelect, sleep_ms_Wrapper, sleep_10us_Wrapper, &U8G2); 
+    Status = init_Display_SSD1309(&Display_SSD1309, &AXI_SPI_UI_Handle, DISPLAY_CS_NUMBER, XPAR_AXI_QUAD_SPI_0_FIFO_SIZE, displayResetOrRun, displayCommandOrData, SPI_InterfaceTrasmitReceive, displayChipSelect, sleep_ms_Wrapper, sleep_10us_Wrapper, &U8G2); 
     if (Status != true)
         InitFailMode |= INIT_FAIL_UI_DISPLAY;
 

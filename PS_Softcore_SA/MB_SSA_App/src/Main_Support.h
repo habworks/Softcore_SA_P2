@@ -152,7 +152,7 @@ extern volatile uint8_t RxDataBuffer[RX_BUFFER_SIZE];
 // FUNCTION PROTOTYPES
 void sleep_10us_Wrapper(uint32_t WaitTime);
 void sleep_ms_Wrapper(uint32_t WaitTime);
-bool userInterfaceTrasmitReceive(XSpi *SPI_UI_Handle, uint8_t ChipSelect_N, uint8_t *TxBuffer, uint8_t *RxBuffer, uint32_t BytesToTransfer, bool UseNegSpiClk, CS_FunctionPointer External_CS_Enable);
+bool SPI_InterfaceTrasmitReceive(XSpi *SPI_UI_Handle, uint8_t ChipSelect_N, uint8_t *TxBuffer, uint8_t *RxBuffer, uint32_t BytesToTransfer, bool UseNegSpiClk, CS_FunctionPointer External_CS_Enable);
 
 
 #ifdef __cplusplus
