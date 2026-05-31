@@ -175,3 +175,4 @@ void displayChipSelect(Type_Display_CS DisplaySelect)
         XGpio_DiscreteSet(&AXI_GPIO_Handle, GPIO_OUTPUT_CHANNEL, DISPLAY_CS);
 
 } // END OF displayChipSelect
+

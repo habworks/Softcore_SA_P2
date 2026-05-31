@@ -62,6 +62,7 @@
 #include "Water_Mark.h"
 #include "Application_Display.h"
 #include "AD9833_Driver.h"
+#include "Hab_Types.h"
 
 
 // STATIC FUNCTIONS
@@ -71,9 +72,12 @@ static bool init_SoftCoreHandleCommon(Type_SoftCore_SA *Handle, uint32_t SampleF
 static bool init_SoftCoreHandleAudio(Type_SoftCore_SA *Handle);
 static bool init_SoftCoreHandleSignal(Type_SoftCore_SA *Handle);
 static void processUserInput(Type_SoftCore_SA *SoftCore_SA);
+static void processUser_IOX_Input(Type_SoftCore_SA *SoftCore_SA);
+static void processUserArtyInput(void);
 static void modeSwitch(Type_SoftCore_SA *SoftCore_SA);
 static void selectSwitch(Type_SoftCore_SA *SoftCore_SA);
 static void updateModeStatus_LED(void);
+static void debugPrintGreeting(void);
 // ISR Callbacks
 static void TimerCallbackSampleRate_ISR(void) __attribute__((fast_interrupt));
 static void TimerCallbackModeStatus_ISR(void) __attribute__((fast_interrupt));
@@ -306,20 +310,8 @@ static void main_InitApplication(void)
 
     // STEP 6: Welcome
     terminal_ClearScreen();
-    // PL BLK GPIO Revision
-    uint32_t PL_Ver = XGpio_DiscreteRead(&AXI_GPIO_Handle, GPIO_INPUT_CHANNEL);
-    PL_Ver = (PL_Ver & HW_PL_VER_MASK) >> HW_PL_VER_OFFSET;
-    // PL IMR Revision
-    Type_PL_Revision PL_Revision = IMR_PL_RevisionGet(XPAR_IMR_PL_REVISION_0_BASEADDR);
     // Display to screen
-    printGreen("IMR Engineering, LLC\r\n");
-    printGreen("  Hab Collector, Principal Engineer\r\n");
-    printGreen("  http://www.imrengineering.com\r\n\n");
-    xil_printf("Softcore Spectrum Analyzer P2\r\n");
-    xil_printf("FW REV: %02d.%02d.%02d\r\n", FW_MAJOR_REV, FW_MINOR_REV, FW_TEST_REV);
-    xil_printf("PL REV: %02d.%02d.%02d\r\n", PL_Revision.Major, PL_Revision.Minor, PL_Revision.Test);
-    xil_printf("PL BLK: %d\r\n", PL_Ver);
-    xil_printf("HW REV: %d\r\n\n", HW_REV);
+    debugPrintGreeting();
     if (InitFailMode)
     {
         printBrightRed("Error on Init:\r\n");
@@ -331,6 +323,7 @@ static void main_InitApplication(void)
     else
     {
         xil_printf("Hello Hab, I am ready...\r\n\n");
+        Type_PL_Revision PL_Revision = IMR_PL_RevisionGet(XPAR_IMR_PL_REVISION_0_BASEADDR);
         displayWelcomeScreen(&Display_SSD1309, FW_MAJOR_REV, FW_MINOR_REV, FW_TEST_REV, PL_Revision.Major, PL_Revision.Minor, PL_Revision.Test);
         sleep_ms_Wrapper(SPLASH_SCREEN_HOLD_TIME);     
     }
@@ -625,6 +618,22 @@ static void ADC_7476A_Primary_ISR(void)
 
 
 /********************************************************************************************************
+* @brief Process the user input for something the user wants to do.  Inputs from the user can be from my
+* board IOX2 or from the Arty A7.  These are prcoessed seperately.  
+*
+* @author original: Hab Collector \n
+*
+* @param SoftCore_SA: Pointer to the application main handle
+********************************************************************************************************/
+static void processUserInput(Type_SoftCore_SA *SoftCore_SA)
+{
+    processUserArtyInput();
+    processUser_IOX_Input(SoftCore_SA);
+}
+
+
+
+/********************************************************************************************************
 * @brief Poll this function to determine if there was a user input.  User input is associated with IO Expander
 * 2.  There is new user input if the IOX 2 IRQ has been set.  If so process to determine which input was
 * activated and take a unique action based on Mode of operation.  All inputs are configured active high. 
@@ -650,11 +659,11 @@ static void ADC_7476A_Primary_ISR(void)
 *
 * @param SoftCore_SA: Pointer to the application main handle
 *
-* STEP 1: Only act upon change in input
+* STEP 1: Only act upon change in input from IOX 2 interrupt (IRQ means an IOX2 input has changed)
 * STEP 2: Process the input and perform an action based unique to Audio or Signal Spectrum Mode
 * STEP 3: Reset encoder logic after 2 switch (AB or BA) inputs
 ********************************************************************************************************/
-static void processUserInput(Type_SoftCore_SA *SoftCore_SA)
+static void processUser_IOX_Input(Type_SoftCore_SA *SoftCore_SA)
 {
     int8_t DummyVar = 0;
     static bool WaveGenEnable = false;
@@ -662,9 +671,9 @@ static void processUserInput(Type_SoftCore_SA *SoftCore_SA)
     bool Status;
     bool Status2;
     
-    // STEP 1: Only act upon change in input
-    uint32_t PresentSwitchState = XGpio_DiscreteRead(&AXI_GPIO_Handle, GPIO_INPUT_CHANNEL);
-    if (!(PresentSwitchState & IOX_2_IRQ))
+    // STEP 1: Only act upon change in input from IOX 2 interrupt (IRQ means an IOX2 input has changed)
+    uint32_t GPIO_InputState = XGpio_DiscreteRead(&AXI_GPIO_Handle, GPIO_INPUT_CHANNEL);
+    if (!(GPIO_InputState & IOX_2_IRQ))
         return;
     
     // STEP 2: Process the input and perform an action based unique to Audio or Signal Spectrum Mode
@@ -828,7 +837,59 @@ static void processUserInput(Type_SoftCore_SA *SoftCore_SA)
     }        
 
 
-} // END OF processUserInput
+} // END OF processUser_IOX_Input
+
+
+
+/********************************************************************************************************
+* @brief Process the user from the Arty A7 development board.  Only PB1, 2 and 3 will be considered.  
+*
+* @author original: Hab Collector \n
+*
+* STEP 1: Capture GPIO input and deterine if PB1, 2 or 3 has been pressed
+* STEP 2: Take no action if nothing to do - switch may also be in the hold poistion so ignore the hold
+* STEP 3: User made a valid press - take an action
+********************************************************************************************************/
+static void processUserArtyInput(void)
+{
+    static uint32_t GPIO_PreviousInputState = 0x00000000;
+    
+    // STEP 1: Capture GPIO input and deterine if PB1, 2 or 3 has been pressed
+    uint32_t GPIO_PresentInputState = XGpio_DiscreteRead(&AXI_GPIO_Handle, GPIO_INPUT_CHANNEL);
+    GPIO_PresentInputState &= (PB_1 | PB_2 | PB_3);
+    
+    // STEP 2: Take no action if nothing to do - switch may also be in the hold poistion so ignore the hold
+    if (GPIO_PresentInputState == GPIO_PreviousInputState)
+        return;
+    else
+        GPIO_PreviousInputState = GPIO_PresentInputState;
+
+    // STEP 3: User made a valid press - take an action
+    switch(GPIO_PresentInputState)
+    {
+        case PB_1:
+        {
+            DO_NOTHING();
+        }
+        break;
+
+        case PB_2:
+        {
+            DO_NOTHING();
+        }
+        break;
+
+        case PB_3:
+        {
+            debugPrintGreeting();
+        }
+        break;
+
+        default:
+        break;
+    } // END OF SWITCH
+    
+} // END OF processUserArtyInput
 
 
 
@@ -837,6 +898,8 @@ static void processUserInput(Type_SoftCore_SA *SoftCore_SA)
 * modes.  Call the appropiate display and set default start conditions for that mode
 *
 * @author original: Hab Collector \n
+*
+* @note: SW1 from IOX2 input
 *
 * @param SoftCore_SA: Pointer to the application main handle
 *
@@ -900,6 +963,8 @@ static void modeSwitch(Type_SoftCore_SA *SoftCore_SA)
 * WAV file to play and sets the default start condition
 *
 * @author original: Hab Collector \n
+*
+* @note: SW2 from IOX2 input
 *
 * @param SoftCore_SA: Pointer to the application main handle
 *
@@ -987,4 +1052,30 @@ static void updateModeStatus_LED(void)
 
 
 
+/********************************************************************************************************
+* @brief Print the debug user greeting to screen
+*
+* @author original: Hab Collector \n
+*
+* STEP 1: Get the PL version and revision information
+* STEP 2: Print greeting to debug port
+********************************************************************************************************/
+static void debugPrintGreeting(void)
+{
+    // STEP 1: Get the PL version and revision information
+    // PL BLK GPIO Revision
+    uint32_t PL_Ver = XGpio_DiscreteRead(&AXI_GPIO_Handle, GPIO_INPUT_CHANNEL);
+    PL_Ver = (PL_Ver & HW_PL_VER_MASK) >> HW_PL_VER_OFFSET;
+    // PL IMR Revision
+    Type_PL_Revision PL_Revision = IMR_PL_RevisionGet(XPAR_IMR_PL_REVISION_0_BASEADDR);
 
+    // STEP 2: Print greeting to debug port
+    printGreen("IMR Engineering, LLC\r\n");
+    printGreen("  Hab Collector, Principal Engineer\r\n");
+    printGreen("  http://www.imrengineering.com\r\n\n");
+    xil_printf("Softcore Spectrum Analyzer P2\r\n");
+    xil_printf("FW REV: %02d.%02d.%02d\r\n", FW_MAJOR_REV, FW_MINOR_REV, FW_TEST_REV);
+    xil_printf("PL REV: %02d.%02d.%02d\r\n", PL_Revision.Major, PL_Revision.Minor, PL_Revision.Test);
+    xil_printf("PL BLK: %d\r\n", PL_Ver);
+    xil_printf("HW REV: %d\r\n\n", HW_REV);
+}

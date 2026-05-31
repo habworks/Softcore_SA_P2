@@ -41,8 +41,8 @@ extern"C" {
 // DEFINES
 // PS FW REVSION
 #define FW_MAJOR_REV            1
-#define FW_MINOR_REV            1
-#define FW_TEST_REV             4
+#define FW_MINOR_REV            2
+#define FW_TEST_REV             1
 #define HW_REV                  1 
 // UART USE
 #define RX_BUFFER_SIZE          10  

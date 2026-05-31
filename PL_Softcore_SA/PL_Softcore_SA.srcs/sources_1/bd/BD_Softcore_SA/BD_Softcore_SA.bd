@@ -48,7 +48,8 @@
       "axi_quad_spi_2": "",
       "xlconstant_1": "",
       "xlconstant_2": "",
-      "axi_quad_spi_0": ""
+      "axi_quad_spi_0": "",
+      "IMR_Debounce_Input_0": ""
     },
     "interface_ports": {
       "DDR3_0": {
@@ -1763,7 +1764,7 @@
             "value": "2"
           },
           "C_REVISION_TEST": {
-            "value": "6"
+            "value": "1"
           }
         }
       },
@@ -1828,6 +1829,18 @@
           },
           "C_USE_STARTUP": {
             "value": "0"
+          }
+        }
+      },
+      "IMR_Debounce_Input_0": {
+        "vlnv": "imrengineering.com:user:IMR_Debounce_Input:1.0",
+        "ip_revision": "1",
+        "xci_name": "BD_Softcore_SA_IMR_Debounce_Input_0_0",
+        "xci_path": "ip\\BD_Softcore_SA_IMR_Debounce_Input_0_0\\BD_Softcore_SA_IMR_Debounce_Input_0_0.xci",
+        "inst_hier_path": "IMR_Debounce_Input_0",
+        "parameters": {
+          "DebounceCycleCount": {
+            "value": "100000"
           }
         }
       }
@@ -1979,6 +1992,12 @@
           "util_ds_buf_0/BUFG_I"
         ]
       },
+      "IMR_Debounce_Input_0_OutputSignal": {
+        "ports": [
+          "IMR_Debounce_Input_0/OutputSignal",
+          "xlconcat_0/In4"
+        ]
+      },
       "IOX_2_IRQ_1": {
         "ports": [
           "IOX_2_IRQ",
@@ -2006,7 +2025,7 @@
       "PB_3_1": {
         "ports": [
           "PB_3",
-          "xlconcat_0/In4"
+          "IMR_Debounce_Input_0/InputSignal"
         ]
       },
       "RST_PB_1": {
@@ -2186,7 +2205,8 @@
           "axi_quad_spi_2/s_axi_aclk",
           "axi_quad_spi_0/s_axi_aclk",
           "IMR_PL_Revision_0/s00_axi_aclk",
-          "axi_gpio_0/s_axi_aclk"
+          "axi_gpio_0/s_axi_aclk",
+          "IMR_Debounce_Input_0/Clock"
         ]
       },
       "microblaze_0_Interrupt_Ack": {
@@ -2247,7 +2267,8 @@
           "axi_quad_spi_2/s_axi_aresetn",
           "axi_quad_spi_0/s_axi_aresetn",
           "IMR_PL_Revision_0/s00_axi_aresetn",
-          "axi_gpio_0/s_axi_aresetn"
+          "axi_gpio_0/s_axi_aresetn",
+          "IMR_Debounce_Input_0/Reset_n"
         ]
       },
       "rst_clk_wiz_1_100M_bus_struct_reset": {
